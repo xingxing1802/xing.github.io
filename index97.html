@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线HTTP请求数据接收Mock工具 - UU在线工具</title>
+    <meta name="description" content="在线HTTP请求数据接收Mock工具，能记录并展示指定请求URL的所有请求记录，支持之定义响应信息，方便API数据跟踪和调试">
+    <link rel="canonical" href="">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common.css">
+<link rel="stylesheet" href="static/css/font_1455035_z0n3d6to6dc.css">    <style>
+input[readonly]{background:#fff}.request-box{margin-left:0}.request-box .item-title{width:20%;width:100px;border-right:1px solid #eaeaea}.request-box tr td:first-child{width:10%}.request-box tr td:last-child{width:90%}.red{color:red}.green{color:green}table{max-width:100%}.tab-bar,.req-tabbar{list-style-type:none;margin-left:0;cursor:pointer;text-align:center;line-height:2;color:#555;font-size:14px}.tab-bar li,.req-tabbar li{width:50%;float:left;border:1px solid #eaeaea}.req-tabbar li{width:20%}.tab-bar li.active,.req-tabbar li.active{background:#1779ba;color:#fff;border-color:#1779ba}.ul-req-list{list-style-type:none;margin-left:0;background:#f5f5f5;color:#7d7d7d;padding:15px 10px;min-height:400px;max-height:600px;overflow-y:scroll;font-size:13px}.req-info-box{min-height:400px;max-height:600px;overflow-y:scroll}.ul-req-list li{margin:8px 0;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ul-req-list li.new{color:green}.ul-req-list li:hover,.ul-req-list li.active{color:red}.req-info-item{clear:both;text-align:left;padding:15px}
+</style>
+</head>
+<body>
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-3 small-6 logo">
+                <a href="index.html">
+                    <span>UU在线工具</span>
+                </a>
+            </div>
+            <div class="cell large-9 small-6 main-nav-box hide-for-small-only">
+                <div class="date-box float-right" id="timeBox"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <!--ad box-->
+    <div class="banner-ad" style="min-height:280px;">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12" style="margin-top:10px;">
+                    <ins class="adsbygoogle" style="display:block;max-height:100px;" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5019822032" data-ad-format="auto"></ins>
+                </div>
+            </div>
+        </div>
+    </div>
+<main class="theme" id="app">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <nav class="breadcrumbs-wrapper" aria-label="你在这里:" role="导航" style="margin-top:15px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="index.html">首页</a></li>
+                        <li>
+                            <span class="show-for-sr">当前: </span>
+                            <h1>在线HTTP请求数据接收Mock工具</h1>
+                        </li>
+                    </ul>
+                    <a class="float-right tool-extend-btn hide-for-small-only collapse " href="javascript:;" title="展开/缩起工具区域">
+                        <i class="iconfont icon-angle-double-right"></i>
+                    </a>
+                </nav>
+                            </div>
+
+            <div class="cell large-9 small-12" id="toolWrapper" data-nosnippet="">
+                <div class="tool-wrapper">
+                    <div class="tool-box">
+    <div class="grid-x grid-margin-x" v-cloak="">
+        <div class="cell large-8 small-12">
+            <label>请求URL
+                <small>（启动后将监听所有来自以下URL的请求）</small>
+                <div class="input-group">
+                    <span class="input-group-label">https://mock.uutool.cn/</span>
+                    <input placeholder="由数字和字母及中下划线组成" title="点击下方按钮复制URL" type="text" v-model="reqId" :disabled="reqStatus" class="input-group-field">
+                    <div class="input-group-button" v-if="!reqStatus">
+                        <input type="submit" value="启动监听并复制URL" @click="startListen" class="button js-copy" :data-clipboard-text="'https://mock.uutool.cn/'+reqId">
+                    </div>
+                    <div class="input-group-button" v-else="">
+                        <button class="button info js-copy" :data-clipboard-text="'https://mock.uutool.cn/'+reqId">复制URL
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <input class="inline-block" type="text" @change="changeSetting('pwd',customHeader)" placeholder="监听密码" v-model="reqPwd" style="display:inline-block;max-width:150px;top: -5px;position: relative;">
+                    <button class="button info" @click="flushList">刷新列表</button>
+                    <button class="button info js-copy" data-clipboard-tip="复制成功，把链接发送给朋友吧~" :data-clipboard-text="'https://uutool.cn/mock.html?req_id='+reqId+(reqPwd?('&pwd='+reqPwd):'')">
+                        分享请求
+                    </button>
+                    <button class="button alert" @click="del">删除请求</button>
+                </div>
+            </label>
+        </div>
+        <div class="cell large-4 small-12 ">
+            <ul class="tab-bar">
+                <li :class="{active:tabbar==1}" @click="tabbar=1">响应内容设置</li>
+                <li :class="{active:tabbar==2}" @click="tabbar=2">响应头设置</li>
+            </ul>
+            <textarea id="responseContent" rows="3" @change="changeSetting('response',customResponse)" v-model="customResponse" v-show="1==tabbar" placeholder="响应内容"></textarea>
+            <textarea id="responseHeader" rows="3" @change="changeSetting('header',customHeader)" v-model="customHeader" v-show="2==tabbar" placeholder="响应头，每行一条，如：version:v1.0"></textarea>
+        </div>
+        <div class="cell large-12 small-12">
+            <!--                <p v-html="syncTip"></p>-->
+        </div>
+        <div class="cell large-12 small-12">
+            <hr>
+            <div class="grid-x">
+                <div class="cell large-4 small-12">
+                    <ul class="ul-req-list">
+                        <li v-if="0==reqArr.length">
+                            &nbsp;&nbsp;暂无请求...
+                        </li>
+                        <li :class="{new:!item.hasOwnProperty('old'),'active':item.no==currentReqNo}" :title="item.req_time" v-for="(item,index) in reqArr" @click="showReqInfo(index)">
+                            #{{item.no}}【{{item.method}}】{{item.ip}} 于 <span :title="item.req_time">{{getTime(item.req_time)}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="cell large-8 small-12 req-info-box" v-if="0!=reqArr.length">
+                    <ul class="req-tabbar">
+                        <li :class="{active:reqTabbar==1}" @click="reqTabbar=1">基本信息</li>
+                        <li :class="{active:reqTabbar==2}" @click="reqTabbar=2">响应内容</li>
+                        <li :class="{active:reqTabbar==3}" @click="reqTabbar=3">响应头</li>
+                        <li :class="{active:reqTabbar==4}" @click="reqTabbar=4">请求头</li>
+                        <li :class="{active:reqTabbar==5}" @click="reqTabbar=5">请求体</li>
+                    </ul>
+                    <div>
+                        <!--基本信息-->
+                        <div class="req-info-item" v-show="1==reqTabbar">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td width="20%" class="item-title">请求编号</td>
+                                    <td width="80%"><b>{{requestInfo.no}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">请求方法</td>
+                                    <td><b>{{requestInfo.method}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">请求URL</td>
+                                    <td><b>{{requestInfo.url}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">请求时间</td>
+                                    <td><b>{{requestInfo.req_time}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">请求IP</td>
+                                    <td><b>{{requestInfo.ip}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">IP归属地</td>
+                                    <td><b>{{requestInfo.ip_location}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">GET参数</td>
+                                    <td><b>{{0!=requestInfo.get?'有':'无'}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">POST参数</td>
+                                    <td><b>{{0!=requestInfo.post?'有':'无'}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title" title="一般包含POST数据">输入流</td>
+                                    <td><b>{{''!=requestInfo.raw?'有':'无'}}</b></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--响应内容-->
+                        <div class="req-info-item" v-show="2==reqTabbar">
+                                <pre>
+{{requestInfo.response}}
+                                </pre>
+                        </div>
+                        <!--响应头-->
+                        <div class="req-info-item" v-show="3==reqTabbar">
+                            <p style="color:#3d3d3d;">这里的响应头只显示自定义设置的响应头，不包含系统自动返回的响应头：</p>
+                            <pre>
+{{requestInfo.response_header}}
+                                </pre>
+                        </div>
+                        <!--请求头-->
+                        <div class="req-info-item" v-show="4==reqTabbar">
+                                <pre>
+{{requestInfo.req_header}}
+                                </pre>
+                        </div>
+                        <!--请求体-->
+                        <div class="req-info-item" v-show="5==reqTabbar">
+                            <p style="color:#3d3d3d;">GET和POST外的其他方法见Raw数据：</p>
+                            <b>GET参数：</b>
+                            <pre>
+{{requestInfo.get}}
+                                </pre>
+                            <b>POST参数：</b>
+                            <pre>
+{{requestInfo.post}}
+                                </pre>
+                            <b>Raw：</b>
+                            <pre>
+{{requestInfo.raw}}
+                                </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                    </div>
+            </div>
+
+            <aside class="cell large-3 small-12 " id="sidebar">
+                                    <div style="height:0;overflow: hidden;">
+                        <img src="static/picture/mock.jpg" alt="在线HTTP请求数据接收Mock工具">
+                    </div>
+                                
+                <!--tool tip -->
+                <div class="aside-item tool-tip">
+                    <div class="aside-title">工具简介</div>
+                    <div class="aside-body">
+                        <div class="text-collapse collapse">
+                            <p style="margin-bottom:20px;">
+                                本工具提供HTTP请求的数据记录以及Mock功能，可以接收展示不方便看到的请求数据，同时支持设置请求响应内容和响应头，方便API接口对接测试。<br><br>
+                    也可用于在线调试业务日志，启动请求后将业务日志推送到监听的URL中，可以直观便捷地看到业务数据，方便后端调试。所有请求数据均使用AES加密后存储，<br>
+                    系统将会自动清除30分钟内无请求的实例，建议使用完毕主动删除。<br><br>
+                    使用方法：<br><br>
+                    1、填写请求ID，默认系统自动生成。<br><br>
+                    2、填写密码和响应信息，强烈建议使用密码，避免被他人监听到数据。<br><br>
+                    3、点击“启动请求监听”按钮启动监听设定的URL。<br><br>
+                    4、复制URL，放到所需的业务逻辑中请求触发。<br><br>
+                    5、回本页面查看请求数据。<br><br>
+                    注意：<br><br>
+                    1、分享请求时密码为明文GET方式传输，密码仅作为基本对比鉴权使用，请勿使用其他应用已设置的密码，避免被拖库。<br><br>
+                    2、设置密码或响应信息时，输入完毕后移开鼠标即可保存生效。                            </p>
+                            <div class="toggle-btn" title="展开/折叠工具简介"></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="aside-item" style="border:none;">
+                    <div class="share-box" title="点击复制本工具链接">
+                        <input class="js-copy" type="text" id="shareInput" readonly="" value="uutool.cn/mock/" data-clipboard-text="https://uutool.cn/mock/" data-clipboard-tip="工具链接已复制">
+                    </div>
+                </div>
+
+                
+                
+                
+                
+                                    <div style="max-height:260px;overflow: hidden;margin-top:20px;">
+                        <div style="max-height:150px;overflow: hidden;margin-bottom:15px;">
+                            <ins class="adsbygoogle" style="display:inline-block;width:100%;min-height:90px" data-full-width-responsive="true" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5880251834"></ins>
+                        </div>
+                    </div>
+                            </aside>
+        </div>
+    </div>
+</main>
+
+
+<footer id="footer" data-tool-alias="mock">
+    <div class="grid-container" data-nosnippet="">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a rel="nofollow" href="about.html">关于我们</a>
+                    <a href="index1.html">工具地图</a>
+                    <a href="v0pd8pgi56.html">工具博客</a>
+                    <a rel="nofollow" href="support.html">支持我们</a>
+                    <a rel="nofollow" href="customization.html">工具定制</a>
+                    <a rel="nofollow" href="data-security.html">用户数据安全</a>
+                    <a rel="nofollow" href="disclaimer.html">免责声明</a>
+                    <a rel="nofollow" href="copyright.html">著作权声明</a>
+                    <a rel="nofollow" href="feedback.html">反馈建议</a>
+                </div>
+                <!-- 友情链接 -->
+                <p class="friend-link text-center">友情链接：
+                    <a href="javascript:;" title="网络剪贴板" target="_blank">网络剪贴板</a>
+                    <a href="javascript:;" target="_blank">Font Awesome</a>
+                    <a href="javascript:;" title="图标制作工具" target="_blank">图标工具</a>
+                    <a href="javascript:;" title="在线文本工具箱" target="_blank">文本工具箱</a>
+                    <a href="javascript:;" title="JPG MIN 图像本地化压缩工具" target="_blank">JPG MIN</a>
+                    <a href="javascript:;" title="JSON数据处理好帮手！" target="_blank">WeJSON</a>
+                    <a href="javascript:;" title="文本派，永久免费的永久文本存储服务" target="_blank">文本派</a>
+                    <a href="javascript:;" title="专业证件照免费处理" target="_blank">证件照大师</a>
+                    <a href="javascript:;" title="在线文件重命名" target="_blank">在线文件重命名</a>
+                    <a href="ygtamznth7.html" target="_blank">手机号段网</a>
+                    <a href="javascript:;" target="_blank" style="font-size:0;overflow: hidden">在线剪辑大师</a>
+                </p>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    Copyright © 2022 奇客科技 uuTool.cn All Rights Reserved <a rel="nofollow" href="javascript:;" target="_blank">桂ICP备17007729号-11</a><br>
+                </p>
+                            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li title="QQ联系我们">
+            <a target="_blank" href="javascript:;"><i class="iconfont icon-qq"></i></a>
+        </li>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon-xcx"></i>
+            <div class="hidden-box">
+                <img src="static/picture/xcx-code.jpg" width="140" alt="小程序码">
+                <span>微信小程序</span>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min.js"></script>
+    <script src="static/js/ad.min.js"></script>
+<script src="static/js/mock.js"></script>
+</body>
+</html>

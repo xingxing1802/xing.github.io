@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线历史朝代年份计算器 - UU在线工具</title>
+    <meta name="description" content="在线历史朝代年份计算器，可以把公元年份转换成历史朝代年份，负数年份表示公元前，输入年份后即可快速计算该公元年所属的历史朝代。">
+    <link rel="canonical" href="">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common.css">
+<link rel="stylesheet" href="static/css/font_1455035_z0n3d6to6dc.css">    <style>
+h2{font-size:22px}
+</style>
+</head>
+<body>
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-3 small-6 logo">
+                <a href="index.html">
+                    <span>UU在线工具</span>
+                </a>
+            </div>
+            <div class="cell large-9 small-6 main-nav-box hide-for-small-only">
+                <div class="date-box float-right" id="timeBox"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <!--ad box-->
+    <div class="banner-ad" style="min-height:280px;">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12" style="margin-top:10px;">
+                    <ins class="adsbygoogle" style="display:block;max-height:100px;" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5019822032" data-ad-format="auto"></ins>
+                </div>
+            </div>
+        </div>
+    </div>
+<main class="theme" id="app">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <nav class="breadcrumbs-wrapper" aria-label="你在这里:" role="导航" style="margin-top:15px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="index.html">首页</a></li>
+                        <li>
+                            <span class="show-for-sr">当前: </span>
+                            <h1>在线历史朝代年份计算器</h1>
+                        </li>
+                    </ul>
+                    <a class="float-right tool-extend-btn hide-for-small-only collapse " href="javascript:;" title="展开/缩起工具区域">
+                        <i class="iconfont icon-angle-double-right"></i>
+                    </a>
+                </nav>
+                                    <div class="tool-collection">
+                        <ul class="expanded1">
+                                                            <li class=""><a href="javascript:;">亲戚关系计算</a></li>
+                                                            <li class=""><a href="javascript:;">轮胎胎压打气计算器</a></li>
+                                                            <li class="active"><a href="">历史朝代计算</a></li>
+                                                    </ul>
+                    </div>
+                            </div>
+
+            <div class="cell large-9 small-12" id="toolWrapper" data-nosnippet="">
+                <div class="tool-wrapper">
+                    <div class="tool-box">
+    <div class="grid-x grid-margin-x">
+        <div class="cell large-6">
+            <div class="input-group">
+                <span class="input-group-label">公元</span>
+                <input min="1" step="100" type="number" v-model="convertData" class="input-group-field" placeholder="负数表示公元前">
+                <span class="input-group-label">年</span>
+            </div>
+            <button class="button " @click="convert">计算朝代</button>
+        </div>
+    </div>
+
+    <div class="intro-box">
+        <hr>
+        <p>公元前请使用负数年份表示，如公元前200年，使用-200。</p>
+        <h2 class="text-center">中国历史朝代公元对照表</h2>
+        <div class="table-scroll">
+            <table align="center" border="1" cellpadding="0" cellspacing="0" class="unstriped ">
+                <tbody>
+                <tr>
+                    <td colspan="3">朝 代</td>
+                    <td width="248">起 讫</td>
+                    <td width="111">都 城</td>
+                    <td width="114">今 地</td>
+                </tr>
+                <tr>
+                    <td colspan="3" rowspan="2">夏</td>
+                    <td rowspan="2" width="248">约前2070—前1600</td>
+                    <td width="111">安邑</td>
+                    <td width="114">山西夏县</td>
+                </tr>
+                <tr>
+                    <td width="111">阳翟</td>
+                    <td width="114">河南禹县</td>
+                </tr>
+                <tr>
+                    <td colspan="3" rowspan="2">商</td>
+                    <td rowspan="2" width="248">前1600—前1046</td>
+                    <td width="111">亳</td>
+                    <td width="114">河南商丘</td>
+                </tr>
+                <tr>
+                    <td width="111">殷</td>
+                    <td width="114">河南安阳</td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2" width="71">周</td>
+                    <td width="106">西周</td>
+                    <td width="248">前1046—前771</td>
+                    <td width="111">镐京</td>
+                    <td width="114">陕西西安</td>
+                </tr>
+                <tr>
+                    <td width="106">东周<br>春秋时代<br>战国时代①</td>
+                    <td width="248">前770—前256<br>前770—前476<br>前475—前221</td>
+                    <td width="111">洛邑</td>
+                    <td width="114">河南洛阳</td>
+                </tr>
+                <tr>
+                    <td colspan="3">秦</td>
+                    <td width="248">前221—前206</td>
+                    <td width="111">咸阳</td>
+                    <td width="114">陕西咸阳</td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2" width="71">汉</td>
+                    <td width="106">西汉<span class="STYLE1">②</span></td>
+                    <td width="248">前206—公元23</td>
+                    <td width="111">长安</td>
+                    <td width="114">陕西西安</td>
+                </tr>
+                <tr>
+                    <td width="106">东汉</td>
+                    <td width="248">25—220</td>
+                    <td width="111">洛阳</td>
+                    <td width="114">河南洛阳</td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="3" width="71">三国</td>
+                    <td width="106">魏</td>
+                    <td width="248">220-265</td>
+                    <td width="111">洛阳</td>
+                    <td width="114">河南洛阳</td>
+                </tr>
+                <tr>
+                    <td width="106">蜀</td>
+                    <td width="248">221-263</td>
+                    <td width="111">成都</td>
+                    <td width="114">四川成都</td>
+                </tr>
+                <tr>
+                    <td width="106">吴</td>
+                    <td width="248">222-280</td>
+                    <td width="111">建业</td>
+                    <td width="114">江苏南京</td>
+                </tr>
+                <tr>
+                    <td colspan="3">西晋</td>
+                    <td width="248">265-316</td>
+                    <td width="111">洛阳</td>
+                    <td width="114">河南洛阳</td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2" width="71">东晋<br>十六国</td>
+                    <td width="106">东晋</td>
+                    <td width="248">317-420</td>
+                    <td width="111">建康</td>
+                    <td width="114">江苏南京</td>
+                </tr>
+                <tr>
+                    <td width="106">十六国<span class="STYLE1">③</span></td>
+                    <td width="248">304-439</td>
+                    <td width="111">—</td>
+                    <td width="114">—</td>
+                </tr>
+                <tr>
+                    <td rowspan="10" width="35">南北朝</td>
+                    <td rowspan="4" width="36">南朝</td>
+                    <td width="106">宋</td>
+                    <td width="248">420-479</td>
+                    <td width="111">建康</td>
+                    <td width="114">江苏南京</td>
+                </tr>
+                <tr>
+                    <td width="106">齐</td>
+                    <td width="248">479-502</td>
+                    <td width="111">建康</td>
+                    <td width="114">江苏南京</td>
+                </tr>
+                <tr>
+                    <td width="106">梁</td>
+                    <td width="248">502-557</td>
+                    <td width="111">建康</td>
+                    <td width="114">江苏南京</td>
+                </tr>
+                <tr>
+                    <td width="106">陈</td>
+                    <td width="248">557-589</td>
+                    <td width="111">建康</td>
+                    <td width="114">江苏南京</td>
+                </tr>
+                <tr>
+                    <td rowspan="6" width="36">北朝</td>
+                    <td rowspan="2" width="106">北魏</td>
+                    <td rowspan="2" width="248">386-534</td>
+                    <td width="111">平城</td>
+                    <td width="114">山西大同</td>
+                </tr>
+                <tr>
+                    <td width="111">洛阳</td>
+                    <td width="114">河南洛阳</td>
+                </tr>
+                <tr>
+                    <td width="106">东魏</td>
+                    <td width="248">534-550</td>
+                    <td width="111">邺</td>
+                    <td width="114">河北临漳</td>
+                </tr>
+                <tr>
+                    <td width="106">北齐</td>
+                    <td width="248">550-577</td>
+                    <td width="111">邺</td>
+                    <td width="114">河北临漳</td>
+                </tr>
+                <tr>
+                    <td width="106">西魏</td>
+                    <td width="248">535-556</td>
+                    <td width="111">长安</td>
+                    <td width="114">陕西西安</td>
+                </tr>
+                <tr>
+                    <td width="106">北周</td>
+                    <td width="248">557-581</td>
+                    <td width="111">长安</td>
+                    <td width="114">陕西西安</td>
+                </tr>
+                <tr>
+                    <td colspan="3">隋</td>
+                    <td width="248">581-618</td>
+                    <td width="111">大兴</td>
+                    <td width="114">陕西西安</td>
+                </tr>
+                <tr>
+                    <td colspan="3">唐</td>
+                    <td width="248">618-907</td>
+                    <td width="111">长安</td>
+                    <td width="114">陕西西安</td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="6" width="71">五代<br>十国</td>
+                    <td width="106">后梁</td>
+                    <td width="248">907-923</td>
+                    <td width="111">汴</td>
+                    <td width="114">河南开封</td>
+                </tr>
+                <tr>
+                    <td width="106">后唐</td>
+                    <td width="248">923-936</td>
+                    <td width="111">洛阳</td>
+                    <td width="114">河南洛阳</td>
+                </tr>
+                <tr>
+                    <td width="106">后晋</td>
+                    <td width="248">936-946</td>
+                    <td width="111">汴</td>
+                    <td width="114">河南开封</td>
+                </tr>
+                <tr>
+                    <td width="106">后汉</td>
+                    <td width="248">947-950</td>
+                    <td width="111">汴</td>
+                    <td width="114">河南开封</td>
+                </tr>
+                <tr>
+                    <td width="106">后周</td>
+                    <td width="248">951-960</td>
+                    <td width="111">汴</td>
+                    <td width="114">河南开封</td>
+                </tr>
+                <tr>
+                    <td width="106">十国④</td>
+                    <td width="248">902-979</td>
+                    <td width="111">—</td>
+                    <td width="114">—</td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2" width="71">宋</td>
+                    <td width="106">北宋</td>
+                    <td width="248">960-1127</td>
+                    <td width="111">开封</td>
+                    <td width="114">河南开封</td>
+                </tr>
+                <tr>
+                    <td width="106">南宋</td>
+                    <td width="248">1127-1279</td>
+                    <td width="111">临安</td>
+                    <td width="114">浙江杭州</td>
+                </tr>
+                <tr>
+                    <td colspan="3">辽</td>
+                    <td width="248">916-1125⑤</td>
+                    <td width="111">皇都<br>(上京)</td>
+                    <td width="114">辽宁<br>巴林右旗</td>
+                </tr>
+                <tr>
+                    <td colspan="3">西夏</td>
+                    <td width="248">1038-1227</td>
+                    <td width="111">兴庆府</td>
+                    <td width="114">宁夏银川</td>
+                </tr>
+                <tr>
+                    <td colspan="3" rowspan="3">金</td>
+                    <td rowspan="3" width="248">1115-1234</td>
+                    <td width="111">会宁</td>
+                    <td width="114">阿城(黑龙江)</td>
+                </tr>
+                <tr>
+                    <td width="111">中都</td>
+                    <td width="114">北京</td>
+                </tr>
+                <tr>
+                    <td width="111">开封</td>
+                    <td width="114">河南开封</td>
+                </tr>
+                <tr>
+                    <td colspan="3">元</td>
+                    <td width="248">1271-1368⑥</td>
+                    <td width="111">大都</td>
+                    <td width="114">北京</td>
+                </tr>
+                <tr>
+                    <td colspan="3">明</td>
+                    <td width="248">1368-1644</td>
+                    <td width="111">北京</td>
+                    <td width="114">北京</td>
+                </tr>
+                <tr>
+                    <td colspan="3">清</td>
+                    <td width="248">1644-1911</td>
+                    <td width="111">北京</td>
+                    <td width="114">北京</td>
+                </tr>
+                <tr>
+                    <td colspan="3">中华民国</td>
+                    <td width="248">1912-1949</td>
+                    <td width="111">南京</td>
+                    <td width="114">江苏南京</td>
+                </tr>
+                <tr>
+                    <td colspan="6">中华人民共和国1949年10月1日成立，首都北京。</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>
+                附注：<br>① 这时期，主要有秦、魏、韩、赵、楚、燕、齐等国。<br>②
+                包括王莽建立的“新”王朝(公元8年—23年)。王莽时期，爆发大规模的农民起义，建立了农民政权。公元23年，新王莽政权灭亡。公元25年，东汉王朝建立。<br>③
+                这时期，在我国北方和巴蜀，先后存在过一些封建割据政权，其中有：汉(前赵)、成(成汉)、前凉、后赵(魏)、前燕、前秦、后燕、后秦、西秦、后凉、南凉、北凉、南燕、西凉、北燕、夏等国，历史上叫做“十六国”。<br>④
+                这时期，除后梁、后唐、后晋、后汉、后周外，还先后存在过一些封建割据政权，其中有：吴、前蜀、吴越、楚、闽、南汉、荆南(南平)、后蜀、南唐、北汉等国，历史上叫做“十国”。<br>⑤
+                辽建国于公元907年，国号契丹，916年始建年号，938年（一说947年）改国号为辽，983年复称契丹，1066年仍称辽。<br>⑥铁木真于公元1206年建国；公元1271年忽必烈定国号为元，1279年灭南宋。
+            </p>
+        </div>
+    </div>
+</div>
+                                    </div>
+            </div>
+
+            <aside class="cell large-3 small-12 " id="sidebar">
+                                    <div style="height:0;overflow: hidden;">
+                        <img src="static/picture/dynasty.jpg" alt="在线历史朝代年份计算器">
+                    </div>
+                                
+                <!--tool tip -->
+                <div class="aside-item tool-tip">
+                    <div class="aside-title">工具简介</div>
+                    <div class="aside-body">
+                        <div class="text-collapse collapse">
+                            <p style="margin-bottom:20px;">
+                                在线历史朝代年份计算器，可以把公元年份转换成历史朝代年份，负数年份表示公元前，输入年份后即可快速计算该公元年所属的历史朝代。                            </p>
+                            <div class="toggle-btn" title="展开/折叠工具简介"></div>
+                        </div>
+                    </div>
+                </div>
+
+                                    <!--green tool tip -->
+                    <div class="aside-item green-tool-tip" data-nosnippet="">
+                        <div class="aside-body">
+                            本工具数据均在本地浏览器处理，不会上传到网络服务器中，请放心使用！
+                        </div>
+                    </div>
+                
+                <div class="aside-item" style="border:none;">
+                    <div class="share-box" title="点击复制本工具链接">
+                        <input class="js-copy" type="text" id="shareInput" readonly="" value="uutool.cn/dynasty/" data-clipboard-text="https://uutool.cn/dynasty/" data-clipboard-tip="工具链接已复制">
+                    </div>
+                </div>
+
+                
+                
+                
+                
+                                    <div style="max-height:260px;overflow: hidden;margin-top:20px;">
+                        <div style="max-height:150px;overflow: hidden;margin-bottom:15px;">
+                            <ins class="adsbygoogle" style="display:inline-block;width:100%;min-height:90px" data-full-width-responsive="true" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5880251834"></ins>
+                        </div>
+                    </div>
+                            </aside>
+        </div>
+    </div>
+</main>
+
+
+<footer id="footer" data-tool-alias="dynasty">
+    <div class="grid-container" data-nosnippet="">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a rel="nofollow" href="about.html">关于我们</a>
+                    <a href="index1.html">工具地图</a>
+                    <a href="v0pd8pgi56.html">工具博客</a>
+                    <a rel="nofollow" href="support.html">支持我们</a>
+                    <a rel="nofollow" href="customization.html">工具定制</a>
+                    <a rel="nofollow" href="data-security.html">用户数据安全</a>
+                    <a rel="nofollow" href="disclaimer.html">免责声明</a>
+                    <a rel="nofollow" href="copyright.html">著作权声明</a>
+                    <a rel="nofollow" href="feedback.html">反馈建议</a>
+                </div>
+                <!-- 友情链接 -->
+                <p class="friend-link text-center">友情链接：
+                    <a href="javascript:;" title="网络剪贴板" target="_blank">网络剪贴板</a>
+                    <a href="javascript:;" target="_blank">Font Awesome</a>
+                    <a href="javascript:;" title="图标制作工具" target="_blank">图标工具</a>
+                    <a href="javascript:;" title="在线文本工具箱" target="_blank">文本工具箱</a>
+                    <a href="javascript:;" title="JPG MIN 图像本地化压缩工具" target="_blank">JPG MIN</a>
+                    <a href="javascript:;" title="JSON数据处理好帮手！" target="_blank">WeJSON</a>
+                    <a href="javascript:;" title="文本派，永久免费的永久文本存储服务" target="_blank">文本派</a>
+                    <a href="javascript:;" title="专业证件照免费处理" target="_blank">证件照大师</a>
+                    <a href="javascript:;" title="在线文件重命名" target="_blank">在线文件重命名</a>
+                    <a href="ygtamznth7.html" target="_blank">手机号段网</a>
+                    <a href="javascript:;" target="_blank" style="font-size:0;overflow: hidden">在线剪辑大师</a>
+                </p>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    Copyright © 2022 奇客科技 uuTool.cn All Rights Reserved <a rel="nofollow" href="javascript:;" target="_blank">桂ICP备17007729号-11</a><br>
+                </p>
+                            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li title="QQ联系我们">
+            <a target="_blank" href="javascript:;"><i class="iconfont icon-qq"></i></a>
+        </li>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon-xcx"></i>
+            <div class="hidden-box">
+                <img src="static/picture/xcx-code.jpg" width="140" alt="小程序码">
+                <span>微信小程序</span>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min.js"></script>
+    <script src="static/js/ad.min.js"></script>
+<script src="https://uutool.cn/assets/js/tools/dynasty.js?v=1628500551"></script>
+</body>
+</html>

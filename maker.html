@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手机号码生成器</title>
+    <meta name="keywords" content="手机号码生成器">
+    <meta name="description" content="手机号码生成器。">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common3.css">
+<link rel="stylesheet" href="static/css/font_1987125_qo7sr2cwkj.css">
+
+    <style>
+        .checkbox-group label {
+            margin-left: 0;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .phone-ul {
+            list-style-type: none;
+            margin: 0;
+        }
+
+        .phone-ul li {
+            width: 14.25%;
+            float: left;
+            line-height: 1.8;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .phone-ul li {
+                width: 33.3%;
+                font-size: 16px;
+                line-height: 1.9;
+            }
+        }
+
+        .title-box {
+            background: #eaeaea;
+            padding: 40px 15px;
+
+        }
+
+        .setting-item {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body data-code="">
+
+<main>
+    <div class="title-box">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12">
+                    <h1 class="text-center">手机号码生成器DEMO</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <div id="app">
+    <div v-cloak="" style="margin-top:10px;padding: 10px 15px; background-color: #dff0d8;  border-color: #d6e9c6; color: #3c763d;">
+        本工具所生成的号码完全随机，不能确定开停机等状态，不涉及个人隐私数据，仅限用于营销等合法用途。<br>
+    </div>
+    <div class="tool-box">
+        <div class="grid-x grid-margin-x" v-cloak="">
+            <!--配置-->
+            <div class="cell large-12 small-12" style="margin-bottom: 10px;">
+                <fieldset class="fieldset">
+                    <legend>生成器设置</legend>
+                    <div class="grid-x grid-margin-x">
+                        <div class="cell large-12 small-12" style="margin-bottom:20px;">
+                            <div class="setting-item">
+                                <b class="float-left">号段：</b>
+                                <div style="margin-left:65px;">
+                                     <span class="checkbox-group">
+                                           <input type="checkbox">
+                                            <label @click="toggleSelect('segment')">全部</label>
+                                      </span>
+                                    <span class="checkbox-group" v-for="(item,index) in segmentArr">
+                                            <input :id="'segment'+index" type="checkbox" :value="item" v-model="dataConfig.segment">
+                                             <label :for="'segment'+index">{{item}}</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <b class="float-left">运营商：</b>
+                                <div style="margin-left:65px;">
+                                                <span class="checkbox-group">
+                                                    <input type="checkbox">
+                                                    <label @click="toggleSelect('isp')">全部</label>
+                                                </span>
+                                    <span class="checkbox-group" v-for="(item,index) in ispArr">
+                                                    <input :id="'isp'+index" type="checkbox" :value="index" v-model="dataConfig.isp">
+                                                    <label :for="'isp'+index">{{item}}</label>
+                                                </span>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <b class="float-left">特征：</b>
+                                <div style="margin-left:65px;">
+                                                <span class="checkbox-group">
+                                                    <input type="checkbox">
+                                                    <label @click="toggleSelect('rule')">全部</label>
+                                                </span>
+                                    <span class="checkbox-group" v-for="(item,index) in ruleArr">
+                                                    <input :id="'rule'+index" type="checkbox" :value="index" v-model="dataConfig.rule">
+                                                    <label :for="'rule'+index">{{index}}</label>
+                                                </span>
+                                    <div>
+                                        <input type="text" v-model="dataConfig.customRule" placeholder="自定义后四位，逗号分隔每一项，如：6666,8888,9999，不足四位将前置补全，如该项设置将覆盖以上所选规则">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <b class="float-left">自定义：</b>
+                                <div style="margin-left:65px;">
+                                                <span class="checkbox-group">
+                                                    <input type="checkbox" id="isCustomSegment" v-model="dataConfig.isCustomSegment">
+                                                    <label for="isCustomSegment">自定义7位号段</label>
+                                                </span>
+                                    <div v-if="dataConfig.isCustomSegment" v-cloak="">
+                                        <textarea rows="10" placeholder="请输入7位号段，每个号段一行" v-model="dataConfig.customSegment"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell large-3 small-6">
+                            <label>归属地省份：
+                                <select @change="showCityList" v-model="province">
+                                    <option value="">所有区域</option>
+                                    <option :value="index" v-for="(item,index) in areaArr">{{index}}
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="cell large-3 small-6">
+                            <label for="">
+                                生成号码数量：
+                                <input type="number" placeholder="太多可能会卡" min="0" step="1000" v-model="dataConfig.num">
+                            </label>
+                        </div>
+                        <div class="cell large-3 small-6">
+                            <label for="">
+                                结果展示数量：
+                                <input type="number" placeholder="太多可能会卡" min="0" step="1000" v-model="dataConfig.displayNum">
+                            </label>
+                        </div>
+                        <div class="cell large-12 small-12 city-box">
+                            <div v-if="0 !=cityArr.length">
+                                <p>请勾选归属地城市</p>
+                                <span class="checkbox-group">
+                                                   <input type="checkbox">
+                                                   <label @click="citySelectAll">全部</label>
+                                                 </span>
+                                <span class="checkbox-group" v-for="item in cityArr">
+                                                    <input :id="'city'+item" type="checkbox" name="city" :value="item" v-model="dataConfig.area">
+                                                    <label :for="'city'+item">{{item}}</label>
+                                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="cell large-12 small-12">
+                <div class="operation-btn text-center">
+                    <button class="button  " @click="generateNo">立即生成号码</button>
+                    <button class="button  js-copy" data-clipboard-target="#resultStr" v-if="0!=phoneArr.length" v-cloak="">复制号码列表</button>
+                    <button class="button  " @click="shuffle" v-if="0!=phoneArr.length" v-cloak="">号码乱序</button>
+                    <button class="button  " @click="export2txt" v-if="0!=phoneArr.length" v-cloak="">导出到TXT</button>
+                    <button class="button  " @click="export2csv" v-if="0!=phoneArr.length" v-cloak="">导出到CSV</button>
+                    <button class="button  " @click="export2excel" v-if="0!=phoneArr.length" v-cloak="">导出到EXCEL</button>
+                    <button class="button  " @click="export2vcf" v-if="0!=phoneArr.length" v-cloak="">导出到VCF</button>
+                </div>
+            </div>
+            <!--号码列表-->
+            <div class="cell large-12 small-12" v-if="0!=phoneArr.length" v-cloak="">
+                <hr>
+                <p>号码总数：<b>{{noCount}}</b> 个，以下仅展示 <span v-text="dataConfig.displayNum">100</span>个，全部号码请下载导出，号码均无重复。</p>
+                <textarea rows="12" placeholder="号码列表" id="resultStr" v-text='phoneArr.join("\n")'></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <div class="grid-container" id="buyBox">
+                    <div class="cell large-12 small-12" style="margin-top:50px;">
+                        <h2 class="text-center">工具优势</h2>
+                        <hr>
+                        <div class="grid-x grid-margin-x large-up-2 small-up-1">
+                            <div class="cell">
+                                <h3>生成数量无上限</h3>
+                                <p>单次生成无上限，千万级号码数秒生成。</p>
+                            </div>
+                            <div class="cell">
+                                <h3>使用次数无限制</h3>
+                                <p>在有效期内，您可以无限次数使用查询工具，性价比极高。</p>
+                            </div>
+                            <div class="cell">
+                                <h3>功能强大</h3>
+                                <p>支持号段，运营商，号码特征以及自定义尾号等多维度设置，简单易用。</p>
+                            </div>
+                            <div class="cell">
+                                <h3>使用便捷</h3>
+                                <p>无需登录与注册，无需安装与下载，打开浏览器即可使用。</p>
+                            </div>
+                            <div class="cell">
+                                <h3>支持多种导出方式</h3>
+                                <p>支持导出到TXT或Excel以及VCF等，建议导出到TXT。</p>
+                            </div>
+                            <div class="cell">
+                                <h3>本地化处理更安全</h3>
+                                <p>所有数据均在您的浏览器本地处理，不会上传到服务器中，更加安全放心。</p>
+                            </div>
+                            <div class="cell">
+                                <h3>查询速度更快</h3>
+                                <p>千万级数据数秒生成，实际速度取决于您的计算机性能，查询性能超高。</p>
+                            </div>
+                            <div class="cell">
+                                <h3>数据更新及时</h3>
+                                <p>将定期更新号段数据，结果更加准确。</p>
+                            </div>
+                            <div class="cell">
+                                <h3>专属客服一对一服务</h3>
+                                <p>遇到任何问题，获取客服一对一服务，急速解决问题。</p>
+                            </div>
+                            <div class="cell">
+                                <h3>赶紧体验吧！</h3>
+                                <p>联系我们，我们将为您开通使用账号，即刻体验。</p>
+                            </div>
+                        </div>
+
+                        <div class="text-center" id="buyBox">
+                            <h2 class="text-center">开通使用</h2>
+                            <div class="grid-x">
+                                <div class="cell large-6" style="border-right:1px solid #eaeaea;">
+                                    <h3 id="pricing">价格方案</h3>
+                                    <div style="font-size:18px;font-weight:600;color:red;line-height:2;" v-cloak="">
+                                        <span v-for="item in packageArr">{{item.name}} <br></span>
+                                    </div>
+                                    <p style="color:#888;margin-top:15px;">支持开通一天先体验，<br> 3天内可联系客服补差价升级套餐。 <br></p>
+                                    <p style="color:indianred">如遇自助开通无法完成支付请联系客服手动开通即可</p>
+                                </div>
+                                <div class="cell large-6">
+                                    <h3>微信自助开通</h3>
+                                    <div>
+                                        <select v-model="packageId" style="display:inline-block;width:auto;color:red;">
+                                            <option value="-1">点击选择套餐</option>
+                                            <option :value="index" v-for="(item,index) in packageArr">{{item.name}}</option>
+                                        </select>
+                                    </div>
+                                    <img :src="qrcodeUrl" alt="付款码" v-cloak="">
+                                    <p style="color:#888;margin-top:5px;">
+                                        选择套餐，微信扫码支付<br>
+                                        <a href="javascript:;" style="color:red;" @click="checkPaymentStatus(1)" v-if="''!=paymentId" v-cloak="">支付后点击获取工具链接 >></a>
+                                    </p>
+                                    <p class="show-for-small-only" style="color:red;" v-if="''!=paymentId" v-cloak="">
+                                        注意：手机端无法截图后从微信相册识别支付，请使用其它手机扫码支付或联系客服手动开通，建议使用电脑体验更佳。
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <h3>客服手动开通</h3>
+                            <p>
+                                根据需求选择合适的套餐，微信或支付宝扫码支付后联系我们，将火速为您开通，建议优先选择微信自助开通，更方便快捷！<br>
+                                如有任何疑问，欢迎点击右侧悬挂客服按钮与我们联系。
+                            </p>
+                            <p class="text-center">
+                                <img src="static/picture/money.jpg" style="max-height:180px;" alt="收款码"><br>
+                            </p>
+
+                            <div class="history-box " style="margin:30px 0;" v-if="0!=historyArr.length" v-cloak="">
+                                <h3>开通历史</h3>
+                                <div class="table-scroll">
+                                    <table style="width:100%;">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">日期</th>
+                                            <th class="text-center">工具链接</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="item in historyArr">
+                                            <td>
+                                                {{item.time}}
+                                            </td>
+                                            <td>
+                                                <a :href="item.url" target="_blank">{{item.url}}</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cell large-12 small-12" style="margin-top: 50px;"><h2 class="text-center">常见问答</h2>
+    <hr>
+            <h3>如何开通使用？</h3>
+        <p>欢迎微信支付自助开通，上方右侧选择套餐并扫码支付，系统将会自动生成一个专属工具链接（每次开通都会重新生成新的），直接通过工具链接使用即可，无需注册和登录。<br>
+            如 <code>https://vip.uutool.cn/maker/<b style="color:green;">abc123456</b></code>，支付后请添加链接到书签，以方便后续使用！<br>
+            您也可以联系客服手动开通，付款后会给您发送工具链接。<br>
+            注：不要将工具链接分享到网络上，系统检测到大量人使用会自动封号处理。
+        </p>
+        <h3>遗忘工具使用链接如何处理？</h3>
+        <p>
+            如果您是自助开通，可以在本页找到开通历史记录，也可以通过支付单号自助找回，<a href="javascript:;" target="_blank">点击找回链接</a>。<br>
+            如果是联系客服开通，请直接查看聊天记录即可。
+        </p>
+    
+    <h3>使用方法？</h3>
+    <p>
+        根据需要勾选需要生成号码的号段，运营商，特征或城市及生成数量，
+        也可以自定义号码后4位（不足4位自动补全）或前七位号段，点击按钮生成即可。
+    </p>
+    <h3>是否能用于收短信和打电话？</h3>
+    <p>
+        本工具为根据号段规则随机批量生成手机号码，仅仅是一个号码而已，无法用于接受短信和打电话以及其它用途。
+    </p>
+    <h3>需要空号检测？</h3>
+    <p>
+        您可以使用 <a href="javascript:;" target="_blank">云检号</a> 工具自助完成大批量空号检测，无需注册和登录，按检测量收费，方便快捷。<br>
+    </p>
+    <h3>数据是否有重复？</h3>
+    <p>所生成号码均已去重处理，号码均为独一无二的不重复号码。</p>
+
+    <h3>为什么实际生成的数量比设置的少？</h3>
+    <p>因为根据所设置的条件，所能够生成的所有组合也没有设置生成数量多，只能按实际情况生成。</p>
+
+    <h3>导出建议</h3>
+    <p>由于导出到Excel文件体积大很多，且导出耗时更长，建议导出到TXT中即可。</p>
+
+    <h3>使用限制？</h3>
+    <p>开通任意套餐后，本工具没有任何使用限制，无单次生成号码数量和使用次数限制，在有效期内均可以随意使用，但请不要分享给他人使用，系统检测到多人使用将会自动封号处理！</p>
+    <h3>使用建议？</h3>
+    <p>
+        本工具兼容电脑和手机使用，但部分手机可能存在兼容性问题无法下载，建议使用电脑使用本工具。<br>
+        浏览器建议使用Chrome浏览器以更好地体验该工具，从兼容性和性能上都更好。
+    </p>
+    <h3>手机号段速查</h3>
+    <p>
+        移动：134, 135, 136, 137, 138, 139, 147, 150, 151, 152, 157, 158, 159, 165, 172, 178, 182, 183, 184, 187, 188, 198 <br>
+        联通：130, 131, 132, 145, 155, 156, 166, 171, 175, 176, 185, 186<br>
+        电信： 133, 149, 153, 173, 177, 180, 181, 189, 199<br>
+    </p>
+    <h3>一些可能有用的免费工具</h3>
+    <p>
+        <a href="javascript:;" target="_blank">手机号码提取工具</a>，
+        <a href="index41.html" target="_blank">手机号码过滤提取工具</a>，
+        <a href="javascript:;" target="_blank">号段全部号码生成工具</a>，
+        <a href="fi6z9z8cg2.html" target="_blank">VCF通讯录导入工具</a>，
+        <a href="index18.html" target="_blank">手机号码生成工具</a>，
+        <a href="javascript:;" target="_blank">文本去重统计</a>，
+        <a href="javascript:;" target="_blank">空号检测工具</a>
+    </p>
+    <h3>需要帮助？</h3>
+    <p>如果您在使用中遇到任何问题，随时欢迎联系我们。QQ:2011689829，VX:iam6899，可直接在电脑端右侧悬挂客服栏点击沟通或扫码添加好友。</p>
+
+    <h3>免责声明</h3>
+    <p>本工具号码均为随机拼接生成，没有其它信息，仅限用于学习和测试，请勿用于其它非法用途，使用本工具生成的数据产生的任何后果均由使用者承担，与本站无关。</p>
+</div>                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="footer">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x text-center">
+            <div class="cell">
+
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a href="javascript:;">首页</a>
+                    <a rel="nofollow" href="javascript:;">关于我们</a>
+                    <a href="javascript:;">工具定制</a>
+                    <a href="javascript:;">免责声明</a>
+                    <a href="javascript:;">联系我们</a>
+                    <a rel="nofollow" href="javascript:;">反馈建议</a>
+                </div>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="margin-top:15px;">
+                    Copyright © 2014-2022 奇客科技 All Rights Reserved<br>
+                    2022-03-14 19:40  &nbsp;&nbsp;星期一<br><br>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon_wechat"></i>
+            <div class="hidden-box">
+                <img src="static/picture/kefu-wechat.jpg" width="140" alt="客服微信" title="微信号：iam6899">
+                <span>扫码添加客服微信</span>
+            </div>
+        </li>
+        <li>
+            <a target="_blank" href="javascript:;"><i class="iconfont icon_qq js-go-top" title="QQ:2011689829"></i></a>
+        </li>
+        <li>
+            <i class="iconfont icon_gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min5.js"></script>
+
+    <div style="display:none;">
+        <script type="text/javascript" src="static/js/z_stat-1279144968_1279144968.js"></script>
+    </div>
+<script>
+    var pageData = {"packageData":{"one_day":{"day":1,"name":"20元 \/ 1天","price":20},"one_month":{"day":30,"name":"39元 \/ 1个月","price":39}},"toolAlias":"maker"};
+</script>
+    <script src="static/js/maker.min.js"></script>
+
+<script src="static/js/demo.min.js"></script>
+</body>
+</html>

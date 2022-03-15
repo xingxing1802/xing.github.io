@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>UU死链检查工具</title>
+    <meta name="keywords" content="死链检查,死链工具,检查死链,死链">
+    <meta name="description" content="UU死链检查工具支持检查404或者连接超时的链接，导入列表后支持批量检查，检查完毕后支持数据一键导出，是SEO运营中不可或缺的在线工具之一。">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/link.css">
+</head>
+<body class="index-page">
+<main id="app">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <h1 class="text-center">
+                    <a href="">UU死链检查工具</a><br>
+                    <span class="subtitle">批量检查URL是否为404或无法访问的失效链接</span>
+                </h1>
+                <div class="tool-box">
+                    <textarea cols="30" rows="10" placeholder="链接列表，每个一行" v-model="urlStr"></textarea>
+                    <div class="grid-x grid-margin-x">
+                        <div class="cell large-2 small-6">
+                            <label>超时时间：
+                                <input type="number" placeholder="单位秒" v-model="timeout">
+                            </label>
+                        </div>
+                        <div class="cell large-2 small-6">
+                            <label>线程数：
+                                <input type="number" placeholder="单位秒" v-model="threadNum">
+                            </label>
+                        </div>
+                        <div class="cell large-2 small-6">
+                            <label><br>
+                                <button class="button expanded " @click="check">开始检查</button>
+                            </label>
+                        </div>
+                        <div class="cell large-2 small-6">
+                            <label><br>
+                                <button class="button expanded " @click="showDemo">举个例子</button>
+                            </label>
+                        </div>
+                        <div class="cell large-2 small-6" v-show="0!=this.linkArr.length">
+                            <label><br>
+                                <button class="button expanded " @click="export2excel" title="包含3个工作簿数据">导出到Excel</button>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="result-box" v-if="0!=linkArr.length" v-cloak="">
+                        <hr>
+                        <p>链接总数：<b v-text="linkArr.length">0</b></p>
+                        <table class="hover">
+                            <thead>
+                            <tr>
+                                <th width="5%">ID</th>
+                                <th width="85%">链接</th>
+                                <th width="10%">状态</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(item,index) in linkArr" v-cloak="">
+                                <td>{{index+1}}</td>
+                                <td class="url-str"><a :href="item.url" target="_blank">{{item.url}}</a></td>
+                                <td class="status-tip" :class="'status'+item.status">{{getTipWord(item.status)}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div v-show="0!=this.linkArr.length">
+                            <button class="button expanded " @click="export2excel" title="包含3个工作簿数据">导出到Excel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cell large-12 small-12">
+                <article>
+                    <section>
+                        <h2>UU死链检查工具的原理</h2>
+                        <p>
+                            UU死链检查工具通过把需要检查的URL作为JS加载，如果服务器返回200说明链接正常，如果为404或超时等状态，则JS会加载出错，以此判断链接可能已经失效。
+                        </p>
+                        <p>请根据自身网络实际情况合理设置加载超时时间，由于检查的效果直接取决于本地的网络质量，有可能网络差造成请求超时，因而误判正常链接为死链，
+                            可以检查完后再对死链检查一遍，排除被误判的死链。</p>
+                        <p>注意：该工具判断的正常页面仅代表相应页面返回的HTTP状态码为200，无法判断内容是否正常，内容请自行判断！</p>
+                    </section>
+                    <section>
+                        <h2>什么是死链？</h2>
+                        <p>
+                            死链是那些不存在的页面（返回404状态码）以及网络加载失败的页面链接，这些链接通常无法正常提供内容或服务。
+                        </p>
+                    </section>
+                    <section>
+                        <h2>为什么要检查死链？</h2>
+                        <p>
+                            1、死链太多会影响用户使用体验。<br>
+                        </p>
+                        <p>
+                            2、死链太多会影响搜索引擎收录，从而对网站权重的提升造成负面影响，甚至会被搜索引擎降权。<br>
+                        </p>
+                    </section>
+                    <section>
+                        <h2>注意事项</h2>
+                        <p>
+                            由于本工具使用的是JS加载方法来判断链接是否为死链，故如果需要检查的链接有https协议的，本工具（link.uutool.cn）页面必须使用http协议访问，
+                            否则http链接将被浏览器阻塞造成无法检查。
+                        </p>
+                        <p>
+                            本工具不会收集您的任何数据，您提供的链接仅用于测试是否为死链，数据仅在您的浏览器中处理，不会上传到网络服务器，请放心使用！
+                        </p>
+                    </section>
+                </article>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.js"></script>
+<script>
+    console.log(1234);
+    require(['text!https://www.baidu.com'],function(text){
+        console.log(text);
+    });
+</script>
+<script src="static/js/index.min3.js"></script>
+    <div style="display:none">
+        <script type="text/javascript" src="static/js/z_stat-1278865933_1278865933.js"></script>
+    </div>
+</body>
+</html>

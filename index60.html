@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线JSON数组转列表工具 - UU在线工具</title>
+    <meta name="description" content="在线JSON数组转列表工具，可以将JSON数组转成每行一项的文本列表，方便提取JSON数组中的数据，支持一键复制和下载到本地。">
+    <link rel="canonical" href="">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common.css">
+<link rel="stylesheet" href="static/css/font_1455035_z0n3d6to6dc.css">    </head>
+<body>
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-3 small-6 logo">
+                <a href="index.html">
+                    <span>UU在线工具</span>
+                </a>
+            </div>
+            <div class="cell large-9 small-6 main-nav-box hide-for-small-only">
+                <div class="date-box float-right" id="timeBox"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <!--ad box-->
+    <div class="banner-ad" style="min-height:280px;">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12" style="margin-top:10px;">
+                    <ins class="adsbygoogle" style="display:block;max-height:100px;" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5019822032" data-ad-format="auto"></ins>
+                </div>
+            </div>
+        </div>
+    </div>
+<main class="theme" id="app">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <nav class="breadcrumbs-wrapper" aria-label="你在这里:" role="导航" style="margin-top:15px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="index.html">首页</a></li>
+                        <li>
+                            <span class="show-for-sr">当前: </span>
+                            <h1>在线JSON数组转列表工具</h1>
+                        </li>
+                    </ul>
+                    <a class="float-right tool-extend-btn hide-for-small-only collapse " href="javascript:;" title="展开/缩起工具区域">
+                        <i class="iconfont icon-angle-double-right"></i>
+                    </a>
+                </nav>
+                                    <div class="tool-collection">
+                        <ul class="expanded1">
+                                                            <li class=""><a href="index86.html">JSON转Excel</a></li>
+                                                            <li class=""><a href="index63.html">JSON数组转Excel</a></li>
+                                                            <li class=""><a href="javascript:;">JSON转CSV</a></li>
+                                                            <li class=""><a href="javascript:;">JSON数组转CSV</a></li>
+                                                            <li class=""><a href="javascript:;">EXCEL数据转换解析</a></li>
+                                                            <li class=""><a href="index64.html">JSON转数组</a></li>
+                                                            <li class=""><a href="hyeeccjz3x.html">Excel转JSON</a></li>
+                                                            <li class=""><a href="index73.html">文本列表转JSON</a></li>
+                                                            <li class="active"><a href="">JSON转列表</a></li>
+                                                            <li class=""><a href="javascript:;">CSV中文乱码修正</a></li>
+                                                    </ul>
+                    </div>
+                            </div>
+
+            <div class="cell large-9 small-12" id="toolWrapper" data-nosnippet="">
+                <div class="tool-wrapper">
+                    <div class="tool-box">
+    <div class="grid-x grid-margin-x">
+        <div class="cell large-2 small-6">
+            <label>
+                去除空行
+                <select v-model="isBlank">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </label>
+        </div>
+        <div class="cell large-2 small-6">
+            <label>
+                去除左右空格
+                <select v-model="isTrim">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </label>
+        </div>
+    </div>
+    <textarea id="dataResource" rows="8" placeholder="请粘贴JSON数组，如[x,x,x...]" v-model="convertData"></textarea>
+    <div class="btn-box" v-cloak="">
+        <button class="button small " @click="convert">转换为列表</button>
+        <button class="button small " @click="showDemo" v-if="''==resultStr">举个栗子</button>
+        <button class="button small js-copy " data-clipboard-target="#resultStr">复制结果</button>
+        <button class="button small " @click="export2txt" v-if="''!=resultStr">下载结果</button>
+        <button class="button small secondary " @click="reset">清空</button>
+    </div>
+    <div v-if="''!=resultStr" v-cloak="">
+        <p>列表项共计： <b>{{allCount}}</b></p>
+        <textarea id="resultStr" v-if="''!=resultStr" rows="16" placeholder="JSON结果" v-model="resultStr"></textarea>
+    </div>
+</div>                                    </div>
+            </div>
+
+            <aside class="cell large-3 small-12 " id="sidebar">
+                                    <div style="height:0;overflow: hidden;">
+                        <img src="static/picture/json2list.jpg" alt="在线JSON数组转列表工具">
+                    </div>
+                                
+                <!--tool tip -->
+                <div class="aside-item tool-tip">
+                    <div class="aside-title">工具简介</div>
+                    <div class="aside-body">
+                        <div class="text-collapse collapse">
+                            <p style="margin-bottom:20px;">
+                                在线JSON数组转列表工具，可以将JSON数组转成每行一项的文本列表，方便提取JSON数组中的数据，支持一键复制和下载到本地。                            </p>
+                            <div class="toggle-btn" title="展开/折叠工具简介"></div>
+                        </div>
+                    </div>
+                </div>
+
+                                    <!--green tool tip -->
+                    <div class="aside-item green-tool-tip" data-nosnippet="">
+                        <div class="aside-body">
+                            本工具数据均在本地浏览器处理，不会上传到网络服务器中，请放心使用！
+                        </div>
+                    </div>
+                
+                <div class="aside-item" style="border:none;">
+                    <div class="share-box" title="点击复制本工具链接">
+                        <input class="js-copy" type="text" id="shareInput" readonly="" value="uutool.cn/json2list/" data-clipboard-text="https://uutool.cn/json2list/" data-clipboard-tip="工具链接已复制">
+                    </div>
+                </div>
+
+                
+                
+                
+                                    <!--relative tool-->
+                    <div class="aside-item relative-tool">
+                        <div class="aside-title">相关工具</div>
+                        <div class="aside-body">
+                            <ul>
+                                                                    <li><a href="index72.html" title="在线JSON转PHP数组工具">在线JSON转PHP数组工具</a></li>
+                                                                    <li><a href="index64.html" title="在线JSON转数组工具">在线JSON转数组工具</a></li>
+                                                                    <li><a href="index73.html" title="在线文本列表转JSON工具">在线文本列表转JSON工具</a></li>
+                                                                    <li><a href="index86.html" title="JSON转Excel">JSON转Excel</a></li>
+                                                            </ul>
+                        </div>
+                    </div>
+                
+                                    <div style="max-height:260px;overflow: hidden;margin-top:20px;">
+                        <div style="max-height:150px;overflow: hidden;margin-bottom:15px;">
+                            <ins class="adsbygoogle" style="display:inline-block;width:100%;min-height:90px" data-full-width-responsive="true" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5880251834"></ins>
+                        </div>
+                    </div>
+                            </aside>
+        </div>
+    </div>
+</main>
+
+
+<footer id="footer" data-tool-alias="json2list">
+    <div class="grid-container" data-nosnippet="">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a rel="nofollow" href="about.html">关于我们</a>
+                    <a href="index1.html">工具地图</a>
+                    <a href="v0pd8pgi56.html">工具博客</a>
+                    <a rel="nofollow" href="support.html">支持我们</a>
+                    <a rel="nofollow" href="customization.html">工具定制</a>
+                    <a rel="nofollow" href="data-security.html">用户数据安全</a>
+                    <a rel="nofollow" href="disclaimer.html">免责声明</a>
+                    <a rel="nofollow" href="copyright.html">著作权声明</a>
+                    <a rel="nofollow" href="feedback.html">反馈建议</a>
+                </div>
+                <!-- 友情链接 -->
+                <p class="friend-link text-center">友情链接：
+                    <a href="javascript:;" title="网络剪贴板" target="_blank">网络剪贴板</a>
+                    <a href="javascript:;" target="_blank">Font Awesome</a>
+                    <a href="javascript:;" title="图标制作工具" target="_blank">图标工具</a>
+                    <a href="javascript:;" title="在线文本工具箱" target="_blank">文本工具箱</a>
+                    <a href="javascript:;" title="JPG MIN 图像本地化压缩工具" target="_blank">JPG MIN</a>
+                    <a href="javascript:;" title="JSON数据处理好帮手！" target="_blank">WeJSON</a>
+                    <a href="javascript:;" title="文本派，永久免费的永久文本存储服务" target="_blank">文本派</a>
+                    <a href="javascript:;" title="专业证件照免费处理" target="_blank">证件照大师</a>
+                    <a href="javascript:;" title="在线文件重命名" target="_blank">在线文件重命名</a>
+                    <a href="ygtamznth7.html" target="_blank">手机号段网</a>
+                    <a href="javascript:;" target="_blank" style="font-size:0;overflow: hidden">在线剪辑大师</a>
+                </p>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    Copyright © 2022 奇客科技 uuTool.cn All Rights Reserved <a rel="nofollow" href="javascript:;" target="_blank">桂ICP备17007729号-11</a><br>
+                </p>
+                            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li title="QQ联系我们">
+            <a target="_blank" href="javascript:;"><i class="iconfont icon-qq"></i></a>
+        </li>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon-xcx"></i>
+            <div class="hidden-box">
+                <img src="static/picture/xcx-code.jpg" width="140" alt="小程序码">
+                <span>微信小程序</span>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min.js"></script>
+    <script src="static/js/ad.min.js"></script>
+<script src="https://uutool.cn/assets/js/tools/json2list.js?v=1628567305"></script>
+</body>
+</html>

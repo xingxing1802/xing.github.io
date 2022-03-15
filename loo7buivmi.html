@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>全部图片工具 - UU在线工具</title>
+    <meta name="description" content="全部图片工具">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common.css">
+<link rel="stylesheet" href="static/css/font_1455035_z0n3d6to6dc.css">    <link rel="stylesheet" href="static/css/type_cat.css">
+</head>
+<body>
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-3 small-6 logo">
+                <a href="index.html">
+                    <span>UU在线工具</span>
+                </a>
+            </div>
+            <div class="cell large-9 small-6 main-nav-box hide-for-small-only">
+                <div class="date-box float-right" id="timeBox"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+<main>
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="cell large-12 small-12 tool-box">
+                <h1>全部图片工具</h1>
+                <div class="group-box">
+                    <div class="grid-x grid-margin-x large-up-4 small-up-1">
+                                                    <div class="cell tool-item green" data-id="icon-batch">
+                                <figure class="tool-icon icon-icon-batch">
+                                    <i class="iconfont icon-icon-batch"></i>
+                                </figure>
+                                <a href="index9.html" target="_blank">
+                                    <b>多尺寸图标批量生成</b>
+                                    <span>通过一张图批量生成多种规格的图标/图片</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-png">
+                                <figure class="tool-icon icon-img-png">
+                                    <i class="iconfont icon-img-png"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>PNG图片查看</b>
+                                    <span>查看PNG图片</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="collage-text">
+                                <figure class="tool-icon icon-collage-text">
+                                    <i class="iconfont icon-collage-text"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>文字拼图</b>
+                                    <span>使用多张图片拼成文字拼图</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="collage-heart">
+                                <figure class="tool-icon icon-collage-heart">
+                                    <i class="iconfont icon-collage-heart"></i>
+                                </figure>
+                                <a href="index25.html" target="_blank">
+                                    <b>心形拼图</b>
+                                    <span>使用多张图片拼成爱心心形形状</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="map-china">
+                                <figure class="tool-icon icon-map-china">
+                                    <i class="iconfont icon-map-china"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>中国地图拼图</b>
+                                    <span>生成中国地图轮廓的图片</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="png-matting-batch">
+                                <figure class="tool-icon icon-png-matting-batch">
+                                    <i class="iconfont icon-png-matting-batch"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>PNG批量反向抠图</b>
+                                    <span>批量反转PNG透明区域和非透明区域</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="png-matting">
+                                <figure class="tool-icon icon-png-matting">
+                                    <i class="iconfont icon-png-matting"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>PNG反向抠图</b>
+                                    <span>反转PNG透明区域和非透明区域</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="svg2webp">
+                                <figure class="tool-icon icon-svg2webp">
+                                    <i class="iconfont icon-svg2webp"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>SVG转WebP</b>
+                                    <span>将SVG图像转为WebP格式</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="svg2png">
+                                <figure class="tool-icon icon-svg2png">
+                                    <i class="iconfont icon-svg2png"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>SVG转PNG</b>
+                                    <span>将SVG图像转为PNG格式</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="svg2jpg">
+                                <figure class="tool-icon icon-svg2jpg">
+                                    <i class="iconfont icon-svg2jpg"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>SVG转JPG</b>
+                                    <span>将SVG图像转为JPG格式</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="email-img">
+                                <figure class="tool-icon icon-email-img">
+                                    <i class="iconfont icon-email-img"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>邮箱地址图片</b>
+                                    <span>生成邮箱地址图片，避免被恶意采集发广告邮件</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="color-text">
+                                <figure class="tool-icon icon-color-text">
+                                    <i class="iconfont icon-color-text"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>彩色文字图片</b>
+                                    <span>生成彩色文字图片</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="photo-collage">
+                                <figure class="tool-icon icon-photo-collage">
+                                    <i class="iconfont icon-photo-collage"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>多图合一拼图</b>
+                                    <span>将多张图片合成到一张图上</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="logo">
+                                <figure class="tool-icon icon-logo">
+                                    <i class="iconfont icon-logo"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>纯文字logo生成</b>
+                                    <span>制作生成纯文字logo或图标</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item " data-id="favicon">
+                                <figure class="tool-icon icon-favicon">
+                                    <i class="iconfont icon-favicon"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>favicon制作工具</b>
+                                    <span>轻松制作favicon网站图标</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-matting">
+                                <figure class="tool-icon icon-img-matting">
+                                    <i class="iconfont icon-img-matting"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>单色图像抠图</b>
+                                    <span>对简单的单色图片快速抠图</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-color-picker">
+                                <figure class="tool-icon icon-img-color-picker">
+                                    <i class="iconfont icon-img-color-picker"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图片拾色器</b>
+                                    <span>获取图片中任意坐标点的颜色值</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-embossment">
+                                <figure class="tool-icon icon-img-embossment">
+                                    <i class="iconfont icon-img-embossment"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>浮雕画制作</b>
+                                    <span>将图像制作成浮雕画</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-printmaking">
+                                <figure class="tool-icon icon-img-printmaking">
+                                    <i class="iconfont icon-img-printmaking"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>黑白版画制作</b>
+                                    <span>将图像制作成黑白版画</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-color-reverse">
+                                <figure class="tool-icon icon-img-color-reverse">
+                                    <i class="iconfont icon-img-color-reverse"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图像反相/反色</b>
+                                    <span>将图像反相/反色，制作负片图像</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-color-remove">
+                                <figure class="tool-icon icon-img-color-remove">
+                                    <i class="iconfont icon-img-color-remove"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图像黑白化去色</b>
+                                    <span>将图像去色，转为黑白色图像</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-resize">
+                                <figure class="tool-icon icon-img-resize">
+                                    <i class="iconfont icon-img-resize"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图像尺寸修改</b>
+                                    <span>不改变图片比例情况下放大缩小等修改图片尺寸</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-download">
+                                <figure class="tool-icon icon-img-download">
+                                    <i class="iconfont icon-img-download"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图片下载</b>
+                                    <span>解决保存图片webp格式问题，单次最多支持5张</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="uu-poster">
+                                <figure class="tool-icon icon-uu-poster">
+                                    <i class="iconfont icon-uu-poster"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>UU推文海报</b>
+                                    <span>快速生成公众号等文章的推文海报</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-list">
+                                <figure class="tool-icon icon-img-list">
+                                    <i class="iconfont icon-img-list"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图片列表显示</b>
+                                    <span>根据图片链接显示图片，便于下载</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="jpg2png">
+                                <figure class="tool-icon icon-jpg2png">
+                                    <i class="iconfont icon-jpg2png"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>PNG & JPG 转换工具</b>
+                                    <span>高效批量PNG和JPG互转工具</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-padding">
+                                <figure class="tool-icon icon-img-padding">
+                                    <i class="iconfont icon-img-padding"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图片平铺填充</b>
+                                    <span>生成指定图片平铺填充的新图片</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-radius">
+                                <figure class="tool-icon icon-img-radius">
+                                    <i class="iconfont icon-img-radius"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>圆角图片制作</b>
+                                    <span>轻松制作制作圆角图像</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="pure-color-img">
+                                <figure class="tool-icon icon-pure-color-img">
+                                    <i class="iconfont icon-pure-color-img"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>纯色图片生成</b>
+                                    <span>生成指定大小和颜色的纯色图片</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="png-bg">
+                                <figure class="tool-icon icon-png-bg">
+                                    <i class="iconfont icon-png-bg"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>PNG图片背景色添加</b>
+                                    <span>为PNG图片批量添加指定颜色背景</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img2gif">
+                                <figure class="tool-icon icon-img2gif">
+                                    <i class="iconfont icon-img2gif"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>GIF图片合成</b>
+                                    <span>使用多张图片合成一个GIF图片</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="video-thumb">
+                                <figure class="tool-icon icon-video-thumb">
+                                    <i class="iconfont icon-video-thumb"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>短视频缩略图剪切</b>
+                                    <span>TikTok，抖音等短视频列表页整体视频封面切割</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-cropper">
+                                <figure class="tool-icon icon-img-cropper">
+                                    <i class="iconfont icon-img-cropper"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>截图工具</b>
+                                    <span>图片截图自由剪切，支持比例和自由剪切</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-editor">
+                                <figure class="tool-icon icon-img-editor">
+                                    <i class="iconfont icon-img-editor"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图片编辑器</b>
+                                    <span>简单编辑图像，如截图，缩放等操作</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-incision">
+                                <figure class="tool-icon icon-img-incision">
+                                    <i class="iconfont icon-img-incision"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图片水平/垂直均等切割</b>
+                                    <span>将图片从水平或垂直方向均等切割生成若干小图片</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="gif-edit">
+                                <figure class="tool-icon icon-gif-edit">
+                                    <i class="iconfont icon-gif-edit"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>GIF图片帧修改</b>
+                                    <span>支持拆分GIF后删除部分帧，调整顺序，重新合成新GIF文件</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="gif2img">
+                                <figure class="tool-icon icon-gif2img">
+                                    <i class="iconfont icon-gif2img"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>GIF图片帧拆分</b>
+                                    <span>将GIF动图帧拆分成多张静态图片</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="wx-black">
+                                <figure class="tool-icon icon-wx-black">
+                                    <i class="iconfont icon-wx-black"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>微信暗黑模式白底添加</b>
+                                    <span>为抠图不完整的图片添加背景色</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-coord">
+                                <figure class="tool-icon icon-img-coord">
+                                    <i class="iconfont icon-img-coord"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图片坐标拾取</b>
+                                    <span>图片位置坐标拾取，在图片上移动鼠标即获取当前坐标</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="barcode">
+                                <figure class="tool-icon icon-barcode">
+                                    <i class="iconfont icon-barcode"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>条形码生成</b>
+                                    <span>生成指定条形码</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="qrcode-batch">
+                                <figure class="tool-icon icon-qrcode-batch">
+                                    <i class="iconfont icon-qrcode-batch"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>二维码批量生成</b>
+                                    <span>通过文本列表批量生成二维码，支持打包下载，方便快捷</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="mp-qrcode">
+                                <figure class="tool-icon icon-mp-qrcode">
+                                    <i class="iconfont icon-mp-qrcode"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>获取微信公众号二维码</b>
+                                    <span>通过ID获取微信公众号二维码</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item " data-id="qq-wall">
+                                <figure class="tool-icon icon-qq-wall">
+                                    <i class="iconfont icon-qq-wall"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>3D QQ头像墙</b>
+                                    <span>随机获取部分QQ头像拼成头像墙</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="cropper-batch">
+                                <figure class="tool-icon icon-cropper-batch">
+                                    <i class="iconfont icon-cropper-batch"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图片批量剪切</b>
+                                    <span>纯客户端图片批量剪切和压缩工具</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item " data-id="ocr">
+                                <figure class="tool-icon icon-ocr">
+                                    <i class="iconfont icon-ocr"></i>
+                                </figure>
+                                <a href="index19.html" target="_blank">
+                                    <b>OCR文字识别</b>
+                                    <span>识别图片中的文字信息</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="pic">
+                                <figure class="tool-icon icon-pic">
+                                    <i class="iconfont icon-pic"></i>
+                                </figure>
+                                <a href="index16.html" target="_blank">
+                                    <b>图片批量压缩</b>
+                                    <span>纯客户端图片批量压缩，高效快捷</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="qrcode">
+                                <figure class="tool-icon icon-qrcode">
+                                    <i class="iconfont icon-qrcode"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>二维码生成</b>
+                                    <span>在线二维码生成工具</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="qq-icon">
+                                <figure class="tool-icon icon-qq-icon">
+                                    <i class="iconfont icon-qq-icon"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>QQ头像获取</b>
+                                    <span>在线QQ头像，QQ空间头像获取工具</span>
+                                </a>
+                            </div>
+                                                    <div class="cell tool-item green" data-id="img-watermark">
+                                <figure class="tool-icon icon-img-watermark">
+                                    <i class="iconfont icon-img-watermark"></i>
+                                </figure>
+                                <a href="javascript:;" target="_blank">
+                                    <b>图片水印平铺</b>
+                                    <span>在线图片水印平铺工具</span>
+                                </a>
+                            </div>
+                                            </div>
+                                    </div>
+            </div>
+            <!--more tool type-->
+            <div class="cell large-12 small-12 more-type-box">
+                <h2>全部工具类型</h2>
+                <ul class="ul-more-type">
+                    <li>
+                        <a href="index1.html">全部工具</a>
+                    </li>
+                                            <li class="">
+                            <a href="iswwvxpvg5.html">文本工具</a>
+                        </li>
+                                            <li class="active">
+                            <a href="">图片工具</a>
+                        </li>
+                                            <li class="">
+                            <a href="i8a8joiqh6.html">编程工具</a>
+                        </li>
+                                            <li class="">
+                            <a href="h7k6sor0xb.html">生活工具</a>
+                        </li>
+                                            <li class="">
+                            <a href="epgxnciy6a.html">信息查询工具</a>
+                        </li>
+                                            <li class="">
+                            <a href="0ydkd9wejk.html">奇趣工具</a>
+                        </li>
+                                            <li class="">
+                            <a href="tu1kgq5acn.html">其它工具</a>
+                        </li>
+                                    </ul>
+            </div>
+        </div>
+</div></main>
+
+
+<footer id="footer" data-tool-alias="">
+    <div class="grid-container" data-nosnippet="">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a rel="nofollow" href="about.html">关于我们</a>
+                    <a href="index1.html">工具地图</a>
+                    <a href="v0pd8pgi56.html">工具博客</a>
+                    <a rel="nofollow" href="support.html">支持我们</a>
+                    <a rel="nofollow" href="customization.html">工具定制</a>
+                    <a rel="nofollow" href="data-security.html">用户数据安全</a>
+                    <a rel="nofollow" href="disclaimer.html">免责声明</a>
+                    <a rel="nofollow" href="copyright.html">著作权声明</a>
+                    <a rel="nofollow" href="feedback.html">反馈建议</a>
+                </div>
+                <!-- 友情链接 -->
+                <p class="friend-link text-center">友情链接：
+                    <a href="javascript:;" title="网络剪贴板" target="_blank">网络剪贴板</a>
+                    <a href="javascript:;" target="_blank">Font Awesome</a>
+                    <a href="javascript:;" title="图标制作工具" target="_blank">图标工具</a>
+                    <a href="javascript:;" title="在线文本工具箱" target="_blank">文本工具箱</a>
+                    <a href="javascript:;" title="JPG MIN 图像本地化压缩工具" target="_blank">JPG MIN</a>
+                    <a href="javascript:;" title="JSON数据处理好帮手！" target="_blank">WeJSON</a>
+                    <a href="javascript:;" title="文本派，永久免费的永久文本存储服务" target="_blank">文本派</a>
+                    <a href="javascript:;" title="专业证件照免费处理" target="_blank">证件照大师</a>
+                    <a href="javascript:;" title="在线文件重命名" target="_blank">在线文件重命名</a>
+                    <a href="ygtamznth7.html" target="_blank">手机号段网</a>
+                    <a href="javascript:;" target="_blank" style="font-size:0;overflow: hidden">在线剪辑大师</a>
+                </p>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    Copyright © 2022 奇客科技 uuTool.cn All Rights Reserved <a rel="nofollow" href="javascript:;" target="_blank">桂ICP备17007729号-11</a><br>
+                </p>
+                            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li title="QQ联系我们">
+            <a target="_blank" href="javascript:;"><i class="iconfont icon-qq"></i></a>
+        </li>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon-xcx"></i>
+            <div class="hidden-box">
+                <img src="static/picture/xcx-code.jpg" width="140" alt="小程序码">
+                <span>微信小程序</span>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min.js"></script>
+    <script src="static/js/ad.min.js"></script>
+</body>
+</html>

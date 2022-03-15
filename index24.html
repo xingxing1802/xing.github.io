@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线咸鱼极限词、敏感词、违禁词、广告法禁词查询工具 - UU在线工具</title>
+    <meta name="description" content="在线咸鱼极限词、敏感词、违禁词、广告法禁词查询工具，可以一键分析找出您产品文案中可能需要注意的极限词，敏感词和违禁词等违反广告法的词汇，并自动标红处理，可以方便地检查核对文案，最大程度避免违反广告法而造成不必要的损失。">
+    <link rel="canonical" href="">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common.css">
+<link rel="stylesheet" href="static/css/font_1455035_z0n3d6to6dc.css">    <style>
+.red{color:red}
+</style>
+</head>
+<body>
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-3 small-6 logo">
+                <a href="index.html">
+                    <span>UU在线工具</span>
+                </a>
+            </div>
+            <div class="cell large-9 small-6 main-nav-box hide-for-small-only">
+                <div class="date-box float-right" id="timeBox"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <!--ad box-->
+    <div class="banner-ad" style="min-height:280px;">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12" style="margin-top:10px;">
+                    <ins class="adsbygoogle" style="display:block;max-height:100px;" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5019822032" data-ad-format="auto"></ins>
+                </div>
+            </div>
+        </div>
+    </div>
+<main class="theme" id="app">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <nav class="breadcrumbs-wrapper" aria-label="你在这里:" role="导航" style="margin-top:15px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="index.html">首页</a></li>
+                        <li>
+                            <span class="show-for-sr">当前: </span>
+                            <h1>在线咸鱼极限词、敏感词、违禁词、广告法禁词查询工具</h1>
+                        </li>
+                    </ul>
+                    <a class="float-right tool-extend-btn hide-for-small-only collapse " href="javascript:;" title="展开/缩起工具区域">
+                        <i class="iconfont icon-angle-double-right"></i>
+                    </a>
+                </nav>
+                                    <div class="tool-collection">
+                        <ul class="expanded1">
+                                                            <li class="active"><a href="">咸鱼极限词、敏感词、违禁词、广告法禁词查询</a></li>
+                                                            <li class=""><a href="javascript:;">通用违禁词检测</a></li>
+                                                            <li class=""><a href="javascript:;">字体版权查询</a></li>
+                                                    </ul>
+                    </div>
+                            </div>
+
+            <div class="cell large-9 small-12" id="toolWrapper" data-nosnippet="">
+                <div class="tool-wrapper">
+                    <div class="tool-box">
+    <textarea id="dataResource" rows="6" placeholder="请粘贴需要检测的文本，检测后敏感词将会自动标红" v-model="convertData"></textarea>
+    <p>违禁词库数量：<b v-text="wordArr.length">0</b></p>
+    <div class="btn-box">
+        <button class="button small " @click="check">开始检查</button>
+        <button class="button small " @click="showDemo">举个栗子</button>
+        <button class="button small secondary " @click="reset">清空</button>
+    </div>
+    <div v-if="''!=resultStr" v-cloak="">
+        <div style="color:#888;font-size:12px;">请注意以下标红的词</div>
+        <hr style="margin-top:0;">
+        <div v-html="resultStr" style="min-height:200px;"></div>
+    </div>
+</div>                                            <div class="tool-intro">
+                            <h2>工具简介</h2><p>在线咸鱼极限词、敏感词、违禁词、广告法禁词查询工具，可以一键分析找出您产品文案中可能需要注意的极限词，敏感词和违禁词等违反广告法的词汇，并自动标红处理，可以方便地检查核对文案，最大程度避免违反广告法而造成不必要的损失。</p><p style="white-space: normal;">新增或修改产品文案时候需要多留意文案用词是否符合广告法或平台的规则，在广告法日益严格和职业索赔师的出现的情况下，一不留神就会被抓住把柄，受到相关部门的处罚或勒索，造成不必要的困扰和经济损失。</p><p>在广告法的基础上，每个平台的违禁词可能略有差异，如某些词汇本工具尚未收录到，可以联系我们添加修正。</p><p>本工具适用于咸鱼，淘宝，京东等各大电商平台极限词等广告词词的检测，可以简单便捷地避免一些初级的用词错误。<br></p><p>除了文案用词外，还需要谨慎字体侵权，对于大多数商家来说，也是个大坑。</p><h2>如何使用</h2><p>将您的文案文本粘贴到输入框中，点击检查按钮，工具将会找出需要注意的词汇并标红处理，根据实际情况修改即可。</p><p>您也可以点击举个栗子按钮查看示例。</p><h2>关于广告法</h2>《中华人民共和国广告法》是为了规范广告活动，保护消费者的合法权益，促进广告业的健康发展，维护社会经济秩序，制定的本法。<p>广告法的立法目的概括来讲有以下几个方面。</p><p>第一，促进广告业的健康发展。广告业属于知识密集、技术密集、智力密集、人才密集的高新技术产业。</p><p>第二，保护消费者合法权益。在我国，消费者的合法权益受到法律的保护。按照《消费者权益保护法》的规定，消费者享有知情权。</p><p>第三，维护社会主义市场经济秩序，发挥广告积极作用。</p><p>我国广告法立法目的就是依法保护正当广告活动，防止和打击虚假广告现象，充分发挥广告的积极作用，充分保护消费者的合法权益，促进我国广告业的健康发展。</p><p><a href="javascript:;" target="_blank">点此了解详细的广告法条例内容</a>。</p><h2>一些常见的违禁词</h2><p><strong>与“最”有关</strong><br>最、最佳、最具、最爱、最赚、最优、最优秀、最好、最大、最大程度、最高、最高级、最高档、最奢侈、最低、最低级、最低价、最底、最便宜、时尚最低价、最流行、最受欢迎、最时尚、最聚拢、最符合、最舒适、最先、最先进、最先进科学、最先进加工工艺、最先享受、最后、最后一波、最新、最新科技、最新科学等无真实依据的极限用语。</p><p><strong>与“一”有关</strong><br></p><p>第一、中国第一、全网第一、销量第一、排名第一、唯一、第一品牌、NO.1、TOP.1、独一无二、全国第一、一流、一天、仅此一次（一款）、最后一波、全国X大品牌之一等无真实依据的极限用语。</p><p><strong>与“级/极”有关</strong></p><p>国家级（相关单位颁发的除外）、国家级产品、全球级、宇宙级、世界级、顶级（顶尖/尖端）、顶级工艺、顶级享受、极品、极佳（绝佳/绝对）、终极、极致等无真实依据的极限用语。</p><p><strong>与“首/家/国”有关</strong></p><p>首个、首选、独家、独家配方、全国首发、首款、全国销量冠军、国家级产品、国家(国家免检）、国家领导人、填补国内空白等无真实依据的极限用语。</p><p><strong>与品牌有关</strong></p><p>王牌、领袖品牌、世界领先、领导者、缔造者、创领品牌、领先上市、至尊、巅峰、领袖、之王、王者、冠军等无真实依据的极限用语。</p><p><strong>与虚假有关</strong></p><p>史无前例、前无古人、永久、万能、祖传、特效、无敌、纯天然、100%等无真实依据的极限用语。</p><p><strong>与时间有关</strong></p><p>限时必须具体时间 今日、今天、几天几夜、倒计时、趁现在、就、仅限、周末、周年庆、特惠趴、购物大趴、闪购、品牌团、精品团、单品团（必须有活动日期）严禁使用随时结束、随时涨价、马上降价等无真实依据的用语。</p><p><strong>严禁使用无真实依据的极限用语：</strong></p><p>1.国家级、世界级、最高级、第一、唯一、首个、首选、顶级、国家级产品、填补国内空白、独家、首家、最新、最先进、第一品牌、金牌、名牌、优秀、顶级、独家、全网销量第一、全球首发、全国首家、全网首发、世界领先、顶级工艺、王牌、销量冠军、第一（NO1Top1）、极致、永久、王牌、掌门人、领袖品牌、独一无二、绝无仅有、史无前例、万能等。</p><p>2.最高、最低、最、最具、最便宜、最新、最先进、最大程度、最新技术、最先进科学、最佳、最大、最好、最大、最新科学、最新技术、最先进加工工艺、最时尚、最受欢迎、最先、等含义相同或近似的绝对化用语。</p><p>3.绝对值、绝对、大牌、精确、超赚、领导品牌、领先上市、巨星、著名、奢侈、世界 全国X大品牌之一等无法考证的词语。</p><p>4.100%、国际品质、高档、正品、国家级、世界级、最高级最佳等虚假或无法判断真伪的夸张性表述词语。</p><p><strong>严禁使用不具体确定的时限用语：</strong></p><p>限时须有具体时限，所有团购须标明具体活动日期，严禁使用随时结束、仅此一次、随时涨价、马上降价、最后一波等无法确定时限的词语。</p><p><strong>严禁使用违禁权威性词语：</strong></p><p>1.严禁使用国家XXX领导人推荐、国家XX机关推荐、国家XX机关专供、特供等借国家、国家机关工作人员名称进行宣传的用语、</p><p>2.严禁使用质量免检、无需国家质量检测、免抽检等宣称质量无需检测的用语</p><p>3.严禁使用人民币图样（央行批准的除外）</p><p>4.严禁使用老字号、中国驰名商标、特供、专供等词语（唯品会专供除外）。</p><p>严禁普通食品使用医疗用语：（不含特殊用途化妆品、保健食品、医疗器械）：</p><p>1.全面调整人体内分泌平衡；增强或提高免疫力；助眠；失眠；滋阴补阳；壮阳</p><p>2.消炎；可促进新陈代谢；减少红血丝；产生优化细胞结构；修复受损肌肤；治愈（治愈系除外）；抗炎；活血；解毒；抗敏；脱敏</p><p>3.减肥；清热解毒；清热袪湿；治疗；除菌；杀菌；抗菌；灭菌；防菌；消毒；排毒</p><p>4.防敏；柔敏；舒敏；缓敏；脱敏；褪敏；改善敏感肌肤；改善过敏现象；降低肌肤敏感度</p><p>5.镇定；镇静；理气；行气；活血；生肌肉；补血；安神；养脑；益气；通脉</p><p>6.胃胀蠕动；利尿；驱寒解毒；调节内分泌；延缓更年期；补肾；祛风；生发</p><p>7.防癌；抗癌</p><p>8.祛疤；降血压；防治高血压；治疗</p><p>9.改善内分泌；平衡荷尔蒙；防止卵巢及子宫的功能紊乱；去除体内毒素；吸附铅汞</p><p>10.除湿；润燥；治疗腋臭；治疗体臭；治疗阴臭</p><p>11.美容治疗；消除斑点；斑立净；无斑；治疗斑秃；逐层减退多种色斑；妊娠纹</p><p>12.毛发新生；毛发再生；生黑发；止脱；生发止脱；脂溢性脱发；病变性脱发；毛囊激活</p><p>13.酒糟鼻；伤口愈合清除毒素</p><p>14.缓解痉挛抽搐；减轻或缓解疾病症状；处方；药方；经××例临床观察具有明显效果</p><p>15.丘疹；脓疱；手癣；甲癣；体癣；头癣；股癣；脚癣；脚气；鹅掌癣；花斑癣；牛皮癣；传染性湿疹</p><p>16.伤风感冒；经痛；肌痛；头痛；腹痛；便秘；哮喘；支气管炎；消化不良</p><p>17.刀伤；烧伤；烫伤；疮痈；毛囊炎；皮肤感染；皮肤面部痉挛等疾病名称或症状</p><p>18.细菌、真菌、念珠菌、糠秕孢子菌、厌氧菌、牙孢菌、痤疮、毛囊寄生虫等微生物名称</p><p>19.雌性激素、雄性激素、荷尔蒙、抗生素、激素</p><p>20.药物；中草药；中枢神经</p><p>21.细胞再生；细胞增殖和分化；免疫力；患处；疤痕；关节痛；冻疮；冻伤</p><p>22.皮肤细胞间的氧气交换；红肿；淋巴液；毛细血管；淋巴毒等</p><p><strong>严禁虚假宣传祈福、涉嫌迷信用语：</strong></p><p>带来好运气，增强第六感、化解小人、增加事业运、招财进宝、健康富贵、提升运气、有助事业、护身、 平衡正负能量、消除精神压力、调和气压、逢凶化吉、时来运转、万事亨通、旺人、旺财、助吉避凶、转富招福等。</p><p><strong>严禁化妆品虚假宣传功效用语：</strong></p><p>特效；高效；全效；强效；速效；速白；一洗白；XX天见效；XX周期见效；超强；激活；全方位；全面；安全；无毒；溶脂、吸脂、燃烧脂肪；瘦身；瘦脸；瘦腿；减肥；延年益寿；提高（保护）记忆力</p><p>提高肌肤抗刺激；消除；清除；化解死细胞；去（祛）除皱纹；平皱；修复断裂弹性（力）纤维；止脱；采用新型着色机理永不褪色</p><p>迅速修复受紫外线伤害的肌肤；更新肌肤；破坏黑色素细胞；阻断（阻碍）黑色素的形成；丰乳、丰胸、使乳房丰满、预防乳房松弛下垂（美乳、健美类化妆品除外）；改善（促进）睡眠；舒眠等。</p><p>运营者可以提前了解基本的广告法和平台规则，在编辑文案时尽量避免使用到违反广告法的违禁词。</p>                        </div>
+                                    </div>
+            </div>
+
+            <aside class="cell large-3 small-12 " id="sidebar">
+                                    <div style="height:0;overflow: hidden;">
+                        <img src="static/picture/check-word.jpg" alt="在线咸鱼极限词、敏感词、违禁词、广告法禁词查询工具">
+                    </div>
+                                
+                <!--tool tip -->
+                <div class="aside-item tool-tip">
+                    <div class="aside-title">工具简介</div>
+                    <div class="aside-body">
+                        <div class="text-collapse collapse">
+                            <p style="margin-bottom:20px;">
+                                在线咸鱼极限词、敏感词、违禁词、广告法禁词查询工具，可以一键分析找出您产品文案中可能需要注意的极限词，敏感词和违禁词等违反广告法的词汇，并自动标红处理，可以方便地检查核对文案，最大程度避免违反广告法而造成不必要的损失。                            </p>
+                            <div class="toggle-btn" title="展开/折叠工具简介"></div>
+                        </div>
+                    </div>
+                </div>
+
+                                    <!--green tool tip -->
+                    <div class="aside-item green-tool-tip" data-nosnippet="">
+                        <div class="aside-body">
+                            本工具数据均在本地浏览器处理，不会上传到网络服务器中，请放心使用！
+                        </div>
+                    </div>
+                
+                <div class="aside-item" style="border:none;">
+                    <div class="share-box" title="点击复制本工具链接">
+                        <input class="js-copy" type="text" id="shareInput" readonly="" value="uutool.cn/check-word/" data-clipboard-text="https://uutool.cn/check-word/" data-clipboard-tip="工具链接已复制">
+                    </div>
+                </div>
+
+                
+                
+                
+                                    <!--relative tool-->
+                    <div class="aside-item relative-tool">
+                        <div class="aside-title">相关工具</div>
+                        <div class="aside-body">
+                            <ul>
+                                                                    <li><a href="javascript:;" title="在线文章通用违禁词检测工具">在线文章通用违禁词检测工具</a></li>
+                                                                    <li><a href="javascript:;" title="在线字体版权查询工具">在线字体版权查询工具</a></li>
+                                                            </ul>
+                        </div>
+                    </div>
+                
+                                    <div style="max-height:260px;overflow: hidden;margin-top:20px;">
+                        <div style="max-height:150px;overflow: hidden;margin-bottom:15px;">
+                            <ins class="adsbygoogle" style="display:inline-block;width:100%;min-height:90px" data-full-width-responsive="true" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5880251834"></ins>
+                        </div>
+                    </div>
+                            </aside>
+        </div>
+    </div>
+</main>
+
+
+<footer id="footer" data-tool-alias="check-word">
+    <div class="grid-container" data-nosnippet="">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a rel="nofollow" href="about.html">关于我们</a>
+                    <a href="index1.html">工具地图</a>
+                    <a href="v0pd8pgi56.html">工具博客</a>
+                    <a rel="nofollow" href="support.html">支持我们</a>
+                    <a rel="nofollow" href="customization.html">工具定制</a>
+                    <a rel="nofollow" href="data-security.html">用户数据安全</a>
+                    <a rel="nofollow" href="disclaimer.html">免责声明</a>
+                    <a rel="nofollow" href="copyright.html">著作权声明</a>
+                    <a rel="nofollow" href="feedback.html">反馈建议</a>
+                </div>
+                <!-- 友情链接 -->
+                <p class="friend-link text-center">友情链接：
+                    <a href="javascript:;" title="网络剪贴板" target="_blank">网络剪贴板</a>
+                    <a href="javascript:;" target="_blank">Font Awesome</a>
+                    <a href="javascript:;" title="图标制作工具" target="_blank">图标工具</a>
+                    <a href="javascript:;" title="在线文本工具箱" target="_blank">文本工具箱</a>
+                    <a href="javascript:;" title="JPG MIN 图像本地化压缩工具" target="_blank">JPG MIN</a>
+                    <a href="javascript:;" title="JSON数据处理好帮手！" target="_blank">WeJSON</a>
+                    <a href="javascript:;" title="文本派，永久免费的永久文本存储服务" target="_blank">文本派</a>
+                    <a href="javascript:;" title="专业证件照免费处理" target="_blank">证件照大师</a>
+                    <a href="javascript:;" title="在线文件重命名" target="_blank">在线文件重命名</a>
+                    <a href="ygtamznth7.html" target="_blank">手机号段网</a>
+                    <a href="javascript:;" target="_blank" style="font-size:0;overflow: hidden">在线剪辑大师</a>
+                </p>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    Copyright © 2022 奇客科技 uuTool.cn All Rights Reserved <a rel="nofollow" href="javascript:;" target="_blank">桂ICP备17007729号-11</a><br>
+                </p>
+                            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li title="QQ联系我们">
+            <a target="_blank" href="javascript:;"><i class="iconfont icon-qq"></i></a>
+        </li>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon-xcx"></i>
+            <div class="hidden-box">
+                <img src="static/picture/xcx-code.jpg" width="140" alt="小程序码">
+                <span>微信小程序</span>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min.js"></script>
+    <script src="static/js/ad.min.js"></script>
+<script src="https://uutool.cn/assets/js/tools/check-word.js?v=1632487611"></script>
+</body>
+</html>

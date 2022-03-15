@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>IP地址查询</title>
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common4.css">
+    <style>
+        .ul-info li .title {
+            color: #111 !important;
+        }
+
+        .ul-info li small {
+            color: #888;
+            display: block;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body class="page-ip">
+<header>
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="cell large-4">
+                <div class="logo-box">
+                    <a href="">IP查询工具</a>
+                </div>
+            </div>
+            <div class="cell large-8">
+                <div class="nav-box">
+                    <ul>
+                        <li><a href="">我的IP</a></li>
+                        <li><a href="javascript:;">免费API</a></li>
+                        <li><a href="javascript:;">关于</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main id="app">
+    <div class="overview-box">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12">
+                    <div class="search-wrapper text-center">
+                        <div class="input-box">
+                            <input type="text" id="ipInput" value="45.115.209.202" v-model="ip" placeholder="输入IPv4地址" @keyup.enter="checkIP">
+                        </div>
+                        <div class="btn-box">
+                            <button @click="checkIP">查询</button>
+                        </div>
+                    </div>
+                    <ul class="ul-overview">
+                        <li>
+                            <div class="title">IP地址</div>
+                            <div class="content">45.115.209.202</div>
+                        </li>
+                        <li>
+                            <div class="title">数字IP</div>
+                            <div class="content">762565066</div>
+                        </li>
+                        <li>
+                            <div class="title">地理位置</div>
+                            <div class="content">
+                                柬埔寨                                                                                            </div>
+                        </li>
+                        <li>
+                            <div class="title">运营商</div>
+                            <div class="content">Ezecom</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="cell large-12" style="margin-top:100px;line-height:1.8;font-size:16px;">
+                    <hr>
+                    <h2>免费API</h2>
+                    支持跨域访问，请求频次限制：1QPS（每分钟最多60次，每天最多3000次）。<br>
+                    https://ip.uutool.cn/api/ => 自动获取IP地址，如 <a href="javascript:;" target="_blank">https://ip.uutool.cn/api/</a><br>
+                    https://ip.uutool.cn/api/[IPv4地址]/ =>查询指定IP地址，如 <a href="javascript:;" target="_blank">https://ip.uutool.cn/api/117.120.150.100/</a><br>
+                    温馨提示：<br>
+                    本服务为免费服务，非商业化产品，仅提供便民免费查询，不承诺稳定性。<br>
+                    对于因不可抗力造成的服务中断或其它缺陷，本站不承担任何责任，但将尽力恢复减少影响。<br>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12">
+                <p class="friend-link">
+                </p>
+                <p class="copyright text-center">
+                    Copyright © 2022 <a href="">ip.uutool.cn</a> All Rights Reserved
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min6.js"></script></body>
+</html>
