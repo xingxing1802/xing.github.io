@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线手机号码归属地批量查询工具 - UU在线工具</title>
+    <meta name="description" content="在线手机号码归属地批量查询工具，可以免费单次批量查询500个内手机号归属地，并支持号码分拣过滤及号码统计，查询结果可以一键导出到TXT或Excel中，方便快捷。">
+    <link rel="canonical" href="">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common.css">
+<link rel="stylesheet" href="static/css/font_1455035_z0n3d6to6dc.css">    <style>
+.field-name{display:block}.sort-out-item{margin-bottom:15px}.checkbox-group label{margin-left:0;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.statistics-ul li{width:16%;float:left}.statistics-title{font-weight:700;color:#14679e}.statistics-ul::after{margin-bottom:10px;display:block;height:0;content:' ';clear:both}@media (max-width: 768px){.statistics-ul li{width:33.33%}}h2{margin-top:30px}
+</style>
+</head>
+<body>
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-3 small-6 logo">
+                <a href="index.html">
+                    <span>UU在线工具</span>
+                </a>
+            </div>
+            <div class="cell large-9 small-6 main-nav-box hide-for-small-only">
+                <div class="date-box float-right" id="timeBox"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <!--ad box-->
+    <div class="banner-ad" style="min-height:280px;">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12" style="margin-top:10px;">
+                    <ins class="adsbygoogle" style="display:block;max-height:100px;" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5019822032" data-ad-format="auto"></ins>
+                </div>
+            </div>
+        </div>
+    </div>
+<main class="theme" id="app">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <nav class="breadcrumbs-wrapper" aria-label="你在这里:" role="导航" style="margin-top:15px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="index.html">首页</a></li>
+                        <li>
+                            <span class="show-for-sr">当前: </span>
+                            <h1>在线手机号码归属地批量查询工具</h1>
+                        </li>
+                    </ul>
+                    <a class="float-right tool-extend-btn hide-for-small-only collapse " href="javascript:;" title="展开/缩起工具区域">
+                        <i class="iconfont icon-angle-double-right"></i>
+                    </a>
+                </nav>
+                                    <div class="tool-collection">
+                        <ul class="expanded1">
+                                                            <li class=""><a href="q5qsjbqrxx.html">手机号码归属地查询</a></li>
+                                                            <li class="active"><a href="">手机号码归属地批量查询</a></li>
+                                                            <li class=""><a href="index18.html">手机号码生成器</a></li>
+                                                            <li class=""><a href="index5.html">手机号中间四位查询</a></li>
+                                                            <li class=""><a href="u5su1vhj8i.html">手机号空号检测</a></li>
+                                                            <li class=""><a href="fi6z9z8cg2.html">VCF手机号码通讯录批量导入</a></li>
+                                                            <li class=""><a href="4nu78dgsdq.html">VCF转电话号码工具</a></li>
+                                                    </ul>
+                    </div>
+                            </div>
+
+            <div class="cell large-9 small-12" id="toolWrapper" data-nosnippet="">
+                <div class="tool-wrapper">
+                    <div class="tool-box">
+    <div class="grid-x grid-margin-x" v-cloak="">
+        <div class="cell large-12 small-12">
+            <div class="cell large-12 small-12" style="margin-bottom: 10px;">
+                <span class="field-name">展示字段：</span>
+                <span class="checkbox-group">
+                        <input id="ispInput" type="checkbox" name="field" value="isp" v-model="showFieldArr.isp">
+                        <label for="ispInput">运营商</label>
+                    </span>
+                <span class="checkbox-group">
+                        <input id="provinceInput" type="checkbox" name="field" value="area" v-model="showFieldArr.province">
+                        <label for="provinceInput">省份</label>
+                    </span>
+                <span class="checkbox-group">
+                        <input id="cityInput" type="checkbox" name="field" value="type" v-model="showFieldArr.city">
+                        <label for="cityInput">城市</label>
+                    </span>
+                <span class="checkbox-group">
+                        <input id="areaCodeInput" type="checkbox" name="field" value="area_code" v-model="showFieldArr.areaCode">
+                        <label for="areaCodeInput">区号</label>
+                    </span>
+                <span class="checkbox-group">
+                        <input id="zipCodeInput" type="checkbox" name="field" value="zipCode" v-model="showFieldArr.zipCode">
+                        <label for="zipCodeInput">邮编</label>
+                    </span>
+            </div>
+            <div class="cell large-12 small-12" style="margin-bottom: 10px;">
+                <div class="field-name">查询设置：</div>
+                <span class="checkbox-group">
+                        <input id="uniqueCheckbox" type="checkbox" name="field" value="isp" v-model="queryConfig.unique">
+                        <label for="uniqueCheckbox">号码去重</label>
+                    </span>
+                <span class="checkbox-group">
+                        <input id="filterInvalidCheckbox" type="checkbox" name="field" value="area" v-model="queryConfig.filterInvalid">
+                        <label for="filterInvalidCheckbox" title="号码信息无法查询时，自动过滤">过滤无数据号码</label>
+                    </span>
+                <span class="checkbox-group">
+                        <input id="statisticsCheckbox" type="checkbox" name="field" value="area" v-model="queryConfig.statistics">
+                        <label for="statisticsCheckbox">启用数据统计</label>
+                    </span>
+                <span class="checkbox-group">
+                        <input id="sortOutCheckbox" type="checkbox" name="field" value="area" v-model="queryConfig.sortOut">
+                        <label for="sortOutCheckbox">启用号码分拣</label>
+                    </span>
+            </div>
+            <!--号码分拣-->
+            <div class="cell large-12 small-12" style="margin-bottom: 10px;" v-show="queryConfig.sortOut">
+                <fieldset class="fieldset">
+                    <legend>号码分拣设置</legend>
+                    <div class="sort-out-item">
+                        按运营商分拣：<br>
+                        <span class="checkbox-group" v-for="(item,index) in ispArr">
+                                <input :id="'isp'+index" type="checkbox" name="isp" :value="item" v-model="sortOutConfig.isp">
+                                <label :for="'isp'+index">{{item}}</label>
+                            </span>
+                    </div>
+                    <div class="sort-out-item">
+                        按省份分拣：<br>
+                        <span class="checkbox-group" v-for="(item,index) in provinceArr">
+                                <input :id="'province'+index" type="checkbox" name="province" :value="item" v-model="sortOutConfig.province">
+                                <label :for="'province'+index">{{item}}</label>
+                            </span>
+                    </div>
+                    <div class="sort-out-item">
+                        按号码段分拣：<br>
+                        <span class="checkbox-group" v-for="(item,index) in segmentArr">
+                                <input :id="'phoneSegment'+index" type="checkbox" name="segment" :value="item" v-model="sortOutConfig.segment">
+                                <label :for="'phoneSegment'+index">{{item}}</label>
+                            </span>
+                    </div>
+                </fieldset>
+            </div>
+
+            <textarea rows="8" placeholder="请粘贴手机号码列表，每行一个，单次最多500个号码" v-model="phoneStr"></textarea>
+
+            <div class="btn-box">
+                <button class="button small " @click="query">开始查询</button>
+                <button class="button small " @click="showDemo">举个栗子</button>
+                <button class="button small " @click="export2txt" v-if="0!=phoneArr.length" v-cloak="">导出到TXT</button>
+                <button class="button small " @click="export2excel" v-if="0!=phoneArr.length" v-cloak="">导出到EXCEL</button>
+                <button class="button small secondary " @click="reset" v-if="0!=phoneArr.length" v-cloak="">重新查询</button>
+            </div>
+        </div>
+        <div class="cell large-12 small-12" v-show="queryConfig.statistics">
+            <fieldset class="fieldset" style="margin-top:0">
+                <legend>归属地数据分类统计</legend>
+                <p>以下统计的数据来源于下方表格中展示的数据，是否去重取决于查询设置，无数据的号码已过滤。</p>
+                <div v-if="0!=showArr.length">
+                    <div v-for="item in statisticsArr">
+                        <div class="statistics-title">{{item.name}}</div>
+                        <ul class="no-bullet statistics-ul">
+                            <li v-for="(v,k) in item.rows">
+                                <b>{{k}}</b> ：{{v}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div v-else="">
+                    <p style="color:red;">请查询后查看统计结果或结果为空！</p>
+                </div>
+            </fieldset>
+        </div>
+        <div class="cell large-12 small-12" v-if="0!=phoneArr.length">
+            <p v-show="0!=phoneArr.length">
+                共 <b>{{phoneArr.length}}</b> 个<span title="11位数">有效号码</span>
+                去重后： <b>{{uniqueArr.length}}</b>
+                <small v-if="0!=filterRuleArr.length">（过滤规则：<span>{{filterRuleArr.join('-')}}</span>）过滤结果数：{{showArr.length}}</small>
+            </p>
+            <table>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>手机号码</th>
+                    <th v-if="showFieldArr.isp">运营商</th>
+                    <th v-if="showFieldArr.province">省份</th>
+                    <th v-if="showFieldArr.city">城市</th>
+                    <th v-if="showFieldArr.areaCode">区号</th>
+                    <th v-if="showFieldArr.zipCode">邮编</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in showArr" v-cloak="">
+                    <td>{{index+1}}</td>
+                    <td>{{item.phone}}</td>
+                    <td v-if="showFieldArr.isp">{{item.isp}}</td>
+                    <td v-if="showFieldArr.province">{{item.province}}</td>
+                    <td v-if="showFieldArr.city">{{item.city}}</td>
+                    <td v-if="showFieldArr.areaCode">{{item.area_code}}</td>
+                    <td v-if="showFieldArr.zipCode">{{item.zip_code}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>                                            <div class="tool-intro">
+                            <h2>工具简介</h2><p>在线手机号码归属地批量查询工具，可以免费单次批量查询500个内手机号归属地，并支持号码分拣过滤及号码统计，查询结果可以一键导出到TXT或Excel中，方便快捷。</p><p>使用本工具，您可以一键快速查询手机号码归属地的运营商，省份，城市，区号及邮编等信息，您可以根据实际需要勾选需要查询展示的字段，展示字段设置会应用于列表展示及下载中。</p><p>支持号码查询统计，您可以便捷地从运营商，归属地省份以及号码号段3个维度查看本次查询的统计结果，快速了解您的用户分布情况。</p><p>支持号码分拣，您可以从号码中筛选出指定符合条件的数据，如需要导出归属地广东省，运营商是移动的号码列表。</p><h2>如何使用</h2><p>直接粘贴需要查询的号码列表，每个号码一行，不能有其它字符，否则工具将会判定为不合法的号码自动过滤掉，如果您的号码不规则，可以使用 <a href="javascript:;" target="_blank">手机号码提取工具</a> 一键提取号码后再查询。</p><p>单次仅支持500个以内的号码查询分拣，如果您的号码数量较多，推荐使用我们的&nbsp;<a href="phone.html" target="_blank">高级版查询工具</a>，单次不限查询数量，更高效便捷。</p><p>如果您的号码有重复号码，可以勾选号码去重，工具将会自动去除重复的号码，查询完成后，可以点击“启用数据统计”查看查询统计结果，勾选“启用号码分拣”过滤想要分拣出来的手机号码。</p><p>如果系统未收录您查询的号码号段，会出现无结果的情况，您可以勾选“过滤无数据号码”，屏蔽无法查询结果的号码，展示和导出均不会出现该号码。</p><p>本工具不支持Excel保留其它数据的情况下直接查询，您可以使用<a href="phone.html" target="_blank">高级版</a>直接查询Excel中的号码归属地。</p><p>本工具使用公开的号段查询分拣手机号码归属地，因此对于携号转网情况的号码可能结果不准确。</p><h2>应用场景</h2><p>手机是常用的通讯工具，手机号具有一定的地理位置信息，通过分析手机号码就可以大概得知用户的位置分布，在商业发展了一定时间后，积累了不少用户手机号码数据，可以对手机号码数据进行分析统计，为后期的营销方向提供重要的参考，如哪个区域的用户下单率高，什么运营商的用户最多等，从而进行精准营销，让商业更加高效。<br></p><h2><a href="phone.html" target="_blank">高级版简介</a></h2><p>本工具仅支持500个内号码查询分拣，如果您有更多数量的号码，比如一百万或是一千万，您可以使用高级版归属地查询工具查询，单次不限号码数量，更加强大精准，主要有以下优势：<br></p><p><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);"><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);">1、单次查询不限数量，支持单次千万级以上数量批量查询。</span></span></p><p><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);">2、号段数据更新更快，号段收录更多更全，查询结果更准确。</span><br><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);">3、支持号码文件导入，千万级号码轻松处理。</span></p><p><span style="color:#0a0a0a;font-family:Microsoft YaHei"><span style="font-size: 14px;">4、支持Excel直接查询，不用单独提取号码，可以保留其它数据</span></span><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px;">列</span><span style="font-size: 14px; color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;;">。</span></p><p><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);">5、本地化离线查询，您的号码数据均不会发送到网络服务器查询，数据更安全。</span><br><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);">6、查询速度极快，百万号码仅需数秒，无需过多等待。</span><br><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);">7、功能更完善，支持按运营商，省份及城市以及号段3个维度数据统计结果及数据下载。</span><br><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);">8、号码分拣功能更强大，可以根据自定义条件筛选导出号码。</span><br><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);">9、支持一键导出运营商，省份城市及号段的全部号码列表。</span><br><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);">10、支持导出到TXT，Excel和CSV格式文件。</span><br><span style="color: rgb(10, 10, 10); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; background-color: rgb(254, 254, 254);">更多功能等你发现...。</span></p><p>欢迎&nbsp;<a href="phone.html" target="_blank">点击体验单次20万号码查询DEMO</a>&nbsp;示例，体验系统自动生成的20万个随机号码查询结果。</p><h2 style="white-space: normal;">查看手机号段信息</h2><p style="white-space: normal;">您可以在&nbsp;<a href="ygtamznth7.html" target="_blank">手机号段网</a>&nbsp;查看所有中国移动，联通及电信手机号的号段信息，可按区市及号段方式查看。</p>                        </div>
+                                    </div>
+            </div>
+
+            <aside class="cell large-3 small-12 " id="sidebar">
+                                    <div style="height:0;overflow: hidden;">
+                        <img src="static/picture/phone-batch.jpg" alt="在线手机号码归属地批量查询工具">
+                    </div>
+                                
+                <!--tool tip -->
+                <div class="aside-item tool-tip">
+                    <div class="aside-title">工具简介</div>
+                    <div class="aside-body">
+                        <div class="text-collapse collapse">
+                            <p style="margin-bottom:20px;">
+                                在线手机号码归属地批量查询工具，可以免费单次批量查询500个内手机号归属地，并支持号码分拣过滤及号码统计，查询结果可以一键导出到TXT或Excel中，方便快捷。                            </p>
+                            <div class="toggle-btn" title="展开/折叠工具简介"></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="aside-item" style="border:none;">
+                    <div class="share-box" title="点击复制本工具链接">
+                        <input class="js-copy" type="text" id="shareInput" readonly="" value="uutool.cn/phone-batch/" data-clipboard-text="https://uutool.cn/phone-batch/" data-clipboard-tip="工具链接已复制">
+                    </div>
+                </div>
+
+                
+                
+                
+                                    <!--relative tool-->
+                    <div class="aside-item relative-tool">
+                        <div class="aside-title">相关工具</div>
+                        <div class="aside-body">
+                            <ul>
+                                                                    <li><a href="index18.html" title="在线手机号码生成器">在线手机号码生成器</a></li>
+                                                                    <li><a href="javascript:;" title="在线文本去重&统计工具">在线文本去重&统计工具</a></li>
+                                                                    <li><a href="javascript:;" title="在线身份证号码批量查询校验工具">在线身份证号码批量查询校验工具</a></li>
+                                                                    <li><a href="index23.html" title="在线身份证查询校验工具">在线身份证查询校验工具</a></li>
+                                                                    <li><a href="index21.html" title="在线名单随机分组工具">在线名单随机分组工具</a></li>
+                                                                    <li><a href="index22.html" title="在线名单随机点名工具">在线名单随机点名工具</a></li>
+                                                                    <li><a href="javascript:;" title="在线身份证号码提取生日工具">在线身份证号码提取生日工具</a></li>
+                                                                    <li><a href="javascript:;" title="在线手机号码提取工具">在线手机号码提取工具</a></li>
+                                                                    <li><a href="javascript:;" title="在线手机号码星号遮掩还原工具">在线手机号码星号遮掩还原工具</a></li>
+                                                                    <li><a href="u5su1vhj8i.html" title="在线手机号码空号检测工具">在线手机号码空号检测工具</a></li>
+                                                            </ul>
+                        </div>
+                    </div>
+                
+                                    <div style="max-height:260px;overflow: hidden;margin-top:20px;">
+                        <div style="max-height:150px;overflow: hidden;margin-bottom:15px;">
+                            <ins class="adsbygoogle" style="display:inline-block;width:100%;min-height:90px" data-full-width-responsive="true" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5880251834"></ins>
+                        </div>
+                    </div>
+                            </aside>
+        </div>
+    </div>
+</main>
+
+
+<footer id="footer" data-tool-alias="phone-batch">
+    <div class="grid-container" data-nosnippet="">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a rel="nofollow" href="about.html">关于我们</a>
+                    <a href="index1.html">工具地图</a>
+                    <a href="v0pd8pgi56.html">工具博客</a>
+                    <a rel="nofollow" href="support.html">支持我们</a>
+                    <a rel="nofollow" href="customization.html">工具定制</a>
+                    <a rel="nofollow" href="data-security.html">用户数据安全</a>
+                    <a rel="nofollow" href="disclaimer.html">免责声明</a>
+                    <a rel="nofollow" href="copyright.html">著作权声明</a>
+                    <a rel="nofollow" href="feedback.html">反馈建议</a>
+                </div>
+                <!-- 友情链接 -->
+                <p class="friend-link text-center">友情链接：
+                    <a href="javascript:;" title="网络剪贴板" target="_blank">网络剪贴板</a>
+                    <a href="javascript:;" target="_blank">Font Awesome</a>
+                    <a href="javascript:;" title="图标制作工具" target="_blank">图标工具</a>
+                    <a href="javascript:;" title="在线文本工具箱" target="_blank">文本工具箱</a>
+                    <a href="javascript:;" title="JPG MIN 图像本地化压缩工具" target="_blank">JPG MIN</a>
+                    <a href="javascript:;" title="JSON数据处理好帮手！" target="_blank">WeJSON</a>
+                    <a href="javascript:;" title="文本派，永久免费的永久文本存储服务" target="_blank">文本派</a>
+                    <a href="javascript:;" title="专业证件照免费处理" target="_blank">证件照大师</a>
+                    <a href="javascript:;" title="在线文件重命名" target="_blank">在线文件重命名</a>
+                    <a href="ygtamznth7.html" target="_blank">手机号段网</a>
+                    <a href="javascript:;" target="_blank" style="font-size:0;overflow: hidden">在线剪辑大师</a>
+                </p>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    Copyright © 2022 奇客科技 uuTool.cn All Rights Reserved <a rel="nofollow" href="javascript:;" target="_blank">桂ICP备17007729号-11</a><br>
+                </p>
+                            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li title="QQ联系我们">
+            <a target="_blank" href="javascript:;"><i class="iconfont icon-qq"></i></a>
+        </li>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon-xcx"></i>
+            <div class="hidden-box">
+                <img src="static/picture/xcx-code.jpg" width="140" alt="小程序码">
+                <span>微信小程序</span>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min.js"></script>
+    <script src="static/js/ad.min.js"></script>
+<script src="https://uutool.cn/assets/js/tools/phone-batch.js?v=1639630325"></script>
+</body>
+</html>

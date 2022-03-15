@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线文件批量重命名工具</title>
+    <meta name="keywords" content="在线重命名,文件重命名,批量重命名,网页重命名,网页在线重命名,在线批量重命名,在线文件重命名,批量文件重命名,在线改名">
+    <meta name="description" content="本工具无需下载安装，直接在线完成文件批量重命名，支持多种重命名模式，纯本地化客户端完成重命名，数据不会上传到服务器，高效便捷，安全放心。">
+    <link rel="canonical" href="https://webrename.cn/">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/font_1629278_eakwi33psps.css">
+<link rel="stylesheet" href="static/css/common1.css">
+</head>
+<body class="page-index">
+
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <div class="logo"><a href="javascript:;">在线重命名</a></div>
+                <ul class="top-nav">
+                    <li><a href="javascript:;">常见问答</a></li>
+                    <li><a href="javascript:;">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="intro-box item-box">
+    <h1>在线文件批量重命名工具</h1>
+    <p class="h1-des">
+        无需下载&安装，支持多种重命名模式，一键批量完成文件重命名，高效便捷
+    </p>
+</div>
+
+<main id="app">
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="cell large-12">
+                <div class="tool-box">
+                    <div class="drag-box" id="dragBox">
+                        <input type="file" id="filePicker" class="file-picker" multiple/="">
+                        <div class="tip-word">点击选择或将文件拖入页面中</div>
+                    </div>
+                    <div class="over-size-tip" v-if="52428800<=totalSize || 500<fileArr.length" v-cloak="">需要处理的文件数量过多或总体积过大，打包时间可能会较长！</div>
+                    <div class="tab-box" v-cloak="">
+                        <div class="tab-title">
+                            <div class="file-overview">
+                                文件总数：<b>{{fileArr.length}}</b>，体积总计：<b>{{getFileSize(totalSize)}}</b>
+                            </div>
+                            <ul>
+                                <li :class="{active:tabId==index}" @click="changeTab(index)" v-for="(item,index) in tabArr">{{item}}</li>
+                                <li @click="showDemo" style="color:#888;">举个栗子</li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-item " v-if="'all'==tabId">
+                                <div class="tip">
+                                    可针对文件名规则和文件后缀规则快速批量修改文件名，直接选择相关规则即可。
+                                </div>
+                                <div class="content-wrapper">
+                                    <div class="setting-item">
+                                        文件名规则：
+                                        <span class="checkbox-group radio"><input type="radio" value="default" id="allConfig10" v-model="allConfig.name"> <label for="allConfig10">原始</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" value="upper" id="allConfig11" v-model="allConfig.name"> <label for="allConfig11">改成大写</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" value="lower" id="allConfig12" v-model="allConfig.name"> <label for="allConfig12">改成小写</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" value="capital" id="allConfig13" v-model="allConfig.name"> <label for="allConfig13">首字母大写</label></span>
+                                    </div>
+                                    <div class="setting-item">
+                                        扩展名规则：
+                                        <span class="checkbox-group radio"><input type="radio" value="default" id="allConfig20" v-model="allConfig.suffix"> <label for="allConfig20">原始</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" value="upper" id="allConfig21" v-model="allConfig.suffix"> <label for="allConfig21">改成大写</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" value="lower" id="allConfig22" v-model="allConfig.suffix"> <label for="allConfig22">改成小写</label></span>
+                                    </div>
+                                    <div class="setting-item">
+                                        扩展名改成：
+                                        <input class="inline-input w100" type="text" placeholder="如txt" v-model="allConfig.specified">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-item " v-if="'order'==tabId">
+                                <div class="tip">
+                                    可根据文件名，修改时间，以及随机排序，点击切换即可完成文件排序，也可以直接拖动文件列表项手动排序。<br>
+                                    命名规则中 <b>#</b> 表示顺序编号，<b>{self}</b> 表示文件原始名称，可以直接使用以上变量，编号位数设置后不足时将自动补零，最多10位自动补零。
+                                </div>
+                                <div class="content-wrapper">
+                                    <div class="setting-item">
+                                        文件排序规则：
+                                        <span class="checkbox-group radio"><input type="radio" value="1" id="order1" v-model="orderConfig.sortType"> <label for="order1">文件名正序</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" value="2" id="order2" v-model="orderConfig.sortType"> <label for="order2">文件名逆序</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" value="3" id="order3" v-model="orderConfig.sortType"> <label for="order3">修改时间正序</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" value="4" id="order4" v-model="orderConfig.sortType"> <label for="order4">修改时间逆序</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" value="5" id="order5" v-model="orderConfig.sortType"> <label for="order5">随机排序</label></span>
+                                    </div>
+                                    <div class="setting-item">
+                                        命名规则：<input type="text" class="inline-input w200" v-model="orderConfig.tpl" placeholder="可自定义修改">
+                                        &nbsp;&nbsp;预设模板：
+                                        <select class="inline-select w100" v-model="replaceTplId">
+                                            <option value="#">#</option>
+                                            <option value="#_{self}">#_{self}</option>
+                                            <option value="#-{self}">#-{self}</option>
+                                            <option value="file-#">file-#</option>
+                                            <option value="pic-#">pic-#</option>
+                                        </select>
+                                    </div>
+                                    <div class="setting-item">
+                                        编号始于：<input type="number" v-model="orderConfig.noFrom" class="inline-input w100" placeholder="如1">
+                                        &nbsp;&nbsp; 增量：<input type="number" v-model="orderConfig.noStep" class="inline-input w100" placeholder="如1">
+                                        &nbsp;&nbsp;编号位数：<input type="number" v-model="orderConfig.noNum" class="inline-input w200" placeholder="设置将自动补零">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-item " v-if="'random'==tabId">
+                                <div class="tip">
+                                    对文件名列表随机排序，选择备选字符以及文件名字符长度，工具将会自动为文件生成随机文件名。<br>
+                                    请确保有足够长的字符长度，避免因字符长度过短而随机生成的文件名产生重复，造成文件被覆盖。
+                                </div>
+                                <div class="content-wrapper">
+                                    <div class="setting-item">
+                                        备选字符：
+                                        <span class="checkbox-group "><input type="checkbox" value="1" id="random11" v-model="randomConfig.str"> <label for="random11">0-9</label></span>
+                                        <span class="checkbox-group "><input type="checkbox" value="2" id="random12" v-model="randomConfig.str"> <label for="random12">a-z</label></span>
+                                        <span class="checkbox-group "><input type="checkbox" value="3" id="random13" v-model="randomConfig.str"> <label for="random13">A-Z</label></span>
+                                    </div>
+                                    <div class="setting-item">
+                                        字符长度：<input type="number" min="1" class="inline-input w100" placeholder="默认8" v-model="randomConfig.num">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-item tab-replace " v-if="'replace'==tabId">
+                                <div class="tip">
+                                    批量替换文件名中的相应字符串，可以设置多组替换规则，工具将依次使用规则对文件进行批量重命名处理，自动跳过替换字符串为空的规则。<br>
+                                    每次替换均从原始文件名为参考进行替换，文件后缀不参与替换操作，每个替换规则仅替换一次，如需多次替换，请使用过条规则替换，目标字符串为空将删除指定替换字符串。
+                                </div>
+                                <div class="content-wrapper">
+                                    <div class="setting-item" v-for="(item,index) in replaceConfig.ruleArr">
+                                        <a class="remove-rule" href="javascript:;" title="移除该规则" @click="removeReplaceRule(index)"> X </a>
+                                        替换规则1：
+                                        将字符串 <input type="text" class="inline-input w200" v-model="replaceConfig.ruleArr[index].from">
+                                        &nbsp;&nbsp; 替换为 <input type="text" class="inline-input w200" v-model="replaceConfig.ruleArr[index].to">
+                                    </div>
+                                    <div class="setting-item">
+                                        <a href="javascript:;" @click="addReplaceRule">+ 添加替换规则</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-item" v-if="'add'==tabId">
+                                <div class="tip">
+                                    在文件名前面或后面添加指定字符串。
+                                </div>
+                                <div class="content-wrapper">
+                                    <div class="setting-item">
+                                        文件名前添加： <input type="text" class="inline-input w200" v-model="addConfig.before" placeholder="如file_">
+                                    </div>
+                                    <div class="setting-item">
+                                        文件名后添加： <input type="text" class="inline-input w200" v-model="addConfig.after" placeholder="如_back">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-item  " v-if="'slice'==tabId">
+                                <div class="tip">
+                                    截取文件名中指定部分的字符串作为新文件名，位置从1开始，截取长度为负数表示截取到末尾相应位置。
+                                </div>
+                                <div class="content-wrapper">
+                                    <div class="setting-item">
+                                        开始截取位置： <input type="number" class="inline-input w200" v-model="sliceConfig.from" placeholder="1开始">
+                                    </div>
+                                    <div class="setting-item">
+                                        总共截取长度： <input type="number" class="inline-input w200" v-model="sliceConfig.length" placeholder="为空表示到结尾">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-item " v-if="'setting'==tabId">
+                                <div class="tip">
+                                    您可以设置实时预览的文件列表，默认20个，如无需拖动排序或手动修改文件名等操作，建议不要设置显示太多或设置全部，列表预览文件过多将会造成浏览器卡顿。
+                                </div>
+                                <div class="content-wrapper">
+                                    <div class="setting-item">
+                                        列表预览数量：
+                                        <span class="checkbox-group radio"><input type="radio" v-model="previewNum" value="20" id="preview12"> <label for="preview12">20</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" v-model="previewNum" value="50" id="preview1"> <label for="preview1">50</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" v-model="previewNum" value="100" id="preview21"> <label for="preview21">100</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" v-model="previewNum" value="200" id="preview2"> <label for="preview2">200</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" v-model="previewNum" value="500" id="preview3"> <label for="preview3">500</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" v-model="previewNum" value="1000" id="preview4"> <label for="preview4">1000</label></span>
+                                        <span class="checkbox-group radio"><input type="radio" v-model="previewNum" value="999999" id="preview5"> <label for="preview5">全部</label></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-item tab7 " v-if="'tutorial'==tabId">
+                                <div class="tip">
+                                    注意：每一个Tab选项卡都是一个独立的重命名功能，切换后文件名列表将会自动重置到原始状态！
+                                </div>
+                                <div class="content-wrapper">
+                                    <p>
+                                        本工具使用Web浏览器在线对您的文件进行批量重命名处理，即开即用，无需安装，无需登录，永久免费，方便快捷。
+                                    </p>
+                                    <p>
+                                        选择文件后，设置重命名规则，点击“开始重命名”按钮，工具将会开始重命名，并将所有文件打包到一个Zip文件后下载到本地。
+                                    </p>
+                                    <p>
+                                        使用时直接将您需要批量重名的文件拖入到页面，也可以点击选择相应文件，<b>所有文件均仅在您的本地浏览器处理，不会上传至网络服务器，请放心使用！</b><br>
+                                    </p>
+                                    <p>
+                                        请注意确保修改后的文件名保持唯一，否则可能会因文件同名被覆盖造成文件数量变少。
+                                    </p>
+                                    <p>
+                                        工具支持多种重命名方式，每一个Tab顶部均有简单的功能介绍，可以参考介绍使用。
+                                        切换Tab选项卡即可使用相应重命名方式，每一种命名方式都相互独立，互不影响！<br>
+                                    </p>
+                                    <p>
+                                        在任意的Tab下均可以拖动文件行对文件列表排序，也可以随时手动修改文件名（点击即可修改），注意，修改后可能会受到工具自动处理覆盖，建议作为处理最后一步才手动修改，修改后直接导出。
+                                    </p>
+                                    <p>
+                                        受限于浏览器内存，本工具仅适合批量重名小文件，小文件重命名速度极快，大文件可能会速度变慢或浏览器卡顿甚至奔溃。
+                                    </p>
+                                    <p>
+                                        由于使用了浏览器API处理文件，因此对一些老浏览器可能并不支持，建议使用Chrome或其它浏览器最新版本使用该工具。<br>
+                                    </p>
+                                    <p>
+                                        如有其它功能建议，欢迎反馈给我们，如可行将会添加到该工具中。
+                                    </p>
+                                    <p>
+                                        好用的话，欢迎收藏或推荐给您的朋友：<b>WebRename.cn</b>（Web网页文件重命名）
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-box text-center">
+                        <button class="button info" @click="downloadAll" v-if="0!=fileArr.length" v-cloak="">开始批量重命名</button>
+                        <button class="button secondary" @click="resetFileName" v-if="0!=fileArr.length" v-cloak="">还原文件名</button>
+                        <button class="button secondary" @click="reset" v-if="0!=fileArr.length" v-cloak="">清空列表</button>
+                    </div>
+                    <div class="list-box" v-if="0!=fileArr.length" v-cloak="">
+                        <hr>
+                        <h2 class="text-center">文件列表预览（{{fileArr.length}} / {{fileArr.slice(0,previewNum).length}}）</h2>
+                        <ul class="ul-list title">
+                            <li class="clearfix">
+                                <div class="id">序号</div>
+                                <div class="old-name">原文件名（拖拽排序）</div>
+                                <div class="new-name">处理后的文件名（点击编辑）</div>
+                                <div class="operate-btn">操作</div>
+                            </li>
+                        </ul>
+
+                        <draggable element="ul" class="ul-list" :list="fileArr" :options="{animation: 300,handle:'li'}">
+                            <li class="clearfix" v-for="(item,index) in fileArr.slice(0,previewNum)" :key="index">
+                                <div class="id">{{index+1}}</div>
+                                <div class="old-name">{{item.name}}</div>
+                                <div class="new-name"><input type="text" v-model="fileArr[index]['newName']"></div>
+                                <div class="operate-btn">
+                                    <a href="javascript:;" @click="removeFile(index)">移除</a>
+                                    <a href="javascript:;" @click="download(index)">下载</a>
+                                </div>
+                            </li>
+                        </draggable>
+                    </div>
+                </div>
+
+                <!--why us-->
+                <div class="why-us">
+                    <h2 class="text-center">工具优势</h2>
+                    <ul class="ul-advantage clearfix">
+                        <li>
+                            <i class="fa fa-magic"></i>
+                            <div>
+                                <b>功能强大</b>
+                                支持多种批量重命名模式，如整体，顺序，随机，替换，添加，截取等模式，总有一个适合您。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-smile-o"></i>
+                            <div>
+                                <b>便捷易用</b>
+                                无需安装，无需登录，无任何使用限制，即来即用，用完即走，界面精简易用，操作方便快捷。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-shield"></i>
+                            <div>
+                                <b>数据安全保障</b>
+                                所有文件数据均在您的本地浏览器处理，绝不会上传到网络服务器中，数据隐私有保障。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-thumbs-o-up"></i>
+                            <div>
+                                <b>重命名效率高</b>
+                                重命名速度快，无需过多等待，立等可取，支持单次数千文件批量重命名。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-hourglass-3"></i>
+                            <div>
+                                <b>实时预览</b>
+                                支持文件重命名实时预览，所见即所得，附有文件重命名前后对照表，重命名情况一手掌握。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-heart"></i>
+                            <div>
+                                <b>永久免费</b>
+                                本服务永久免费，欢迎记住我们，webRenamer.cn，你的文件批量重命名得力小助手。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!--qa-->
+                <div class="qa">
+                    <h2 class="text-center">常见问答</h2>
+                    <h3>如何使用在线批量文件重命名工具?</h3>
+                    <p>
+                        直接将文件拖入页面即可，根据需要选择不同重命名功能选项卡，简单设置即可完成文件重命名，重命名完成后将会把所有文件打包下载到本地，更多使用方法可以点击工具“工具教程”选项卡。
+                    </p>
+
+                    <h3>工具支持多大的文件重命名？</h3>
+                    <p>
+                        由于受到浏览器内存限制，浏览器无法读取过大的文件，因此工具适合小文件批量重命名，大文件可能会造成文件打包时间过长，甚至浏览器奔溃，具体多大取决于您的机器情况和浏览器的设置。
+                    </p>
+
+                    <h3>每次能够重命名多少文件？</h3>
+                    <p>
+                        单次支持数千甚至上万小文件批量处理，实际阈值取决于您的设备性能和浏览器，过多的文件统一会让文件打包时间过长，只要浏览器不崩溃，就可以完成重命名，请耐心等待即可。
+                    </p>
+                    <h3>重命名原理和数据安全？</h3>
+                    <p>
+                        本重命名工具主要利用现代浏览器的文件处理相关API读取文件，因此数据仅在您的浏览器处理，不会上传到网络服务器，因此您无需担心数据泄露问题，请放心使用。<br>
+                        工具对文件API有依赖，因此过低版本的浏览器可能不支持工具正常运行，建议使用Chrome浏览器使用本工具。
+                    </p>
+
+                    <h3>功能建议及反馈</h3>
+                    <p>
+                        如果您在使用过程有任何疑问或建议，欢迎通过邮件和我们联系：2011689829#qq.com。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="footer">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <div class="friend-link text-center">
+                    <a href="javascript:;">首页</a>
+                    <a href="javascript:;" target="_blank">压图大师</a>
+                    <a href="index.html" target="_blank">UU在线工具</a>
+                    <a href="javascript:;" target="_blank">在线文件重命名</a>
+                    <a href="javascript:;">常见问答</a>
+                    <a href="javascript:;">关于</a>
+                </div>
+                <!-- 版权声明 -->
+                <p class="copyright text-center">
+                    Copyright © 奇客科技 <b><a href="javascript:;"> 在线文件重命名工具 </a></b> All Rights Reserved<br><br>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min2.js"></script>
+<script src="static/js/index.min1.js"></script>
+</body>
+</html>

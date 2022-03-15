@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>网络剪贴板 - 极简的跨平台数据暂存和传送工具 | netcut.cn</title>
+    <meta name="Keywords" content="网络剪贴板,互联网剪贴板,互联网复制粘贴,网络复制粘贴,netcut,跨平台复制粘贴,在线复制粘贴,数据临时存储,云剪贴板,在线剪贴板,网络剪贴板官网,netcut官网">
+    <meta name="Description" content="网络剪贴板（netcut.cn）是一款极简的提供跨平台的文本复制粘贴和全格式文件传送的在线工具，操作简单，让数据传送更简单">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/style.css">
+<link rel="stylesheet" href="static/css/font_778503_v4t4nmh1nz.css">
+
+
+    <link rel="stylesheet" href="static/css/font_778503_rt8dm8wgzao.css">
+    <style>
+        h2 {
+            font-size: 24px;
+        }
+
+        .search-box {
+            margin: 100px 15px;
+        }
+
+        header {
+            padding: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+
+    <div class="container">
+        <div class="grid-x">
+            <div class="cell small-12 large-12 ">
+                <div class="slogan"><a href="javascript:;"><i class="iconfont icon-clipboard"></i>网络剪贴板</a></div>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="index-page" id="app">
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="cell large-12 small-12">
+                <div class="grid-x">
+                    <div class="cell small-offset-1 small-10 large-offset-4 large-4 ">
+                        <div class="input-group search-box">
+                            <input class="input-group-field" type="text" id="noteName" placeholder="剪贴板名称，默认随机">
+                            <div class="input-group-button">
+                                <input type="button" value="查看剪贴板" id="submitBtn" class="button">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cell large-12 small-12">
+                <hr>
+                <h2>工具简介</h2>
+
+                <p>
+                    网络剪贴板（netcut.cn）是一款提供数据暂存和传送服务的在线工具，您可以将文本数据或全格式文件数据上传到剪贴板中，随时随地打开剪贴板取回数据，
+                    让数据的传送不再依赖QQ文件助手等工具以及繁琐的U盘等，让数据的暂存和传送更加方便快捷。
+                </p>
+                <h2>如何使用</h2>
+                <p>
+                    剪贴板的URL构成如下所示：<br>
+                    <span class="note-url-example" style="margin-top:15px;color:#555;font-size:26px;">https://netcut.cn/剪贴板名称</span><br>
+                </p>
+                <p>
+                    举个栗子：<br>
+                    假如您的剪贴板名字是abc，那么您的剪贴板地址就是：<a href="javascript:;">netcut.cn/abc</a>，<b>建议直接在浏览器输入网址，回车后即可编辑或取回您的剪贴板数据</b>。
+                </p>
+
+                <div style="margin-top:10px;">
+                    <p>需要多文本记录和导出？欢迎体验 <a href="javascript:;" target="_blank">文本派</a>，极简的在线文本存储服务</p>
+                </div>
+            </div>
+
+                    </div>
+    </div>
+</main>
+
+<!--footer-->
+<footer>
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x text-center">
+            <div class="cell small-12 large-12">
+                <div style="margin-top:10px;">
+                    <p class="text-center" style="color:#fff;">需要多文本记录和导出？欢迎体验 <a style="color:#fff;font-weight:700;text-decoration: underline" href="javascript:;" target="_blank" title="点击体验">文本派</a>，极简的在线文本存储服务</p>
+                </div>
+                <!-- 底部导航 -->
+                <p class="footer-nav">
+                    <a href="index.html" title="UU在线工具" target="_blank">UU在线工具</a>
+                    <a href="javascript:;" title="免费极简的在线文本存储服务" target="_blank">文本派</a>
+                    <a href="feedback1.html" target="_blank">反馈建议</a>
+                    <a href="javascript:;">关于剪贴板</a>
+                </p>
+            </div>
+            <div class="cell small-12 large-12">
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    网络剪贴板 - 让数据暂存和传送更简单！<br><br>
+                    <a href="javascript:;" target="_blank">桂ICP备15002134号-10</a>
+                </p>
+                <p class="" style="margin-top:15px;font-size:15px;">特别致谢：
+                    <a rel="nofollow" href="javascript:;" target="_blank">
+                        <img src="static/picture/upyun_logo.png" style="height:24px;" alt="又拍云">
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <div style="display:none;">
+        <script src="static/js/z_stat-1274361014_1274361014.js"></script>
+    </div>
+
+<!--脚本-->
+<script src="static/js/require1.js"></script>
+<script src="static/js/common.min1.js"></script><script>
+    require(['jquery'], function ($) {
+        var jump = function () {
+            var noteName = $('#noteName').val().trim();
+            if ('' === noteName) {
+                noteName = parseInt((new Date()).valueOf()).toString(32);
+            }
+            window.location.href = '/' + noteName;
+        };
+
+        $('#submitBtn').click(function () {
+            jump();
+        });
+        $('#noteName').keydown(function (e) {
+            if (13 === e.keyCode) {
+                jump();
+            }
+        });
+    });
+</script>
+</body>
+</html>

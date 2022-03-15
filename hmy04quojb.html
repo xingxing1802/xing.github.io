@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浏览器指纹检测大师</title>
+    <meta name="keywords" content="指纹检测,浏览器检测,IP检测,User Agent检测,浏览器指纹,UA检测,在线浏览器指纹检测">
+    <meta name="description" content="浏览器指纹检测大师可以一键检测您的浏览器各项设置以及硬件指纹信息，通过分析您浏览器的操作系统版本，IP位置信息，语言等信息，帮助您更好了解浏览器设置及弱点，以更好的保护您的隐私信息。">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/style3.css">
+<link rel="shortcut icon" href="https://web.uutool.cn/assets/web/favicon.ico">
+<!--<link rel="stylesheet" href="https://cdn.qikekeji.com/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->    <style>
+        .ul-info li .title {
+            color: #111 !important;
+        }
+
+        .ul-info li small {
+            color: #888;
+            display: block;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body class="page-index">
+<header>
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="cell large-4">
+                <div class="logo-box">
+                    <a href="">指纹检测大师</a>
+                </div>
+            </div>
+            <div class="cell large-8">
+                <div class="nav-box">
+                    <ul>
+                        <li><a href="">首页</a></li>
+                        <li><a href="javascript:;">关于</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main id="app">
+    <div class="overview-box">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12">
+                    <div class="page-title text-center">
+                        我的IP：<b class="js-copy" title="点击复制" :data-clipboard-text="ipData.ip" v-text="ipData.ip">00.00.00.00</b>
+                        <p class="text-center fp-info">指纹ID：<span v-text="fpID">-</span></p>
+                    </div>
+                    <ul class="ul-overview">
+                        <li>
+                            <div class="title">IP归属地</div>
+                            <div class="content">
+                                <span v-text="ipData.country"></span>
+                                <span v-text="ipData.province"></span>
+                                <span v-text="ipData.city"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="title">网络运营商</div>
+                            <div class="content" v-text="ipData.isp"></div>
+                        </li>
+                        <li>
+                            <div class="title">操作系统</div>
+                            <div class="content" v-text="uaData.platform"></div>
+                        </li>
+                        <li>
+                            <div class="title">浏览器名称</div>
+                            <div class="content"><span v-text="uaData.browser + uaData.version"></span>
+                                <span v-text="uaData.broserName" v-if="''!=uaData.browserName"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="title">代理服务器</div>
+                            <div class="content" v-text="clientData.isProxy?'是':'否'"></div>
+                        </li>
+                        <li>
+                            <div class="title">DNT状态</div>
+                            <div class="content" v-text="clientData.isDNT?'是':'否'"></div>
+                        </li>
+                        <li>
+                            <div class="title">浏览器语言</div>
+                            <div class="content" v-text="uaData.language"></div>
+                        </li>
+                        <li>
+                            <div class="title">显示器尺寸</div>
+                            <div class="content" v-text="clientData.width+' / '+clientData.height">-</div>
+                        </li>
+
+                        <li>
+                            <div class="title">系统时区</div>
+                            <div class="content" v-text="clientData.timeZone">-</div>
+                        </li>
+                        <li>
+                            <div class="title">系统时间</div>
+                            <div class="content" v-text="clientData.time">-</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-6">
+                <div class="info-item">
+                    <h2>指纹检测</h2>
+                    <ul class="ul-info">
+                        <li class="clearfix">
+                            <div class="title">User Agent <small>浏览器用户代理</small></div>
+                            <div class="content" v-text="fpInfo.ua"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">Canvas <small>2D图像和动画绘制特征指纹</small></div>
+                            <div class="content" v-text="fpInfo.canvas"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">Webgl <small>显卡及驱动程序指纹</small></div>
+                            <div class="content" v-text="fpInfo.webgl"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">Plugins <small>浏览器预装插件特征指纹</small></div>
+                            <div class="content" v-text="fpInfo.plugins"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">Audio <small>音频设置和硬件特征指纹</small></div>
+                            <div class="content" v-text="fpInfo.audio"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">Screen <small>浏览器分辨率</small></div>
+                            <div class="content" v-text="fpInfo.screen"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">Fonts <small>字体及输入设备特征指纹</small></div>
+                            <div class="content" v-text="fpInfo.fonts"></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-item" v-cloak="">
+                    <h2>其它区域IP检测</h2>
+                    <ul class="ul-info">
+                        <li class="clearfix" v-for="(item,index) in areaArr">
+                            <div class="title" v-text="item.name"></div>
+                            <div class="content" v-html="getIp(index)"></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-item">
+                    <h2>显示器信息</h2>
+                    <ul class="ul-info">
+                        <li class="clearfix">
+                            <div class="title">像素密度比</div>
+                            <div class="content" v-text="clientData.devicePixelRatio"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">颜色深度</div>
+                            <div class="content" v-text="clientData.colorDepth"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">像素深度</div>
+                            <div class="content" v-text="clientData.pixelDepth"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">浏览器宽度</div>
+                            <div class="content" v-text="clientData.width"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">浏览器高度</div>
+                            <div class="content" v-text="clientData.height"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">可用宽度</div>
+                            <div class="content" v-text="clientData.availWidth"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">可用高度</div>
+                            <div class="content" v-text="clientData.availHeight"></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-item">
+                    <h2>浏览器信息</h2>
+                    <ul class="ul-info">
+                        <li class="clearfix">
+                            <div class="title">浏览器名称</div>
+                            <div class="content">
+                                <span v-text="uaData.browser"></span>
+                                <span v-text="'（'+uaData.browserName+'）'" v-if="''!=uaData.browserName"></span>
+                        </div></li>
+                        <li class="clearfix">
+                            <div class="title">浏览器版本</div>
+                            <div class="content" v-text="uaData.version"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">浏览器语言</div>
+                            <div class="content" v-text="uaData.language"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">启用Javascript</div>
+                            <div class="content" v-text="clientData.isJavascript?'是':'否'">否</div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">时区</div>
+                            <div class="content" v-text="clientData.timeZone"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">格式化时间</div>
+                            <div class="content" v-text="clientData.time"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">系统时间戳</div>
+                            <div class="content" v-text="clientData.timestamp"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">UTC时间</div>
+                            <div class="content" v-text="clientData.utcTime"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cell large-6">
+
+                <div class="info-item">
+                    <h2>浏览器UA信息</h2>
+                    <ul class="ul-info">
+                        <li class="clearfix">
+                            <div class="title">服务器检测</div>
+                            <div class="content" v-text="uaData.ua"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">客户端检测</div>
+                            <div class="content" v-text="clientData.ua">检测中...</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-item">
+                    <h2>IP位置信息</h2>
+                    <ul class="ul-info">
+                        <li class="clearfix">
+                            <div class="title">IP地址</div>
+                            <div class="content" v-text="ipData.ip"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">IP数字地址</div>
+                            <div class="content" v-text="ipData.ip_int"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">是否代理</div>
+                            <div class="content" v-text="clientData.isProxy?'是':'否'"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">国家</div>
+                            <div class="content" v-text="ipData.country"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">省份</div>
+                            <div class="content" v-text="ipData.province"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">城市</div>
+                            <div class="content" v-text="ipData.city"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">网络类型</div>
+                            <div class="content" v-text="ipData.isp"></div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="title">时区</div>
+                            <div class="content" v-text="clientData.timeZone">读取中...</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-item">
+                    <h2>HTTP请求头</h2>
+                    <ul class="ul-info">
+                        <li class="clearfix" v-for="(item,key) in headerData">
+                            <div class="title" v-text="key"></div>
+                            <div class="content" v-text="item"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cell large-12">
+                <hr>
+                <div class="info-item">
+                    <h1 style="font-size:24px;">浏览器指纹检测大师</h1>
+                    <p>
+                        浏览器指纹检测大师可以一键检测您的浏览器各项设置以及硬件指纹信息，通过分析您浏览器的操作系统版本，IP位置信息，语言等信息，以帮助您更好了解浏览器设置及弱点，以更好的保护您的隐私信息。
+                    </p>
+                </div>
+
+                <div class="info-item">
+                    <h2>常见问答</h2>
+                    <ul class="ul-qa">
+                        <li>
+                            <div class="question">在线浏览器指纹检测大师有什么用？</div>
+                            <div class="answer">
+                                本工具可以一键检测您的浏览器设置信息和网络信息，判断您当前是否已具备充分的伪装，避免访问网站时候暴露自身不愿透露的信息，保护您的信息隐私。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="question">本工具的应用场景？</div>
+                            <div class="answer">
+                                1、供开发者参考请求头及浏览器参数信息。<br>
+                                2、了解自身设备和网络信息，如浏览器分辨率，IP地址以及IP归属地等。<br>
+                                3、产品Spy时绕过对方设置的防火墙拦截规则。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="question">指纹ID有什么用？</div>
+                            <div class="answer">
+                                指纹ID根据指纹检测列表中的7项检测共同计算得出，当您开启浏览器分身或无痕浏览器后，如果指纹ID相同，很有可能会在有指纹检测的网站系统中暴露您的真实身份，
+                                具体请参考指纹检测中的各项ID，最好使用指纹浏览器并设置使所有检测ID都不一样。<br>
+                                注意，由于不同的系统使用的指纹算法不一样，因此更多的应该关注指纹检测中的各项检测数值，而不是最终计算的指纹ID。
+                            </div>
+                        </li>
+                        <li>
+                            <div class="question">检测结果值得注意的地方？</div>
+                            <div class="answer">
+                                1、您的IP地址。<br>
+                                2、您的浏览器语言，通过语言可以轻松确认所属国家。<br>
+                                3、您的本地时间，时区也可以大致判断区域。<br>
+                                4、浏览器名称是否具有明显的区域特性，如QQ浏览器等。<br>
+                                5、是否已开启DNT，避免被第三方跟踪到。<br>
+                                6、是否有Cookie信息，建议开启无痕窗口。<br>
+                                7、您的设备字体。<br>
+                                8、浏览器指纹信息。<br>
+                                9、网页Referer，从哪里跳转到目标页面。<br>
+                                10、您的DNS设置。<br>
+                                11、是否允许获取位置信息。<br>
+                                12、仔细核对UA信息，是否包含明显区域信息，如手机型号，国产浏览器名等其他未检测到的细节。<br>
+                                13、其它典型可以确认区域位置的特征信息。<br>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="question">说明情况会使得分降低？</div>
+                            <div class="answer">
+                                1、IP地址归属地和您的浏览器时区设置不一致。<br>
+                                2、IP地址所用语言和您的浏览器语言设置不一致。<br>
+                                3、时区所用语言和您设置的浏览器语言不一致。<br>
+                                4、其它情况。<br>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="question">如何使用在线浏览器指纹检测大师？</div>
+                            <div class="answer">
+                                访问本页面，对比检测结果和系统提示，根据自己实际需求进行调整设置，调整完毕继续刷新页面，直到检测结果满意为止。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            
+            <div class="cell large-12">
+                <p class="friend-link">
+                </p>
+                <p class="copyright text-center">
+                    Copyright © 2022 <a href="">浏览器指纹检测大师</a> All Rights Reserved
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min7.js"></script><script>
+    var pageData = {"ipData":{"ip":"45.115.209.202","country":"柬埔寨","province":"","city":"","isp":"Ezecom","ip_int":762565066},"headerData":{"ACCEPT":"text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/webp,image\/apng,*\/*;q=0.8,application\/signed-exchange;v=b3","ACCEPT_ENCODING":"gzip, deflate","ACCEPT_LANGUAGE":"zh-CN,zh;q=0.9","CONNECTION":"Keep-Alive","HOST":"web.uutool.cn","QUERY_STRING":"","REFERER":"https:\/\/web.uutool.cn\/","REMOTE_ADDR":"45.115.209.202","REQUEST_METHOD":"GET","REQUEST_TIME":1647258040,"REQUEST_URI":"\/","SERVER_PORT":"443","SERVER_PROTOCOL":"HTTP\/1.1","USER_AGENT":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/96.0.4664.93 Safari\/537.36"},"uaData":{"ua":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/96.0.4664.93 Safari\/537.36","browser":"Chrome","version":"96.0","platform":"Windows 10","language":"zh-cn,zh","browserName":""},"isProxy":0,"isDNT":0,"browserName":""};
+</script>
+<script src="static/js/index.min4.js"></script>
+</body>
+</html>

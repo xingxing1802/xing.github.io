@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线JS代码混淆加密工具 - UU在线工具</title>
+    <meta name="description" content="在线JS代码混淆加密工具，可以通过代码混淆的方式，让您的JS代码更难理解和被他人抄袭复制，保护您的JS代码。">
+    <link rel="canonical" href="">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common.css">
+<link rel="stylesheet" href="static/css/font_1455035_z0n3d6to6dc.css">    <style>
+textarea{font-size:14px}.code-box{border:1px solid #eaeaea;margin-bottom:25px}.code-box .tab-title ul{list-style-type:none;margin:0;padding:0;text-align:center;background:#eaeaea}.code-box .tab-title ul li{width:33.33%;float:left;line-height:42px;cursor:pointer}.code-box .tab-title ul li.active{background:#fff}.code-box .tab-content{padding:10px 15px}.code-box .tab-content textarea{margin-bottom:0}.code-box .tab-content .drag-box{margin-bottom:10px}.code-box .tab-content p{margin-bottom:10px}.code-box .btn-box button{margin-bottom:10px}.setting-box .setting-item{margin-bottom:25px}.setting-box .setting-item .setting-title{font-size:18px;font-weight:600;margin-bottom:5px}.setting-box .setting-item .setting-content{color:#333}.setting-box .setting-item .setting-content label{margin-bottom:10px}h2{font-size:22px}h3{font-size:18px}
+</style>
+</head>
+<body>
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-3 small-6 logo">
+                <a href="index.html">
+                    <span>UU在线工具</span>
+                </a>
+            </div>
+            <div class="cell large-9 small-6 main-nav-box hide-for-small-only">
+                <div class="date-box float-right" id="timeBox"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <!--ad box-->
+    <div class="banner-ad" style="min-height:280px;">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12" style="margin-top:10px;">
+                    <ins class="adsbygoogle" style="display:block;max-height:100px;" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5019822032" data-ad-format="auto"></ins>
+                </div>
+            </div>
+        </div>
+    </div>
+<main class="theme" id="app">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <nav class="breadcrumbs-wrapper" aria-label="你在这里:" role="导航" style="margin-top:15px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="index.html">首页</a></li>
+                        <li>
+                            <span class="show-for-sr">当前: </span>
+                            <h1>在线JS代码混淆加密工具</h1>
+                        </li>
+                    </ul>
+                    <a class="float-right tool-extend-btn hide-for-small-only collapse " href="javascript:;" title="展开/缩起工具区域">
+                        <i class="iconfont icon-angle-double-right"></i>
+                    </a>
+                </nav>
+                            </div>
+
+            <div class="cell large-9 small-12" id="toolWrapper" data-nosnippet="">
+                <div class="tool-wrapper">
+                    <div class="tool-box">
+    <div class="code-box">
+        <div class="tab-title">
+            <ul class="clearfix">
+                <li :class="{active:1==tabId}" @click="tabId=1">粘贴JS代码</li>
+                <li :class="{active:2==tabId}" @click="tabId=2">上传JS文件</li>
+                <li :class="{active:3==tabId}" @click="tabId=3">混淆结果</li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div v-show="1==tabId" v-cloak="">
+                <textarea id="dataResource" rows="12" :placeholder="inputTip" v-model="convertData"></textarea>
+            </div>
+            <div v-show="2==tabId" v-cloak="">
+                <div class="drag-box" id="dragBox">
+                    <input type="file" id="filePicker" class="file-picker">
+                    <div class="tip-word">点击选择或将JS文件拖入页面即可</div>
+                </div>
+                <p>
+                    您JS文件将仅在您的客户端浏览器读取处理，不会上传到网络服务器，请放心使用。<br>
+                    点击选择或者直接将JS拖入到页面中即可，支持.txt和.js文件格式，选择上传文件后工具将自动开始混淆。
+                </p>
+                <p>
+                </p>
+            </div>
+            <div v-show="3==tabId" v-cloak="">
+                <textarea id="resultStr" rows="12" placeholder="代码混淆结果，为保证代码完整性，请点击复制按钮复制代码" v-model="resultStr"></textarea>
+                <div v-if="''!=resultStr">
+                    <p style="color:#888;margin-top:5px;">
+                        混淆结果字符数：<b v-text="resultStr.length"></b>，预估文件大小： <b v-text="getFileSize()"></b>
+                        <span v-if="''!=setting.domainLock">，您设置了安全域名，请注意留意。</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="btn-box text-center">
+            <button class="button " @click="convert" v-if="1==tabId">JS混淆加密</button>
+            <button class="button" @click="showDemo" v-if="1==tabId">举个栗子</button>
+            <button class="button  js-copy" data-clipboard-target="#resultStr" v-if="3==tabId" v-cloak="">复制结果</button>
+            <button class="button  " @click="convert" v-if="3==tabId && ''!=resultStr" v-cloak="">重新混淆</button>
+            <button class="button  " @click="download" v-if="3==tabId" v-cloak="">下载混淆结果</button>
+            <button class="button  alert" @click="reset" v-if="1==tabId" v-cloak="">清空</button>
+        </div>
+    </div>
+    <hr>
+    <p>
+        配置项较多，各位同学使用时可直接根据自身实际情况使用以下预设方案，您的所有设置均会自动保存，刷新不会丢失。
+    </p>
+    <div class="setting-box">
+        <div class="setting-item">
+            <div class="setting-title">
+                混淆预设方案
+            </div>
+            <div class="setting-content">
+                <div class="grid-x grid-margin-x large-up-3">
+                    <div class="cell">
+                        <div class="checkbox-group">
+                            <input id="preset1" type="radio" v-model.number="setting.preset" value="1">
+                            <label for="preset1">最佳混淆，性能较差</label>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div class="checkbox-group">
+                            <input id="preset2" type="radio" v-model.number="setting.preset" value="2">
+                            <label for="preset2">中等混淆，性能均衡</label>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div class="checkbox-group">
+                            <input id="preset3" type="radio" v-model.number="setting.preset" value="3">
+                            <label for="preset3">低度混淆，性能最佳</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="setting-item">
+            <div class="setting-title">
+                基础设置
+            </div>
+            <div class="setting-content">
+                <div class="grid-x grid-margin-x large-up-4 small-up-2">
+                    <div class="cell" v-for="(item,index) in basicArr">
+                        <div class="checkbox-group">
+                            <input :id="index" type="checkbox" v-model="setting.basic" :value="index">
+                            <label :for="index">{{item}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="setting-item">
+            <div class="setting-title">
+                加密系数&规则
+            </div>
+            <div class="setting-content">
+                <div class="grid-x grid-margin-x large-up-4 small-up-2">
+                    <div class="cell">
+                        <label>
+                            变量加密系数
+                            <select v-model.number="setting.stringArrayThreshold">
+                                <option value="0">不加密变量名</option>
+                                <option :value="i/10" v-for="i in 10">{{i/10}}</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label>
+                            死代码注入系数
+                            <select v-model.number="setting.deadCodeInjectionThreshold">
+                                <option value="0">不注入死代码</option>
+                                <option :value="i/10" v-for="i in 10">{{i/10}}</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label>
+                            控制流平坦化系数
+                            <select v-model.number="setting.controlFlowFlatteningThreshold">
+                                <option value="0">不修改控制流</option>
+                                <option :value="i/10" v-for="i in 10">{{i/10}}</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label>
+                            变量加密规则
+                            <select v-model="setting.stringArrayEncoding">
+                                <option value="none">不加密</option>
+                                <option value="base64">Base64</option>
+                                <option value="rc4">Rc4</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-title">
+                高级设置 <small>（每项一行）</small>
+            </div>
+            <div class="setting-content">
+                <div class="grid-x grid-margin-x large-up-4 small-up-1">
+                    <div class="cell">
+                        <label>
+                            安全域名
+                            <textarea rows="4" v-model="setting.domainLock" placeholder=".domain.com表示所有子域名"></textarea>
+                        </label>
+                        <label v-if="''!=setting.domainLock">
+                            非安全域名跳转URL(带http)
+                            <input type="text" v-model="setting.domainLockRedirectUrl" placeholder="默认为：about:blank">
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label>
+                            强制转换的字符串
+                            <textarea rows="4" v-model="setting.forceTransformStrings" placeholder="保护某些敏感字符串"></textarea>
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label>
+                            保留的变量标识符
+                            <textarea rows="4" v-model="setting.reservedNames" placeholder="不希望被混淆修改的变量名"></textarea>
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label>
+                            保留的字符串
+                            <textarea rows="4" v-model="setting.reservedStrings" placeholder="不希望被混淆替换的字符串"></textarea>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="intro-box">
+        <hr>
+        <h2>混淆工具介绍</h2>
+        <p>
+            本工具可以混淆加密您的JS代码，让您的JS代码更难理解和被他人抄袭复制，保护您的代码成果，支持es3, es5, es2015, es2016, es2017, es2018, es2019 and partially es2020版本的JS。
+        </p>
+        <p>
+            本JS混淆工具完全免费，支持粘贴JS代码或文件上传方式混淆您的代码，没有长度和文件体积限制，
+            默认会带个小尾巴（最前面声明的一个obfucator的变量），当然您可以随意删除，不会影响程序执行。
+        </p>
+        <p>
+            本工具采用开源组件在您的本地客户端浏览器混淆加密您的JS代码，您的JS代码不会上传到网络服务器中处理，
+            完全在您的浏览器完成JS代码的加密混淆，您无需担心代码泄露，安全可信，请放心使用。
+        </p>
+        <p>
+            您的JS代码由开源组件完成混淆，如果您有高频混淆需求，建议使用CLI方式自动化混淆，更加高效便捷。<br>
+        </p>
+
+        <h2>混淆预设方案</h2>
+        <p>
+            由于本工具配置项较多，默认提供了3套预设的混淆加密方案，可根据自身情况修改配置，预设方案分别是：<br>
+            1、最佳混淆，性能较差（将会慢50-100%）；
+            2、中等混淆，性能均衡（将会慢30-35%）；
+            3、低度混淆，性能最佳（比未混淆稍慢）。
+        </p>
+        <p>
+            由于混淆过程中会修改程序的执行逻辑以及众多变量替换等操作，会影响原程序的执行性能和增大文件体积，混淆强度和程序性能互斥，
+            最佳混淆会让混淆效果最佳，解密和理解难度最大，但程序执行性能会受到较大影响。最低度的混淆虽然执行性能受影响最小，但混淆强度最低，
+            相对较容易理解混淆后的程序，当然您也可以折中选择中等的混淆强度，该方案相对均衡。
+        </p>
+        <p>
+            您也可以根据实际需要在预设的基础上调整某些配置，值得注意的是，切换预设配置可能会覆盖某些您的自定义设置，请留意配置情况。<br>
+            一般而言，可以无需修改设置直接使用默认的混淆预设方案即可。
+        </p>
+        <h2>配置项介绍</h2>
+        <p>
+
+        </p>
+        <h3>一、基础设置</h3>
+        <p>
+            注意部分设置可能会破坏您的程序逻辑，请混淆后注意检查验证程序逻辑。
+        </p>
+        <p>
+            <b>防止格式化</b>：可以让代码美化工具对混淆后的代码不起作用。<br>
+            <b>使用eval语句</b>：使用eval语句方式实现程序混淆。<br>
+            <b>转义Unicode</b>：将变量值转换为Unicode编码，此项会大大增加文件体积，且很容易还原回去，建议只针对小文件使用。<br>
+            <b>优化代码结构</b>：精简代码，如将多个if else结构换为三目运算。<br>
+            <b>重命名全局变量</b>：将全局变量重命名，可能会造成代码执行问题，请根据实际情况选择。<br>
+            <b>重命名属性名</b>：将对象属性名重新命名，可能会造成代码执行问题，请根据实际情况选择。<br>
+            <b>分割变量字符串</b>：将会以10个字符为一个单位，拆分混淆变量值的字符串。<br>
+            <b>数字转表达式</b>：将数字转换为函数表达式的写法，增加复杂度。<br>
+            <b>禁止控制台调试</b>：当控制台打开时终止程序执行，并进入死循环干扰控制台调试。<br>
+            <b>禁止控制台输出</b>：屏蔽一些控制台输出信息，如log，error，debug等方法，减少程序流程提示。<br>
+        </p>
+        <h3>二、混淆加密系数&规则</h3>
+        <p>
+            混淆加密规则及系数均可以选择关闭相应功能，提高程序的执行效率，系数设置范围为0-1，值越高则混淆加密强度越高，文件体积和代码执行效率会有所下降。
+        </p>
+        <p>
+            <b>变量加密系数</b>：混淆改变您的代码变量名称，值越高看起来越乱。<br>
+            <b>死代码注入系数</b>：死代码也就是花指令，指向正常的程序中注入一些没什么用的废代码，让程序更乱更加难以理解，干扰解密过程。<br>
+            <b>控制流平坦化系数</b>：改变程序的执行流程结构，模糊程序模块之间的前后关系，让程序看起来更加乱，增加程序分析难度。<br>
+            <b>变量加密规则</b>：加密改变变量的方法，base64加密后比rc4执行效率要高，当然没有rc4强度高。<br>
+        </p>
+        <h3>三、混淆高级设置</h3>
+        <p>
+            高级设置中所有的设置项每项一行，使用回车分隔每一个配置项。
+        </p>
+        <p>
+            <b>安全域名</b>：只允许混淆后的代码在指定的安全域名下执行（支持多个域名，子域名通配符用“.domain.com”表示），
+            在此之外的任何域名下执行均会重定向到所设置的URL中，这样即使您的代码被复制，对方也无法使用，强烈建议设置此项！<br>
+            <b>强制转换的字符串</b>：强制加密编码一些比较敏感的字符串，让寻找及解密难度增大。<br>
+            <b>保留的变量标识符</b>：需要保留的不希望被混淆的一些变量标识符。<br>
+            <b>保留的字符串</b>：需要保留的不希望倍混淆的一些字符串。<br>
+        </p>
+
+        <h2>为何要混淆代码？</h2>
+        <p>
+            混淆代码是为了保护您的代码成果，通常有以下几种情形：<br>
+            1、避免让他人通过代码读懂您的产品逻辑，造成商业机密泄露。<br>
+            2、防止一些白嫖党无节操的复制掠夺您的代码成果。<br>
+            3、为客户开发程序，在未收到尾款前用于给客户展示的演示站。<br>
+            4、删除代码注释等无用信息，提高代码文件的网络加载速度。<br>
+            此外，还有很多类似场景...
+        </p>
+
+
+        <h2>其它提示</h2>
+        <p>
+            使用本工具完成代码混淆后，请勿使用其它代码压缩工具（如uglifyjs等）或混淆加密工具二次处理混淆结果，否则可能会造成混淆变量被修改造成脚本无法执行或者混淆失败，也不要使用工具二次混淆，仅混淆加密一次就已经足够安全了。
+        </p>
+        <p>
+            为了代码的完整性，建议混淆完毕后使用工具提供的一键复制或下载保存到本地。
+        </p>
+        <p>
+            工具将会默认记住您的混淆设置，只需设置一次即可，不需要每次使用都重新设置。
+        </p>
+        <p>
+            更多混淆加密细节请参考 <a href="javascript:;" target="_blank">Javascript Obfuscator</a>。
+        </p>
+    </div>
+</div>
+                                    </div>
+            </div>
+
+            <aside class="cell large-3 small-12 " id="sidebar">
+                                    <div style="height:0;overflow: hidden;">
+                        <img src="static/picture/js.jpg" alt="在线JS代码混淆加密工具">
+                    </div>
+                                
+                <!--tool tip -->
+                <div class="aside-item tool-tip">
+                    <div class="aside-title">工具简介</div>
+                    <div class="aside-body">
+                        <div class="text-collapse collapse">
+                            <p style="margin-bottom:20px;">
+                                在线JS代码混淆加密工具，可以通过代码混淆的方式，让您的JS代码更难理解和被他人抄袭复制，保护您的JS代码。                            </p>
+                            <div class="toggle-btn" title="展开/折叠工具简介"></div>
+                        </div>
+                    </div>
+                </div>
+
+                                    <!--green tool tip -->
+                    <div class="aside-item green-tool-tip" data-nosnippet="">
+                        <div class="aside-body">
+                            本工具数据均在本地浏览器处理，不会上传到网络服务器中，请放心使用！
+                        </div>
+                    </div>
+                
+                <div class="aside-item" style="border:none;">
+                    <div class="share-box" title="点击复制本工具链接">
+                        <input class="js-copy" type="text" id="shareInput" readonly="" value="uutool.cn/js/" data-clipboard-text="https://uutool.cn/js/" data-clipboard-tip="工具链接已复制">
+                    </div>
+                </div>
+
+                
+                
+                
+                                    <!--relative tool-->
+                    <div class="aside-item relative-tool">
+                        <div class="aside-title">相关工具</div>
+                        <div class="aside-body">
+                            <ul>
+                                                                    <li><a href="javascript:;" title="在线JS设备屏幕参数检测工具">在线JS设备屏幕参数检测工具</a></li>
+                                                                    <li><a href="index72.html" title="在线JSON转PHP数组工具">在线JSON转PHP数组工具</a></li>
+                                                                    <li><a href="index86.html" title="JSON转Excel">JSON转Excel</a></li>
+                                                                    <li><a href="index64.html" title="在线JSON转数组工具">在线JSON转数组工具</a></li>
+                                                                    <li><a href="index63.html" title="在线JSON数组转Excel工具">在线JSON数组转Excel工具</a></li>
+                                                                    <li><a href="index73.html" title="在线文本列表转JSON工具">在线文本列表转JSON工具</a></li>
+                                                                    <li><a href="index78.html" title="在线JSON字段提取工具">在线JSON字段提取工具</a></li>
+                                                                    <li><a href="index98.html" title="在线JSON格式化工具">在线JSON格式化工具</a></li>
+                                                                    <li><a href="hyeeccjz3x.html" title="在线Excel转JSON工具">在线Excel转JSON工具</a></li>
+                                                                    <li><a href="bunlpe93b4.html" title="在线HTML转JS/JSON工具">在线HTML转JS/JSON工具</a></li>
+                                                            </ul>
+                        </div>
+                    </div>
+                
+                                    <div style="max-height:260px;overflow: hidden;margin-top:20px;">
+                        <div style="max-height:150px;overflow: hidden;margin-bottom:15px;">
+                            <ins class="adsbygoogle" style="display:inline-block;width:100%;min-height:90px" data-full-width-responsive="true" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5880251834"></ins>
+                        </div>
+                    </div>
+                            </aside>
+        </div>
+    </div>
+</main>
+
+
+<footer id="footer" data-tool-alias="js">
+    <div class="grid-container" data-nosnippet="">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a rel="nofollow" href="about.html">关于我们</a>
+                    <a href="index1.html">工具地图</a>
+                    <a href="v0pd8pgi56.html">工具博客</a>
+                    <a rel="nofollow" href="support.html">支持我们</a>
+                    <a rel="nofollow" href="customization.html">工具定制</a>
+                    <a rel="nofollow" href="data-security.html">用户数据安全</a>
+                    <a rel="nofollow" href="disclaimer.html">免责声明</a>
+                    <a rel="nofollow" href="copyright.html">著作权声明</a>
+                    <a rel="nofollow" href="feedback.html">反馈建议</a>
+                </div>
+                <!-- 友情链接 -->
+                <p class="friend-link text-center">友情链接：
+                    <a href="javascript:;" title="网络剪贴板" target="_blank">网络剪贴板</a>
+                    <a href="javascript:;" target="_blank">Font Awesome</a>
+                    <a href="javascript:;" title="图标制作工具" target="_blank">图标工具</a>
+                    <a href="javascript:;" title="在线文本工具箱" target="_blank">文本工具箱</a>
+                    <a href="javascript:;" title="JPG MIN 图像本地化压缩工具" target="_blank">JPG MIN</a>
+                    <a href="javascript:;" title="JSON数据处理好帮手！" target="_blank">WeJSON</a>
+                    <a href="javascript:;" title="文本派，永久免费的永久文本存储服务" target="_blank">文本派</a>
+                    <a href="javascript:;" title="专业证件照免费处理" target="_blank">证件照大师</a>
+                    <a href="javascript:;" title="在线文件重命名" target="_blank">在线文件重命名</a>
+                    <a href="ygtamznth7.html" target="_blank">手机号段网</a>
+                    <a href="javascript:;" target="_blank" style="font-size:0;overflow: hidden">在线剪辑大师</a>
+                </p>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    Copyright © 2022 奇客科技 uuTool.cn All Rights Reserved <a rel="nofollow" href="javascript:;" target="_blank">桂ICP备17007729号-11</a><br>
+                </p>
+                            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li title="QQ联系我们">
+            <a target="_blank" href="javascript:;"><i class="iconfont icon-qq"></i></a>
+        </li>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon-xcx"></i>
+            <div class="hidden-box">
+                <img src="static/picture/xcx-code.jpg" width="140" alt="小程序码">
+                <span>微信小程序</span>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min.js"></script>
+    <script src="static/js/ad.min.js"></script>
+<script src="https://uutool.cn/assets/js/tools/js.js?v=1628500603"></script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>压图大师 - 在线高效图片压缩工具</title>
+    <meta name="keywords" content="压图大师,图像优化,图像压缩,压图大师,本地化图像压缩,浏览器图像压缩,图片压缩,本地图片压缩,浏览器图片压缩">
+    <meta name="description" content="压图大师是一款使用浏览器高效压缩图像的在线工具，其压缩效率高，速度快，图像压缩纯本地化，所有图像均不会上传到网络服务器，隐私更有保障！">
+    <link rel="canonical" href="https://jpgmin.cn/">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common2.css">
+<link rel="stylesheet" href="static/css/font_1629278_eakwi33psps.css">
+<script async="" src="static/js/adsbygoogle.js" crossorigin="anonymous"></script></head>
+<body class="page-index" data-site="压图大师">
+
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <div class="logo"><a href="javascript:;">压图大师</a></div>
+                <ul class="top-nav">
+                    <li><a href="javascript:;">常见问答</a></li>
+                    <li><a href="javascript:;">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="intro-box item-box">
+    <h1>压图大师</h1>
+    <p class="h1-des">
+        本地客户端离线压图，速度快性能好，高效便捷，安全放心
+    </p>
+</div>
+
+<main id="app" @paste="handlePaste">
+    <div class="grid-container">
+        <!-- 数据框 -->
+        <div class="grid-x grid-margin-x tool-box">
+            <div class="cell large-12 small-12">
+
+                <!--压缩设置-->
+                <div class="grid-x grid-margin-x" v-cloak="">
+                    <div class="cell large-2 small-6">
+                        压缩模式
+                        <select :disabled="runStatus?'disabled':false" v-model.number="compressMode">
+                            <option value="1">压缩率最高</option>
+                            <option value="0">速度最快</option>
+                        </select>
+                    </div>
+                    <div class="cell large-2 small-6">
+                        <label for="">
+                            压缩率：
+                            <input class="input-group-field" type="number" min="1" max="100" placeholder="0-100" :disabled="runStatus?'disabled':false" v-model="compressQuality">
+                        </label>
+                    </div>
+                    <div class="cell large-2 small-6">
+                        <label for="">
+                            输出格式：
+                            <select :disabled="(runStatus||1==compressMode)?'disabled':false" v-model="outputFormat">
+                                <option value="">原始格式</option>
+                                <option value="jpg">JPG</option>
+                                <option value="png">PNG</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="cell large-2 small-6">
+                        <label for="">
+                            线程数：
+                            <select :disabled="runStatus?'disabled':false" v-model.number="maxThread">
+                                <option :value="i" v-for="i in 5" v-text="i">2</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="cell large-2 small-6">
+                        <label for="">
+                            最大输出宽度（px）：
+                            <input class="input-group-field" type="number" min="1" placeholder="默认原始宽度" :disabled="(runStatus||1==compressMode)?'disabled':false" v-model.number="maxWidth">
+                        </label>
+                    </div>
+                    <div class="cell large-2 small-6">
+                        滚动跟随
+                        <select :disabled="runStatus?'disabled':false" v-model.number="isFollow">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="drag-box" id="dragBox">
+                    <input type="file" id="filePicker" class="file-picker" accept="image/*" multiple/="">
+                    <div class="tip-word">请将图像拖至此或点击上传</div>
+                </div>
+                <p style="margin-top:-15px;font-size:12px;color:#888;">
+                    如需快速批量缩小图像或格式转换，欢迎体验 <a href="javascript:;" target="_blank">图片转换大师</a>，速度超快零等待！
+                </p>
+
+                <div class="operation-btn text-center " style="margin-top:20px;" v-show="0!=imgArr.length" v-cloak="">
+                    <button class="button expanded" @click="downloadAll">下载全部图像</button>
+                </div>
+                <div class="file-box" v-show="0!=imgArr.length" v-cloak="">
+                    <ul class="ul-file-list">
+                        <li :id="'img'+index" class="clearfix" v-for="(item,index) in imgArr">
+                            <div class="bar-item info-bar">
+                                <a href="javascript:;" @click="preview(index,1)" title="点击预览">{{item.fileName}}</a>
+                                <span class="text">{{getFileSize(item.fileSize)}}</span>
+                            </div>
+                            <div class="bar-item progress-bar">
+                                <div class="bar">
+                                    <div :class="'progress '+getClassName(item.status)">
+                                        <span class="progress-meter" style="width:100%;">
+                                          <p class="progress-meter-text">{{getStatusDes(item.status)}}</p>
+                                         </span>
+                                    </div>
+                                </div>
+                                <span class="text" v-if="3==item.status">{{getFileSize(item.finalSize)}}</span>
+                            </div>
+                            <div class="bar-item download-bar" v-if="3==item.status">
+                                <a href="javascript:;" @click="preview(index)" title="预览效果图"><i class="iconfont icon-eye"></i></a>
+                                <a href="javascript:;" @click="download(index)"><i class="iconfont icon-download"></i></a>
+                                <span class="text">{{getCompressPercent(index)}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="operation-btn text-center " style="margin-top:20px;" v-show="0!=imgArr.length" v-cloak="">
+                    <button class="button expanded" @click="downloadAll">下载全部图像</button>
+                </div>
+
+                <!--压缩统计-->
+                <div class="text-center" v-show="0!=imgArr.length" v-cloak="">
+                    <div class="compress-tip">
+                        本次共为您压缩 <b>{{getSavePercent()}}</b> 共计 <strong>{{getTotalSave()}}</strong>
+                    </div>
+                    <hr>
+                </div>
+
+                <div>
+                    <!--why us-->
+                    <div class="why-us">
+                        <h2 class="text-center">压图大师的优势</h2>
+                        <p class="text-center">
+                            尽管网上有很多图像压缩工具，和这些工具相比，压图大师具有以下优势。
+                        </p>
+                        <ul class="ul-advantage clearfix">
+                            <li>
+                                <i class="iconfont icon-minimize"></i>
+                                <div>
+                                    <b>压缩效率超高</b>
+                                    在保证图像质量的情况下，经压缩后图像能够节约40-80%的体积，压缩率超高，性能出色。
+                                </div>
+                            </li>
+                            <li>
+                                <i class="iconfont icon-unlimit"></i>
+                                <div>
+                                    <b>无任何使用限制</b>
+                                    没有单次压缩图像数量以及图像体积大小等限制，免登陆，打开即用，使用便捷，永久免费。
+                                </div>
+                            </li>
+                            <li>
+                                <i class="iconfont icon-light"></i>
+                                <div>
+                                    <b>数据处理更高效</b>
+                                    所有图像压缩计算均在本地浏览器执行，图像不会上传到网络服务器，极大节约了流量及上传下载等待时间，多线程图像压缩，更高效。
+                                </div>
+                            </li>
+                            <li>
+                                <i class="iconfont icon-lock"></i>
+                                <div>
+                                    <b>数据隐私更放心</b>
+                                    数据本地化离线处理意味着您不用担心数据泄露，图像数据绝不会上传至网络服务器中，一切都在您的掌控之中。
+                                </div>
+                            </li>
+                            <li>
+                                <i class="iconfont icon-copy"></i>
+                                <div>
+                                    <b>支持粘贴压缩</b>
+                                    在屏幕截图或复制图像文件后，直接按下 <code>CTRL+V</code> 即可快速传压缩图像，操作高效快捷。
+                                </div>
+                            </li>
+                            <li>
+                                <i class="iconfont icon-format"></i>
+                                <div>
+                                    <b>可选图像输出格式</b>
+                                    可以选择指定图像格式作为最终的输出格式，方便地进行图像格式转换，如将PNG格式图片统一转换成JPG格式输出存储。
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!--qa-->
+                    <div class="qa">
+                        <h2 class="text-center">常见问答</h2>
+                        <p class="text-center">通过以下问答了解关于压图大师的更多信息。</p>
+
+                        <h3>关于压图大师</h3>
+                        <p>
+                            压图大师是一个免费的在线图像压缩优化工具，能够极大地压缩图像体积，提高网络的传输效率以及减少图像存储体积，广泛适用于网站图像压缩等，压缩后的图像具有更小的体积，更快的加载速度，更好的用户体验。
+                        </p>
+
+                        <h3>如何使用压图大师？</h3>
+                        <p>
+                            直接把图像拖入到页面中，压图大师将会自动开始压缩，压缩完毕后您可以选择下载指定的图像或者打包下载所有已压缩的图像。<br>
+                            您也可以在复制图像或截图后直接按 <code>CTRL+V</code> 粘贴后优化处理！
+                        </p>
+
+                        <h3>为什么会压缩失败？</h3>
+                        <p>
+                            压缩失败通常有以下原因：<br>
+                            1、图像格式不支持。<br>
+                            2、图像格式不标准或规范。<br>
+                            3、线程数设置过大造成内存不足，减少线程数即可。<br>
+                            4、工具自身处理失败及其它原因。<br>
+                        </p>
+                        <p>更多关于压图大师的信息请查看 <a href="javascript:;">常见问答</a>。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-x">
+            <div class="cell large-12 small-12">
+
+                <!--result overview-->
+                <div class="result-overview">
+                    <h2 class="text-center" style="margin-top:50px;">压缩效果预览</h2>
+                    <p class="text-center">
+                        左右移动鼠标查看压缩后图像和原始图像，左侧为压缩后的图像，右侧为原始图像。
+                    </p>
+                    <div class="result" id="resultBox">
+                        <div class="origin">
+                            <img src="static/picture/origin.jpg" alt="原始">
+                            <span>原始：737KB</span>
+                        </div>
+                        <div class="after">
+                            <img src="static/picture/compressed.jpg" alt="压缩后">
+                            <span>压图大师：274KB</span>
+                        </div>
+                    </div>
+                    <div class="progress-box">
+                        <div class="download-box">
+                            <a href="static/picture/origin.jpg" target="_blank">原始图像</a>
+                            <a href="static/picture/compressed.jpg" target="_blank">压缩图像</a>
+                        </div>
+                        <div class="origin">
+                            <div class="success progress">
+                                <div class="progress-meter" style="width: 100%"></div>
+                            </div>
+                            <span>压图大师：274KB （ -62.84% ）</span>
+                        </div>
+                        <div class="after">
+                            <div class="warning progress">
+                                <div class="progress-meter" style="width: 100%"></div>
+                            </div>
+                            <span>原始：737KB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="footer">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <div class="friend-link text-center">
+                    <a href="javascript:;">首页</a>
+                    <a href="javascript:;">常见问答</a>
+                    <a href="javascript:;">服务条款</a>
+                    <a href="javascript:;">关于我们</a>
+                    <a href="javascript:;" target="_blank">图片转换大师</a>
+                    <a href="index.html" target="_blank">UU在线工具</a>
+                    <a href="javascript:;" target="_blank">在线文件重命名</a>
+                </div>
+                <!-- 版权声明 -->
+                <p class="copyright text-center">
+                    Copyright © 奇客科技 <b><a href="javascript:;"> 压图大师 </a></b> All Rights Reserved<br><br>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min3.js"></script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线信用卡分期真实年化利率计算器 - UU在线工具</title>
+    <meta name="description" content="在线信用卡分期真实年化利率计算器，可以一键计算出信用卡分期的真实年化利率，支持一次性支付利息服务费以及分期平均支付利息服务费2种情况，使用Excel的IRR内部收益率计算公式完成计算，便捷地为您提供参考依据。">
+    <link rel="canonical" href="">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common.css">
+<link rel="stylesheet" href="static/css/font_1455035_z0n3d6to6dc.css">    </head>
+<body>
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-3 small-6 logo">
+                <a href="index.html">
+                    <span>UU在线工具</span>
+                </a>
+            </div>
+            <div class="cell large-9 small-6 main-nav-box hide-for-small-only">
+                <div class="date-box float-right" id="timeBox"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <!--ad box-->
+    <div class="banner-ad" style="min-height:280px;">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12" style="margin-top:10px;">
+                    <ins class="adsbygoogle" style="display:block;max-height:100px;" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5019822032" data-ad-format="auto"></ins>
+                </div>
+            </div>
+        </div>
+    </div>
+<main class="theme" id="app">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <nav class="breadcrumbs-wrapper" aria-label="你在这里:" role="导航" style="margin-top:15px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="index.html">首页</a></li>
+                        <li>
+                            <span class="show-for-sr">当前: </span>
+                            <h1>在线信用卡分期真实年化利率计算器</h1>
+                        </li>
+                    </ul>
+                    <a class="float-right tool-extend-btn hide-for-small-only collapse " href="javascript:;" title="展开/缩起工具区域">
+                        <i class="iconfont icon-angle-double-right"></i>
+                    </a>
+                </nav>
+                                    <div class="tool-collection">
+                        <ul class="expanded1">
+                                                            <li class=""><a href="javascript:;">内部收益率IRR计算器</a></li>
+                                                            <li class="active"><a href="">信用卡分期利率计算器</a></li>
+                                                            <li class=""><a href="index2.html">信用卡花呗分期真实年化利率速查表</a></li>
+                                                    </ul>
+                    </div>
+                            </div>
+
+            <div class="cell large-9 small-12" id="toolWrapper" data-nosnippet="">
+                <div class="tool-wrapper">
+                    <div class="tool-box">
+    <div class="grid-x grid-margin-x">
+        <div class="cell large-3">
+            <label for="">
+                利息/服务费收取方式：
+                <select v-model.number="type">
+                    <option value="1">平均每月收取</option>
+                    <option value="2">一次性收取</option>
+                </select>
+            </label>
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell large-3">
+            <label for="">
+                分期总额：
+                <input type="text" placeholder="共分期多少钱" v-model.number="billAmount">
+            </label>
+        </div>
+        <div class="cell large-3">
+            <label for="">
+                分期数：
+                <input type="text" placeholder="共分多少期还款" v-model.number="monthNum">
+            </label>
+        </div>
+        <div class="cell large-3" v-if="1==type">
+            <label for="">
+                每期还款金额：
+                <input type="text" placeholder="本金+利息" v-model.number="billMonth">
+            </label>
+        </div>
+        <div class="cell large-3" v-if="2==type" v-cloak="">
+            <label for="">
+                服务费总额：
+                <input type="text" placeholder="首期一次性收取" v-model.number="serviceFee">
+            </label>
+        </div>
+    </div>
+
+    <div class="btn-box">
+        <button class="button small " @click="calc">开始计算</button>
+        <button class="button small" @click="showDemo" v-if="''==resultStr">举个栗子</button>
+        <button class="button small secondary" @click="reset" v-if="''!=resultStr" v-cloak="">清空</button>
+    </div>
+
+    <div class="result-box" v-if="resultStr" v-cloak="">
+        <p>
+            真实年化利率为：<b style="font-size:32px;color:green;" v-text="resultStr"></b>
+        </p>
+    </div>
+</div>
+                                            <div class="tool-intro">
+                            <h2>工具简介</h2><p>在线信用卡分期真实年化利率计算器，可以一键计算出信用卡分期的真实年化利率，支持一次性支付利息服务费以及分期平均支付利息服务费2种情况，使用Excel的IRR内部收益率计算公式完成计算，便捷地为您提供参考依据。</p><p>在办理信用卡分期的时候，通常月息是0.75左右，名义上分期的年利率为0.75*12=9%，看似并不高，但实际上真实的年化利率远高于名义利率，毕竟每个月都在还款，本金一直在减少，但每个月的利息却没变，因此真实年化会远高于银行标注的利率。<br></p><p>我们可以使用Excel的IRR公式计算出信用卡分期的真实年化利率，但需要使用Excel软件且需详细列出每个月的还款金额，还需要熟练使用IRR公式，对于小白不太友好，通过本工具，您可以经通过输入分期金额，分期数以及每月还款数快速计算出信用卡真实年化利率，计算结果与Excel一致，简单便捷，可以快速为您提供分期年化利率参考。</p><p>信用卡分期利息及手续费一般有2中方式：一种是以月手续费的方式平均每期收取，如农行、建行、交行、民生等；另一种则是在缴付首期款时一次性收取，如招行、工行、中行等。</p><p>在计算时候，不用考虑服务费的百分比例或打折优惠度，直接填写经过优惠计算后的金额即可。</p><h2 style="white-space: normal;">如何使用</h2><p style="white-space: normal;">根据您的分期情况选择好是一次性支付利息服务费还是分月平均支付利息服务费，填写好分期总额，分期数以及每期还款金额，点击开始计算即可完成信用卡真实年化利率的计算。</p><p style="white-space: normal;">注意每期还款数为本金加利息的总额，一般银行会自动计算每月应还金额，并给出包含利息数，此处填入银行计算的每月还款金额即可。</p><p style="white-space: normal;">您可以点击“举个栗子”按钮快速体验，例子中分期金额为10000元，共分12期，按月支付服务费利息，每期需要还款876.33元，计算结果显示该分期的真实年化利率为9.39%。</p><p style="white-space: normal;">本工具依旧适用于花呗分期利率计算，京东白条分期利率计算，微粒贷分期利率计算等各类金融服务分期真实年化利率计算。</p><h2>什么是内部收益率？</h2><p style="white-space: normal;">部收益率，英文名称：Internal Rate of Return，缩写IRR。是指项目投资实际可望达到的收益率。就是资金流入现值总额与资金流出现值总额相等、净现值等于零时的折现率。如果不使用电子计算机，内部收益率要用若干个折现率进行试算，直至找到净现值等于零或接近于零的那个折现率。内部收益率，是一项投资渴望达到的报酬率，是能使投资项目净现值等于零时的折现率。</p>                        </div>
+                                    </div>
+            </div>
+
+            <aside class="cell large-3 small-12 " id="sidebar">
+                                    <div style="height:0;overflow: hidden;">
+                        <img src="static/picture/creditcard-rate.jpg" alt="在线信用卡分期真实年化利率计算器">
+                    </div>
+                                
+                <!--tool tip -->
+                <div class="aside-item tool-tip">
+                    <div class="aside-title">工具简介</div>
+                    <div class="aside-body">
+                        <div class="text-collapse collapse">
+                            <p style="margin-bottom:20px;">
+                                在线信用卡分期真实年化利率计算器，可以一键计算出信用卡分期的真实年化利率，支持一次性支付利息服务费以及分期平均支付利息服务费2种情况，使用Excel的IRR内部收益率计算公式完成计算，便捷地为您提供参考依据。                            </p>
+                            <div class="toggle-btn" title="展开/折叠工具简介"></div>
+                        </div>
+                    </div>
+                </div>
+
+                                    <!--green tool tip -->
+                    <div class="aside-item green-tool-tip" data-nosnippet="">
+                        <div class="aside-body">
+                            本工具数据均在本地浏览器处理，不会上传到网络服务器中，请放心使用！
+                        </div>
+                    </div>
+                
+                <div class="aside-item" style="border:none;">
+                    <div class="share-box" title="点击复制本工具链接">
+                        <input class="js-copy" type="text" id="shareInput" readonly="" value="uutool.cn/creditcard-rate/" data-clipboard-text="https://uutool.cn/creditcard-rate/" data-clipboard-tip="工具链接已复制">
+                    </div>
+                </div>
+
+                
+                
+                
+                                    <!--relative tool-->
+                    <div class="aside-item relative-tool">
+                        <div class="aside-title">相关工具</div>
+                        <div class="aside-body">
+                            <ul>
+                                                                    <li><a href="javascript:;" title="在线内部收益率IRR计算器">在线内部收益率IRR计算器</a></li>
+                                                            </ul>
+                        </div>
+                    </div>
+                
+                                    <div style="max-height:260px;overflow: hidden;margin-top:20px;">
+                        <div style="max-height:150px;overflow: hidden;margin-bottom:15px;">
+                            <ins class="adsbygoogle" style="display:inline-block;width:100%;min-height:90px" data-full-width-responsive="true" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5880251834"></ins>
+                        </div>
+                    </div>
+                            </aside>
+        </div>
+    </div>
+</main>
+
+
+<footer id="footer" data-tool-alias="creditcard-rate">
+    <div class="grid-container" data-nosnippet="">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a rel="nofollow" href="about.html">关于我们</a>
+                    <a href="index1.html">工具地图</a>
+                    <a href="v0pd8pgi56.html">工具博客</a>
+                    <a rel="nofollow" href="support.html">支持我们</a>
+                    <a rel="nofollow" href="customization.html">工具定制</a>
+                    <a rel="nofollow" href="data-security.html">用户数据安全</a>
+                    <a rel="nofollow" href="disclaimer.html">免责声明</a>
+                    <a rel="nofollow" href="copyright.html">著作权声明</a>
+                    <a rel="nofollow" href="feedback.html">反馈建议</a>
+                </div>
+                <!-- 友情链接 -->
+                <p class="friend-link text-center">友情链接：
+                    <a href="javascript:;" title="网络剪贴板" target="_blank">网络剪贴板</a>
+                    <a href="javascript:;" target="_blank">Font Awesome</a>
+                    <a href="javascript:;" title="图标制作工具" target="_blank">图标工具</a>
+                    <a href="javascript:;" title="在线文本工具箱" target="_blank">文本工具箱</a>
+                    <a href="javascript:;" title="JPG MIN 图像本地化压缩工具" target="_blank">JPG MIN</a>
+                    <a href="javascript:;" title="JSON数据处理好帮手！" target="_blank">WeJSON</a>
+                    <a href="javascript:;" title="文本派，永久免费的永久文本存储服务" target="_blank">文本派</a>
+                    <a href="javascript:;" title="专业证件照免费处理" target="_blank">证件照大师</a>
+                    <a href="javascript:;" title="在线文件重命名" target="_blank">在线文件重命名</a>
+                    <a href="ygtamznth7.html" target="_blank">手机号段网</a>
+                    <a href="javascript:;" target="_blank" style="font-size:0;overflow: hidden">在线剪辑大师</a>
+                </p>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    Copyright © 2022 奇客科技 uuTool.cn All Rights Reserved <a rel="nofollow" href="javascript:;" target="_blank">桂ICP备17007729号-11</a><br>
+                </p>
+                            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li title="QQ联系我们">
+            <a target="_blank" href="javascript:;"><i class="iconfont icon-qq"></i></a>
+        </li>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon-xcx"></i>
+            <div class="hidden-box">
+                <img src="static/picture/xcx-code.jpg" width="140" alt="小程序码">
+                <span>微信小程序</span>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min.js"></script>
+    <script src="static/js/ad.min.js"></script>
+<script src="https://uutool.cn/assets/js/tools/creditcard-rate.js?v=1642744067"></script>
+</body>
+</html>

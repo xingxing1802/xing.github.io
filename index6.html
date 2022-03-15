@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线图片300DPI分辨率修改工具 - UU在线工具</title>
+    <meta name="description" content="​在线图片300DPI分辨率修改工具，可以将图像的分辨率设置为300DPI，也可以自定义设置为其它分辨率值，该工具不会影响图像的画质，仅修改DPI显示数值，不会修改图像尺寸和增强图像画质。">
+    <link rel="canonical" href="">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common.css">
+<link rel="stylesheet" href="static/css/font_1455035_z0n3d6to6dc.css">    <style>
+
+</style>
+</head>
+<body>
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-3 small-6 logo">
+                <a href="index.html">
+                    <span>UU在线工具</span>
+                </a>
+            </div>
+            <div class="cell large-9 small-6 main-nav-box hide-for-small-only">
+                <div class="date-box float-right" id="timeBox"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <!--ad box-->
+    <div class="banner-ad" style="min-height:280px;">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12" style="margin-top:10px;">
+                    <ins class="adsbygoogle" style="display:block;max-height:100px;" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5019822032" data-ad-format="auto"></ins>
+                </div>
+            </div>
+        </div>
+    </div>
+<main class="theme" id="app">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <nav class="breadcrumbs-wrapper" aria-label="你在这里:" role="导航" style="margin-top:15px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="index.html">首页</a></li>
+                        <li>
+                            <span class="show-for-sr">当前: </span>
+                            <h1>在线图片300DPI分辨率修改工具</h1>
+                        </li>
+                    </ul>
+                    <a class="float-right tool-extend-btn hide-for-small-only collapse " href="javascript:;" title="展开/缩起工具区域">
+                        <i class="iconfont icon-angle-double-right"></i>
+                    </a>
+                </nav>
+                                    <div class="tool-collection">
+                        <ul class="expanded1">
+                                                            <li class=""><a href="index13.html">证件照换底色</a></li>
+                                                            <li class=""><a href="javascript:;">证件照尺寸大小任意修改</a></li>
+                                                            <li class="active"><a href="">图片300DPI分辨率修改</a></li>
+                                                            <li class=""><a href="index20.html">证件照剪切生成</a></li>
+                                                            <li class=""><a href="index7.html">报名证件照处理</a></li>
+                                                    </ul>
+                    </div>
+                            </div>
+
+            <div class="cell large-9 small-12" id="toolWrapper" data-nosnippet="">
+                <div class="tool-wrapper">
+                    <div class="tool-box">
+    <div class="grid-x grid-margin-x">
+        <div class="cell large-12">
+            <label for="">
+                图像DPI分辨率:
+                <input type="number" placeholder="默认300" v-model="dpi">
+            </label>
+        </div>
+    </div>
+    <div class="drag-box" id="dragBox">
+        <input type="file" id="filePicker" class="file-picker" accept="image/*">
+        <div class="tip-word">点击上传或将图片拖至此处</div>
+    </div>
+
+    <div class="btn-box" v-if="''!=base64" v-cloak="">
+        <button class="button small info " @click="download">下载图像</button>
+        <button class="button small secondary " @click="reset">清空</button>
+    </div>
+
+    <div class="result-box tex-center" v-if="''!=base64" v-cloak="">
+        <div class="text-center">图像预览，点击下载</div>
+        <div class="text-center">
+            <img :src="base64" alt="Preview" @click="download">
+        </div>
+        <div class="text-center">
+            <button class="button small info " @click="download" style="margin-top:12px;">下载图像</button>
+        </div>
+    </div>
+</div>                                            <div class="tool-intro">
+                            <h2>工具简介</h2><p>在线图片300DPI分辨率修改工具，可以将图像的分辨率设置为300DPI，也可以自定义设置为其它分辨率值，该工具不会影响图像的画质，仅修改DPI显示数值，不会修改图像尺寸和增强图像画质。</p><p>通常报名平台等要求上传的证件照为300DPI，但在网上下载或网页上制作的证件照DPI分辨率通常只有72DPI，无法通过平台检查，可以使用本工具快速将图片DPI修改为300DPI或其它的数值。</p><p>本工具仅修改图像DPI显示数值，并不会对图像做任何尺寸修改和画质增强，也就是您从72DPI修改为300DPI，图像也不会变得更清晰，仅仅是修改DPI值用于通过平台校验规则。</p><p>所设置的DPI数值将会同步应用到垂直分辨率和水平分辨率中，如设置300DPI，处理后垂直分辨率和水平分辨率都是300DPI。</p><p>仅支持1MB以内的图像处理，超出后请使用<a href="javascript:;" target="_blank"> 压图大师 </a>压缩图像体积后重试！</p><h2>如何使用</h2><p>设置需要修改的图像DPI数值，点击上传或将您的图像直接拖拽至页面，工具将会自动完成图像DPI修改。<br></p><p>修改完成后可以点击按钮下载保存到本地，如无法保存电脑右键另存为，手机长按保存即可。</p>                        </div>
+                                    </div>
+            </div>
+
+            <aside class="cell large-3 small-12 " id="sidebar">
+                                    <div style="height:0;overflow: hidden;">
+                        <img src="static/picture/img-300dpi.jpg" alt="在线图片300DPI分辨率修改工具">
+                    </div>
+                                
+                <!--tool tip -->
+                <div class="aside-item tool-tip">
+                    <div class="aside-title">工具简介</div>
+                    <div class="aside-body">
+                        <div class="text-collapse collapse">
+                            <p style="margin-bottom:20px;">
+                                ​在线图片300DPI分辨率修改工具，可以将图像的分辨率设置为300DPI，也可以自定义设置为其它分辨率值，该工具不会影响图像的画质，仅修改DPI显示数值，不会修改图像尺寸和增强图像画质。                            </p>
+                            <div class="toggle-btn" title="展开/折叠工具简介"></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="aside-item" style="border:none;">
+                    <div class="share-box" title="点击复制本工具链接">
+                        <input class="js-copy" type="text" id="shareInput" readonly="" value="uutool.cn/img-300dpi/" data-clipboard-text="https://uutool.cn/img-300dpi/" data-clipboard-tip="工具链接已复制">
+                    </div>
+                </div>
+
+                
+                
+                
+                                    <!--relative tool-->
+                    <div class="aside-item relative-tool">
+                        <div class="aside-title">相关工具</div>
+                        <div class="aside-body">
+                            <ul>
+                                                                    <li><a href="index7.html" title="在线报名证件照处理工具">在线报名证件照处理工具</a></li>
+                                                                    <li><a href="javascript:;" title="在线证件照任意尺寸大小修改工具">在线证件照任意尺寸大小修改工具</a></li>
+                                                                    <li><a href="index13.html" title="在线证件照换底色工具">在线证件照换底色工具</a></li>
+                                                                    <li><a href="index20.html" title="在线证件照剪切生成工具">在线证件照剪切生成工具</a></li>
+                                                            </ul>
+                        </div>
+                    </div>
+                
+                                    <div style="max-height:260px;overflow: hidden;margin-top:20px;">
+                        <div style="max-height:150px;overflow: hidden;margin-bottom:15px;">
+                            <ins class="adsbygoogle" style="display:inline-block;width:100%;min-height:90px" data-full-width-responsive="true" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5880251834"></ins>
+                        </div>
+                    </div>
+                            </aside>
+        </div>
+    </div>
+</main>
+
+
+<footer id="footer" data-tool-alias="img-300dpi">
+    <div class="grid-container" data-nosnippet="">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a rel="nofollow" href="about.html">关于我们</a>
+                    <a href="index1.html">工具地图</a>
+                    <a href="v0pd8pgi56.html">工具博客</a>
+                    <a rel="nofollow" href="support.html">支持我们</a>
+                    <a rel="nofollow" href="customization.html">工具定制</a>
+                    <a rel="nofollow" href="data-security.html">用户数据安全</a>
+                    <a rel="nofollow" href="disclaimer.html">免责声明</a>
+                    <a rel="nofollow" href="copyright.html">著作权声明</a>
+                    <a rel="nofollow" href="feedback.html">反馈建议</a>
+                </div>
+                <!-- 友情链接 -->
+                <p class="friend-link text-center">友情链接：
+                    <a href="javascript:;" title="网络剪贴板" target="_blank">网络剪贴板</a>
+                    <a href="javascript:;" target="_blank">Font Awesome</a>
+                    <a href="javascript:;" title="图标制作工具" target="_blank">图标工具</a>
+                    <a href="javascript:;" title="在线文本工具箱" target="_blank">文本工具箱</a>
+                    <a href="javascript:;" title="JPG MIN 图像本地化压缩工具" target="_blank">JPG MIN</a>
+                    <a href="javascript:;" title="JSON数据处理好帮手！" target="_blank">WeJSON</a>
+                    <a href="javascript:;" title="文本派，永久免费的永久文本存储服务" target="_blank">文本派</a>
+                    <a href="javascript:;" title="专业证件照免费处理" target="_blank">证件照大师</a>
+                    <a href="javascript:;" title="在线文件重命名" target="_blank">在线文件重命名</a>
+                    <a href="ygtamznth7.html" target="_blank">手机号段网</a>
+                    <a href="javascript:;" target="_blank" style="font-size:0;overflow: hidden">在线剪辑大师</a>
+                </p>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    Copyright © 2022 奇客科技 uuTool.cn All Rights Reserved <a rel="nofollow" href="javascript:;" target="_blank">桂ICP备17007729号-11</a><br>
+                </p>
+                            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li title="QQ联系我们">
+            <a target="_blank" href="javascript:;"><i class="iconfont icon-qq"></i></a>
+        </li>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon-xcx"></i>
+            <div class="hidden-box">
+                <img src="static/picture/xcx-code.jpg" width="140" alt="小程序码">
+                <span>微信小程序</span>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min.js"></script>
+    <script src="static/js/ad.min.js"></script>
+<script src="https://uutool.cn/assets/js/tools/img-300dpi.js?v=1640584096"></script>
+</body>
+</html>

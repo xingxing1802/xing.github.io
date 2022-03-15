@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线VCF手机号码通讯录批量导入工具 - UU在线工具</title>
+    <meta name="description" content="本工具可以将电话号码列表生成vcf格式，快速导入手机通讯录中，直接从Excel中复制手机号码列表，快捷导入数据！">
+    <link rel="canonical" href="">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common.css">
+<link rel="stylesheet" href="static/css/font_1455035_z0n3d6to6dc.css">    <style>
+#qrcode canvas{max-width:100%}
+</style>
+</head>
+<body>
+<header id="header">
+    <div class="grid-container fluid">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-3 small-6 logo">
+                <a href="index.html">
+                    <span>UU在线工具</span>
+                </a>
+            </div>
+            <div class="cell large-9 small-6 main-nav-box hide-for-small-only">
+                <div class="date-box float-right" id="timeBox"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <!--ad box-->
+    <div class="banner-ad" style="min-height:280px;">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12" style="margin-top:10px;">
+                    <ins class="adsbygoogle" style="display:block;max-height:100px;" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5019822032" data-ad-format="auto"></ins>
+                </div>
+            </div>
+        </div>
+    </div>
+<main class="theme" id="app">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <nav class="breadcrumbs-wrapper" aria-label="你在这里:" role="导航" style="margin-top:15px;">
+                    <ul class="breadcrumbs">
+                        <li><a href="index.html">首页</a></li>
+                        <li>
+                            <span class="show-for-sr">当前: </span>
+                            <h1>在线VCF手机号码通讯录批量导入工具</h1>
+                        </li>
+                    </ul>
+                    <a class="float-right tool-extend-btn hide-for-small-only collapse " href="javascript:;" title="展开/缩起工具区域">
+                        <i class="iconfont icon-angle-double-right"></i>
+                    </a>
+                </nav>
+                                    <div class="tool-collection">
+                        <ul class="expanded1">
+                                                            <li class=""><a href="q5qsjbqrxx.html">手机号码归属地查询</a></li>
+                                                            <li class=""><a href="index17.html">手机号码归属地批量查询</a></li>
+                                                            <li class=""><a href="index18.html">手机号码生成器</a></li>
+                                                            <li class=""><a href="index5.html">手机号中间四位查询</a></li>
+                                                            <li class=""><a href="u5su1vhj8i.html">手机号空号检测</a></li>
+                                                            <li class="active"><a href="">VCF手机号码通讯录批量导入</a></li>
+                                                            <li class=""><a href="4nu78dgsdq.html">VCF转电话号码工具</a></li>
+                                                    </ul>
+                    </div>
+                            </div>
+
+            <div class="cell large-9 small-12" id="toolWrapper" data-nosnippet="">
+                <div class="tool-wrapper">
+                    <div class="tool-box" v-cloak="">
+    <div class="grid-x grid-margin-x">
+        <div class="cell large-12 small-12">
+            <textarea rows="8" placeholder="18778300000 张三 (号码和姓名之间用空格或制表符分隔）" v-model="phoneStr"></textarea>
+        </div>
+        <div class="cell large-12 small-12">
+            <div class="btn-box">
+                <button class="button small " @click="convert">生成VCF文件</button>
+                <button class="button small " @click="showDemo" v-if="''==vcfStr">举个栗子</button>
+                <button class="button small " @click="downloadVcf" v-if="''!=vcfStr" v-cloak="">下载VCF文件</button>
+                <button class="button small secondary " @click="reset" v-if="''!=vcfStr" v-cloak="">清空列表</button>
+            </div>
+            <div v-if="''!=vcfStr && ''==downloadUrl" v-cloak="">
+                <p style="color:red;">手机浏览器无法下载或需要发送至手机？ <a href="javascript:;" @click="download2">点击使用备用下载方案</a></p>
+                <hr>
+                <p style="color:#555;">共计<b>{{telArr.length}}</b>项，请核对号码和姓名是否处理正确，确认无误即可下载VCF文件。</p>
+                <table class="text-left" style="max-width:460px">
+                    <thead>
+                    <tr>
+                        <th>号码</th>
+                        <th>姓名</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in telArr.slice(0,1000)">
+                        <th v-text="item.tel"></th>
+                        <th v-text="item.name"></th>
+                    </tr>
+                    <tr v-if="1000<telArr.length">
+                        <td class="text-center" colspan="2"><small>仅展示前1000项，全部请直接导出到VCF中</small></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="cell large-12" v-if="''==vcfStr">
+            <hr>
+            <p>
+                VCF是通讯录导出的一种格式，可以使用本工具批量将手机号码生成VCF文件，从而快速将手机号导入通讯录中。
+            </p>
+            <p>
+                生成VCF文件后，直接点击下载按钮即可下载，如无法成功下载，请点击备用下载按钮启用备用下载方案，也可以使用备用下载按钮生成的下载链接，直接在手机扫码完成VCF文件的下载。
+            </p>
+            <p>
+                VCF文件下载到手机后，使用“通讯录与拨号”程序打开即可导入到通讯录中。
+            </p>
+            <p>
+                备用下载链接将于1天后自动失效。
+            </p>
+        </div>
+        <div class="cell large-12 text-center" id="download2" v-if="''!=downloadUrl" v-cloak="">
+            <hr>
+            <p>
+                请点击下载vcf或复制下载链接，链接将于1天后自动失效：
+            </p>
+            <p>
+                <input type="text" v-model="downloadUrl" id="downloadInput">
+            <div class="btn-box">
+                <a class="button small " :href="downloadUrl">立即下载</a>
+                <button class="button small js-copy" data-clipboard-target="#downloadInput">复制链接</button>
+            </div>
+            
+            <p>
+                手机扫码下载<br>
+            </p>
+            <div id="qrcode">
+            </div>
+        </div>
+    </div>
+</div>
+                                            <div class="tool-intro">
+                            <h2>工具简介</h2><p>在线VCF手机号码通讯录批量导入工具，可以将手机号码姓名和号码转换成VCF文件，使用安卓手机即可快速导入通讯录中，</p><p>注意VCF请不要再电脑上直接打开，否则会不断地弹处通讯录信息页面，号码过多的话造成难以关闭的情况，如需查看内容可以使用文本文件软件打开。</p><p>本工具仅限合法营销用途使用，请勿用于其它任意非法用途。</p><h2>如何使用</h2><p>将号码和姓名列表粘贴到输入框中，格式为“号码 姓名”，号码和姓名之间使用空格或制表符连接，可以直接从Excel中复制这两列数据，也可以没有姓名，工具将会使用号码本身作为默认姓名。</p><p>粘贴号码后点击“生成VCF文件”按钮，工具将会生成VCF文件，同时给出前100条号码和姓名的预览效果，检查确认没有问题即可点击下载按钮下载VCF文件。</p><p>将VCF文件发送至手机后安卓手机使用“通讯录与拨号”程序打开即可导入手机通讯录中。</p><p>也可点击使用备用方案下载，直接用手机原生浏览器扫码下载后打开即可快速导入手机中，备用链接有效期为一天，请生成VCF后尽快下载。</p><p>也可以使用网络剪贴板快速将文件从电脑发送到手机，打开 <a href="javascript:;" target="_blank">网络剪贴板</a> 后，创建个新剪贴板，将VCF文件拖入页面，在手机上扫码即可快速下载。</p><h2>关于VCF</h2><p>VCF是通讯录导出的一种格式，安卓设备可以通过VCF文件快速将手机号码导入通讯录中。</p>                        </div>
+                                    </div>
+            </div>
+
+            <aside class="cell large-3 small-12 " id="sidebar">
+                                    <div style="height:0;overflow: hidden;">
+                        <img src="static/picture/vcf.jpg" alt="在线VCF手机号码通讯录批量导入工具">
+                    </div>
+                                
+                <!--tool tip -->
+                <div class="aside-item tool-tip">
+                    <div class="aside-title">工具简介</div>
+                    <div class="aside-body">
+                        <div class="text-collapse collapse">
+                            <p style="margin-bottom:20px;">
+                                本工具可以将电话号码列表生成vcf格式，快速导入手机通讯录中。<br><br>
+<br>
+请直接从excel中复制电话和姓名列，粘贴后点击生成即可，第一列为号码，第二列为姓名，无姓名则默认使用号码填充姓名列，姓名和电话之间使用空格或制表符分隔，每个号码一行，<br>
+生成后可以直接下载vcf文件，将文件通过QQ等发送到手机中使用通讯录程序打开即可完成号码导入。<br>
+<br>
+建议使用 <a href="javascript:;" target="_blank">网络剪贴板</a>快速将VCF文件传送到手机（打开剪贴板，将vcf拖入页面，手机端扫码打开下载vcf文件即可！）。                            </p>
+                            <div class="toggle-btn" title="展开/折叠工具简介"></div>
+                        </div>
+                    </div>
+                </div>
+
+                                    <!--green tool tip -->
+                    <div class="aside-item green-tool-tip" data-nosnippet="">
+                        <div class="aside-body">
+                            本工具数据均在本地浏览器处理，不会上传到网络服务器中，请放心使用！
+                        </div>
+                    </div>
+                
+                <div class="aside-item" style="border:none;">
+                    <div class="share-box" title="点击复制本工具链接">
+                        <input class="js-copy" type="text" id="shareInput" readonly="" value="uutool.cn/vcf/" data-clipboard-text="https://uutool.cn/vcf/" data-clipboard-tip="工具链接已复制">
+                    </div>
+                </div>
+
+                
+                
+                
+                                    <!--relative tool-->
+                    <div class="aside-item relative-tool">
+                        <div class="aside-title">相关工具</div>
+                        <div class="aside-body">
+                            <ul>
+                                                                    <li><a href="index18.html" title="在线手机号码生成器">在线手机号码生成器</a></li>
+                                                                    <li><a href="index45.html" title="在线手机短信编辑工具">在线手机短信编辑工具</a></li>
+                                                                    <li><a href="index17.html" title="在线手机号码归属地批量查询工具">在线手机号码归属地批量查询工具</a></li>
+                                                                    <li><a href="4nu78dgsdq.html" title="在线VCF文件解析转电话号码工具">在线VCF文件解析转电话号码工具</a></li>
+                                                            </ul>
+                        </div>
+                    </div>
+                
+                                    <div style="max-height:260px;overflow: hidden;margin-top:20px;">
+                        <div style="max-height:150px;overflow: hidden;margin-bottom:15px;">
+                            <ins class="adsbygoogle" style="display:inline-block;width:100%;min-height:90px" data-full-width-responsive="true" data-ad-client="ca-pub-6304833918940741" data-ad-slot="5880251834"></ins>
+                        </div>
+                    </div>
+                            </aside>
+        </div>
+    </div>
+</main>
+
+
+<footer id="footer" data-tool-alias="vcf">
+    <div class="grid-container" data-nosnippet="">
+        <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a rel="nofollow" href="about.html">关于我们</a>
+                    <a href="index1.html">工具地图</a>
+                    <a href="v0pd8pgi56.html">工具博客</a>
+                    <a rel="nofollow" href="support.html">支持我们</a>
+                    <a rel="nofollow" href="customization.html">工具定制</a>
+                    <a rel="nofollow" href="data-security.html">用户数据安全</a>
+                    <a rel="nofollow" href="disclaimer.html">免责声明</a>
+                    <a rel="nofollow" href="copyright.html">著作权声明</a>
+                    <a rel="nofollow" href="feedback.html">反馈建议</a>
+                </div>
+                <!-- 友情链接 -->
+                <p class="friend-link text-center">友情链接：
+                    <a href="javascript:;" title="网络剪贴板" target="_blank">网络剪贴板</a>
+                    <a href="javascript:;" target="_blank">Font Awesome</a>
+                    <a href="javascript:;" title="图标制作工具" target="_blank">图标工具</a>
+                    <a href="javascript:;" title="在线文本工具箱" target="_blank">文本工具箱</a>
+                    <a href="javascript:;" title="JPG MIN 图像本地化压缩工具" target="_blank">JPG MIN</a>
+                    <a href="javascript:;" title="JSON数据处理好帮手！" target="_blank">WeJSON</a>
+                    <a href="javascript:;" title="文本派，永久免费的永久文本存储服务" target="_blank">文本派</a>
+                    <a href="javascript:;" title="专业证件照免费处理" target="_blank">证件照大师</a>
+                    <a href="javascript:;" title="在线文件重命名" target="_blank">在线文件重命名</a>
+                    <a href="ygtamznth7.html" target="_blank">手机号段网</a>
+                    <a href="javascript:;" target="_blank" style="font-size:0;overflow: hidden">在线剪辑大师</a>
+                </p>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="text-align:center;">
+                    Copyright © 2022 奇客科技 uuTool.cn All Rights Reserved <a rel="nofollow" href="javascript:;" target="_blank">桂ICP备17007729号-11</a><br>
+                </p>
+                            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li title="QQ联系我们">
+            <a target="_blank" href="javascript:;"><i class="iconfont icon-qq"></i></a>
+        </li>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon-xcx"></i>
+            <div class="hidden-box">
+                <img src="static/picture/xcx-code.jpg" width="140" alt="小程序码">
+                <span>微信小程序</span>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min.js"></script>
+    <script src="static/js/ad.min.js"></script>
+<script src="https://uutool.cn/assets/js/tools/vcf.js?v=1628500681"></script>
+</body>
+</html>
