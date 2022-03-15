@@ -1,0 +1,56 @@
+[v-cloak] {
+  display: none; }
+
+.index-page h1 {
+  font-size: 36px;
+  margin: 80px 15px; }
+.index-page h2 {
+  font-size: 22px;
+  border-left: 5px solid #888;
+  line-height: 1;
+  padding-left: 15px;
+  margin-bottom: 10px; }
+.index-page .subtitle {
+  font-size: 18px;
+  color: #555; }
+.index-page .tool-box {
+  margin-bottom: 50px; }
+.index-page .status-tip {
+  font-weight: 500; }
+.index-page table {
+  word-wrap: break-word;
+  word-break: break-all; }
+.index-page .status0 {
+  color: #1779ba; }
+.index-page .status1 {
+  color: #ffae00; }
+.index-page .status2 {
+  color: #3adb76; }
+.index-page .status3 {
+  color: #cc4b37; }
+.index-page .search-box {
+  margin-bottom: 100px; }
+.index-page article section {
+  background: #f9f9f9;
+  padding: 15px;
+  font-size: 14px;
+  margin-bottom: 25px; }
+.index-page article section p {
+  line-height: 1.8; }
+.index-page .ul-history {
+  list-style-type: none;
+  text-align: center; }
+.index-page .ul-history li {
+  display: inline-block;
+  border: 1px solid #eaeaea;
+  padding: 0 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #666;
+  margin: 0 3px 5px 3px; }
+.index-page .ul-history li:hover {
+  border-color: #00BB00;
+  background: #00BB00;
+  color: #fff; }
+
+/*# sourceMappingURL=link.css.map */

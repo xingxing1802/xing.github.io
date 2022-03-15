@@ -1,0 +1,142 @@
+body {
+  background: #eaeaea; }
+
+p {
+  margin-bottom: 25px;
+  line-height: 2; }
+
+header {
+  background: #202020;
+  color: #fff;
+  line-height: 2;
+  padding: 15px 0; }
+  header .logo a {
+    color: #fff; }
+  header .slogan {
+    font-size: 16px; }
+
+footer {
+  border-top: 1px solid #eaeaea;
+  margin-top: 35px;
+  padding: 25px 15px;
+  background: #555;
+  color: #ccc;
+  text-align: center; }
+  footer p {
+    margin-bottom: 15px; }
+  footer a {
+    color: #ccc; }
+    footer a:hover {
+      color: #fff; }
+
+.page-index h3 {
+  margin-top: 15px;
+  font-size: 18px;
+  margin-bottom: 15px;
+  border-left: 3px solid #555;
+  padding-left: 8px;
+  line-height: 1;
+  font-weight: 600; }
+.page-index .convert-box {
+  padding: 35px 15px;
+  text-align: center; }
+  .page-index .convert-box a {
+    font-size: 22px;
+    line-height: 1.26; }
+.page-index .format-box {
+  background-color: #3a3a3a;
+  color: #fff;
+  padding: 50px 15px; }
+  .page-index .format-box .info-box h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+    font-weight: 600; }
+  .page-index .format-box .info-box .content {
+    font-size: 16px; }
+.page-index .item-box {
+  margin-top: 35px;
+  padding: 25px 15px;
+  background: #fff; }
+  .page-index .item-box.about-format {
+    min-height: 260px; }
+  .page-index .item-box h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    border-left: 5px solid #555;
+    padding-left: 10px;
+    line-height: 1;
+    font-weight: 600; }
+  .page-index .item-box .content a {
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #222; }
+
+.page-format .format-box {
+  background-color: #3a3a3a;
+  color: #fff;
+  padding: 50px 15px; }
+  .page-format .format-box .info-box h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+    font-weight: 600; }
+  .page-format .format-box .info-box .content {
+    font-size: 16px; }
+.page-format .item-box {
+  margin-top: 35px;
+  padding: 25px 15px;
+  background: #fff; }
+  .page-format .item-box h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    border-left: 5px solid #555;
+    padding-left: 10px;
+    line-height: 1;
+    font-weight: 600; }
+  .page-format .item-box .content a {
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #222; }
+
+.page-tool .convert-box {
+  padding: 35px 15px;
+  text-align: center; }
+  .page-tool .convert-box a {
+    font-size: 22px;
+    line-height: 1.26; }
+.page-tool .format-box {
+  background-color: #3a3a3a;
+  color: #fff;
+  padding: 50px 15px; }
+  .page-tool .format-box .info-box h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+    font-weight: 600; }
+  .page-tool .format-box .info-box .content {
+    font-size: 16px; }
+.page-tool .item-box {
+  margin-top: 35px;
+  padding: 25px 15px;
+  background: #fff; }
+  .page-tool .item-box.about-format {
+    min-height: 260px; }
+  .page-tool .item-box h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    border-left: 5px solid #555;
+    padding-left: 10px;
+    line-height: 1;
+    font-weight: 600; }
+  .page-tool .item-box .content a {
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #222; }
+
+.item-box .content a {
+  border: 1px solid #eaeaea;
+  display: block;
+  line-height: 1.8; }
+  .item-box .content a:hover {
+    background: #333;
+    color: #fff; }
+
+/*# sourceMappingURL=common.css.map */
