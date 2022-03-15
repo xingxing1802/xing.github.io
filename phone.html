@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手机号码归属地批量查询工具示例 - UU定制工具</title>
+    <meta name="keywords" content="归属地批量查询工具">
+    <meta name="description" content="归属地批量查询工具支持无上限号码本地化查询，查询速度快，功能更强大，数据更准确及时，更安全放心。">
+    <link href="static/css/foundation.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/css/common3.css">
+<link rel="stylesheet" href="static/css/font_1987125_qo7sr2cwkj.css">
+
+</head>
+<body class="page-phone">
+
+<main>
+    <div class="title-box">
+        <div class="grid-container">
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12">
+                    <h1 class="text-center">手机号归属地批量查询工具DEMO</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-12 small-12">
+                <div class="tool-box" id="app" style="border:1px solid #eaeaea;">
+                    <div class="tab-box" v-cloak="">
+                        <ul>
+                            <li v-for="(item,index) in tabArr" :class="{active:index==tabId}" @click="changeTab(index)">{{item}}</li>
+                        </ul>
+                    </div>
+                    <div class="tab-content" v-cloak="">
+                        <txt-tool :is-demo="isDemo" v-if="'txt-tool'==tabId"></txt-tool>
+                        <excel-tool :is-demo="isDemo" v-if="'excel-tool'==tabId" v-cloak=""></excel-tool>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-x grid-margin-x">
+                <div class="cell large-12 small-12">
+                    <div class="grid-container" id="buyBox">
+                        <div class="cell large-12 small-12" style="margin-top:50px;">
+                            <h2 class="text-center">工具优势</h2>
+                            <hr>
+                            <div class="grid-x grid-margin-x large-up-2 small-up-1">
+                                <div class="cell">
+                                    <h3>查询数量无上限</h3>
+                                    <p>您可以通过文件批量导入方式轻易完成几十万甚至几百万数据规模的归属地查询。</p>
+                                </div>
+                                <div class="cell">
+                                    <h3>使用次数无限制</h3>
+                                    <p>在有效期内，您可以无限次数使用查询工具，性价比极高。</p>
+                                </div>
+                                <div class="cell">
+                                    <h3>支持号码分拣</h3>
+                                    <p>可根据运营商，省份以及号段筛选过滤号码，仅导出符合条件的数据。</p>
+                                </div>
+                                <div class="cell">
+                                    <h3>支持统计报下载</h3>
+                                    <p>支持按运营商，归属地省份以及手机号段3个维度统计报表下载导出。</p>
+                                </div>
+                                <div class="cell">
+                                    <h3>本地化处理更安全</h3>
+                                    <p>所有数据均在您的浏览器本地处理，不会上传到服务器中，无需担心号码泄露。</p>
+                                </div>
+                                <div class="cell">
+                                    <h3>查询速度更快</h3>
+                                    <p>50万数据仅需2秒，实际速度取决于您的计算机性能，批量查询无需等待。</p>
+                                </div>
+                                <div class="cell">
+                                    <h3>归属地数据更新更及时</h3>
+                                    <p>归属地数据维护更新更全面和及时，确保查询结果更加精确。</p>
+                                </div>
+                                <div class="cell">
+                                    <h3>专属客服一对一服务</h3>
+                                    <p>遇到任何问题，获取客服一对一服务，急速解决问题。</p>
+                                </div>
+                                <div class="cell">
+                                    <h3>工具持续更新维护</h3>
+                                    <p>有效期内，全自动免费升级到最新版本，随时体验最给力的查询服务。</p>
+                                </div>
+                                <div class="cell">
+                                    <h3>赶紧体验吧！</h3>
+                                    <p>联系我们，我们将为您开通使用账号，即刻体验。</p>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <h2 class="text-center">开通使用</h2>
+                                <div class="grid-x">
+                                    <div class="cell large-6" style="border-right:1px solid #eaeaea;">
+                                        <h3 id="pricing">价格方案</h3>
+                                        <div style="font-size:18px;font-weight:600;color:red;line-height:2;">
+                                            <span v-for="item in packageArr">{{item.name}} <br></span>
+                                        </div>
+                                        <p style="color:#888;margin-top:15px;">支持开通一天先体验，<br> 3天内可联系客服补差价升级套餐。 <br></p>
+                                        <p style="color:indianred">如遇自助开通无法完成支付请联系客服手动开通即可</p>
+                                    </div>
+                                    <div class="cell large-6">
+                                        <h3>微信自助开通</h3>
+                                        <div>
+                                            <select v-model="packageId" style="display:inline-block;width:auto;color:red;">
+                                                <option value="-1">点击选择套餐</option>
+                                                <option :value="index" v-for="(item,index) in packageArr">{{item.name}}</option>
+                                            </select>
+                                        </div>
+                                        <img :src="qrcodeUrl" alt="付款码" v-cloak="">
+                                        <p style="color:#888;margin-top:6px;">
+                                            选择套餐，微信扫码支付<br>
+                                            <a href="javascript:;" style="color:red;" @click="checkPaymentStatus(1)" v-if="''!=paymentId" v-cloak="">支付后点击获取工具链接 >></a>
+                                        </p>
+                                        <p class="show-for-small-only" style="color:red;" v-if="''!=paymentId" v-cloak="">
+                                            注意：手机端无法截图后从微信相册识别支付，请使用其它手机扫码支付或联系客服手动开通，建议使用电脑体验更佳。
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h3>客服手动开通</h3>
+                                <p>
+                                    根据需求选择合适的套餐，微信或支付宝扫码支付后联系我们，将火速为您开通，建议优先选择微信自助开通，更方便快捷！<br>
+                                    如有任何疑问，欢迎点击右侧悬挂客服按钮与我们联系。
+                                </p>
+                                <p class="text-center">
+                                    <img src="static/picture/money.jpg" style="max-height:180px;" alt="打赏码"><br>
+                                </p>
+
+                                <div class="history-box " style="margin:30px 0;" v-if="0!=historyArr.length" v-cloak="">
+                                    <h3>开通历史</h3>
+                                    <div class="table-scroll">
+                                        <table style="width:100%;">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">日期</th>
+                                                <th class="text-center">工具链接</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="item in historyArr">
+                                                <td>
+                                                    {{item.time}}
+                                                </td>
+                                                <td>
+                                                    <a :href="item.url" target="_blank">{{item.url}}</a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+<div class="cell large-12 small-12" style="margin-top: 50px;"><h2 class="text-center">常见问答</h2>
+    <hr>
+            <h3>如何开通使用？</h3>
+        <p>欢迎微信支付自助开通，上方右侧选择套餐并扫码支付，系统将会自动生成一个专属工具链接（每次开通都会重新生成新的），直接通过工具链接使用即可，无需注册和登录。<br>
+            如 <code>https://vip.uutool.cn/phone/<b style="color:green;">abc123456</b></code>，支付后请添加链接到书签，以方便后续使用！<br>
+            您也可以联系客服手动开通，付款后会给您发送工具链接。<br>
+            注：不要将工具链接分享到网络上，系统检测到大量人使用会自动封号处理。
+        </p>
+        <h3>遗忘工具使用链接如何处理？</h3>
+        <p>
+            如果您是自助开通，可以在本页找到开通历史记录，也可以通过支付单号自助找回，<a href="javascript:;" target="_blank">点击找回链接</a>。<br>
+            如果是联系客服开通，请直接查看聊天记录即可。
+        </p>
+    
+    <h3>使用方法？</h3>
+    <p>
+        本工具支持号码列表查询和Excel导入查询模式，点击选项卡即可切换，其区别如下：<br>
+        <b>号码列表查询</b>：支持单次百万级甚至千万级批量查询，适用于号码列表统计及分拣。<br>
+        <b>Excel导入查询</b>：导入Excel批量查询并能够保留Excel其它数据列，便于整理数据。<br><br>
+        将需要查询的号码粘贴到文本框中或将TXT文件拖入到文本框中，系统将自动读取手机号码数量，
+        确认号码数量无误后点击查询按钮即可完成手机号归属地查询，之后便可以根据需求导出数据，支持全部导出和按地级市导出，也可以从号段，运营商以及省份维度分拣过滤号码。
+
+        <br><br>
+        使用Excel导入查询仅需要选择Excel文件后检查系统识别到的号码开始行及所在列是否正确，确认无误后查询后导出即可。
+    </p>
+    <h3>TXT号码文件导入要求？</h3>
+    <p>
+        TXT号码导入方式查询时，需要确保每个号码一行，且无其它不相关字符，文件无数量限制，如您的号码不是每个一行，可用<a href="javascript:;" target="_blank">手机号码提取工具</a>提取整理。
+    </p>
+    <h3>工具未加载出来无法使用？</h3>
+    <p>
+        如遇工具界面无法加载，可能是由于网络问题部分资源未能成功加载，请 <code>CTRL+F5</code>强制刷新后重试，如有需要可以随时联系客服处理。
+    </p>
+    <h3>本工具数据安全性？</h3>
+    <p>本工具所有查询均在您的浏览器处理，您查询的手机号码均不会发送到网络服务器中，您无需担心号码泄露，可以放心使用！</p>
+    <h3>使用限制？</h3>
+    <p>开通任意套餐后，本工具没有任何使用限制，无单次查询号码数量和使用次数限制，在有效期内均可以随意使用，但请不要分享给他人使用，系统检测到多人使用将会自动封号处理！</p>
+    <h3>手机号段速查</h3>
+    <p>
+        移动：134, 135, 136, 137, 138, 139, 147, 150, 151, 152, 157, 158, 159, 165, 172, 178, 182, 183, 184, 187, 188, 198 <br>
+        联通：130, 131, 132, 145, 155, 156, 166, 171, 175, 176, 185, 186<br>
+        电信： 133, 149, 153, 173, 177, 180, 181, 189, 199<br>
+    </p>
+    <h3>一些可能有用的免费工具</h3>
+    <p>
+        <a href="javascript:;" target="_blank">手机号码提取工具</a>，
+        <a href="javascript:;" target="_blank">号段全部号码生成工具</a>，
+        <a href="fi6z9z8cg2.html" target="_blank">VCF通讯录导入工具</a>，
+        <a href="index18.html" target="_blank">手机号码生成工具</a>，
+        <a href="javascript:;" target="_blank">文本去重统计</a>，
+        <a href="u5su1vhj8i.html" target="_blank">空号检测工具</a>
+    </p>
+    <h3>导出EXCEL太久？</h3>
+    <p>
+        手机归属地数据量太大（几万以上）使用EXCEL导出需要比较长的时间导出，强烈建议大数据量的查询结果使用CSV格式导出，使用Excel打开csv文件即可，与导出到Excel效果一致。
+    </p>
+    <h3>数据更新时间？</h3>
+    <p>
+        由于号段数据相对固定且较少发布，新发布的也大多是不常用的虚拟号段，因此您无需担心数据有效性问题，只要查询时候没有出现“失败号码”，就说明本工具已收录您需要查询的号码号段，可正常使用。<br>
+        本工具最近一次数据更新时间为 <b>2021.11</b>，数据持续更新中...
+    </p>
+    <h3>使用建议？</h3>
+    <p>
+        本工具兼容电脑和手机使用，但部分手机可能存在兼容性问题无法下载，建议使用电脑使用本工具。<br>
+        浏览器建议使用Chrome浏览器以更好地体验该工具，从兼容性和性能上都更好。
+    </p>
+
+    <h3>需要数据处理？</h3>
+    <p>我们提供收费的数据处理服务，可以将数据为您处理成您期望的格式，有需要可以联系客服。</p>
+    <h3>需要帮助？</h3>
+    <p>如果您在使用中遇到任何问题，随时欢迎联系我们。QQ:2011689829，VX:iam6899，可直接在电脑端右侧悬挂客服栏点击沟通或扫码添加好友。</p>
+</div>                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script type="text/html" id="txtToolTpl">
+    <div>
+        <div class="tab-intro">
+            <p>本模式支持粘贴号码列表或导入TXT文件方式批量查询归属地，支持单次百万级号码查询与分拣，适合大批量归属地查询与筛选场景。</p>
+        </div>
+        <div class="setting-box">
+            <div class="" style="margin-bottom: 10px;">
+                查询字段：
+                <div class="checkbox-group">
+                    <input id="ispInput" type="checkbox" name="field" value="isp" v-model="showFieldArr.isp">
+                    <label for="ispInput">运营商</label>
+                </div>
+                <div class="checkbox-group">
+                    <input id="provinceInput" type="checkbox" name="field" value="area"
+                           v-model="showFieldArr.province">
+                    <label for="provinceInput">省份</label>
+                </div>
+                <div class="checkbox-group">
+                    <input id="cityInput" type="checkbox" name="field" value="type" v-model="showFieldArr.city">
+                    <label for="cityInput">城市</label>
+                </div>
+                <div class="checkbox-group">
+                    <input id="areaCodeInput" type="checkbox" name="field" value="area_code"
+                           v-model="showFieldArr.areaCode">
+                    <label for="areaCodeInput">区号</label>
+                </div>
+                <div class="checkbox-group">
+                    <input id="zipCodeInput" type="checkbox" name="field" value="zipCode"
+                           v-model="showFieldArr.zipCode">
+                    <label for="zipCodeInput">邮编</label>
+                </div>
+            </div>
+            <div class="" style="margin-bottom: 10px;">
+                查询设置：
+                <div class="checkbox-group">
+                    <input id="uniqueCheckbox" type="checkbox" name="field" v-model="queryConfig.unique" :disabled="2==queryStatus?'disabled':false">
+                    <label for="uniqueCheckbox">号码去重</label>
+                </div>
+                <div class="checkbox-group">
+                    <input id="filterInvalidCheckbox" type="checkbox" v-model="queryConfig.filterInvalid">
+                    <label for="filterInvalidCheckbox" title="号码导出时自动过滤查询失败的号码，不会导出">不导出查询失败的号码</label>
+                </div>
+                <div class="checkbox-group">
+                    <input id="filterCheckbox" type="checkbox" v-model="queryConfig.filter">
+                    <label for="filterCheckbox">启用号码分拣</label>
+                </div>
+            </div>
+            <div class="" style="margin-bottom: 10px;">
+                导出格式：
+                <div class="checkbox-group">
+                    <input id="format1" type="radio" value="txt"
+                           v-model="exportFormat">
+                    <label for="format1">TXT</label>
+                </div>
+                <div class="checkbox-group">
+                    <input id="format2" type="radio" value="excel"
+                           v-model="exportFormat">
+                    <label for="format2">EXCEL</label>
+                </div>
+                <div class="checkbox-group">
+                    <input id="format3" type="radio" value="csv"
+                           v-model="exportFormat">
+                    <label for="format3">CSV</label>
+                </div>
+            </div>
+            <div class="" style="margin-bottom: 10px;" v-if="0!=phoneNum">
+                号码总数：<b>{{phoneNum}}</b>
+                <small v-if="0!=uniqueNum" style="color:#555;">（ 去重后 <b>{{uniqueNum}}</b>）</small>
+            </div>
+            <div class="" style="margin-bottom: 10px;" v-if="2==queryStatus">
+                查询结果：
+                <a style="color:green;" href="#validList">成功 <b>{{validNum}}</b></a>
+                <a style="color:red;margin-left:20px;" title="点击查看失败列表" @click="showInvalidList" v-if="0!=invalidArr.length">失败 <b>{{invalidArr.length}}</b></a>
+            </div>
+        </div>
+        <div class="btn-box">
+            <button class="button  " @click="queryNo" v-if="0==queryStatus">开始查询</button>
+            <button class="button " style="position:relative;" v-if="0==queryStatus">
+                选择TXT文件
+                <input type="file" id="txtPicker" accept="text/plain" style="position:absolute;left:0;top:0;opacity: 0;width:100%;height:100%;cursor: pointer"/>
+            </button>
+            <button class="button " @click="loadDemo" v-if="0==queryStatus">加载20万示例</button>
+            <button class="button expanded " @click="exportAll()" v-if="2==queryStatus">导出全部查询结果</button>
+        </div>
+        <div class="result-box">
+            <div class="" v-if="0==queryStatus">
+                <textarea rows="12" placeholder="请粘贴手机号码或将TXT文件拖入到文本框中，每个手机号码一行，无效号码将自动过滤" v-model="phoneStr" id="inputBox"></textarea>
+            </div>
+
+            <div class="" v-show="queryConfig.statistics">
+                <!--号码分拣-->
+                <div class="cell large-12 small-12" style="margin-bottom: 10px;" v-show="queryConfig.filter">
+                    <fieldset class="fieldset">
+                        <legend>分拣号码设置</legend>
+                        <p style="color:#555;">您可以根据不同条件分拣过滤号码，设置分拣条件后点击下载按钮导出分拣结果到本地。</p>
+                        <div class="sort-out-item">
+                            按运营商分拣：<br/>
+                            <div class="checkbox-group" v-for="(item,index) in ispArr">
+                                <input :id="'isp'+index" type="checkbox" name="isp" :value="index"
+                                       v-model="filterConfig.isp">
+                                <label :for="'isp'+index">{{item}}</label>
+                            </div>
+                        </div>
+                        <div class="sort-out-item">
+                            按号码段分拣：<br/>
+                            <div class="checkbox-group" v-for="(item,index) in segmentArr">
+                                <input :id="'phoneSegment'+index" type="checkbox" name="segment" :value="item"
+                                       v-model="filterConfig.segment">
+                                <label :for="'phoneSegment'+index">{{item}}</label>
+                            </div>
+                        </div>
+                        <div class="sort-out-item">
+                            按省份分拣：<br/>
+                            <div class="checkbox-group" v-for="(item,index) in provinceArr">
+                                <input :id="'province'+index" type="checkbox" name="province" :value="item"
+                                       v-model="filterConfig.area">
+                                <label :for="'province'+index">{{item}}</label>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="button small " @click="downloadFilter" v-if="0!=resultArr.length">下载以上分拣结果</button>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!--查询结果统计-->
+                <fieldset class="fieldset" style="margin-top:0" v-if="2==queryStatus">
+                    <legend>查询结果分类统计
+                        <small style="color:red;">（点击数值下载详细列表）</small>
+                    </legend>
+                    <div v-if="1">
+                        <div>
+                            <div class="statistics-title">按运营商统计</div>
+                            <ul class="no-bullet statistics-ul">
+                                <li v-for="(v,k) in statisticsArr.isp">
+                                    <b>{{getIspName(k)}}</b> ：<a href="javascript:;" @click="exportStatistics('isp',k)" :title="getPercent(v)">{{v}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="statistics-title">按号段统计</div>
+                            <ul class="no-bullet statistics-ul">
+                                <li v-for="(v,k) in statisticsArr.segment">
+                                    <b>{{k}}</b> ：<a href="javascript:;" @click="exportStatistics('segment',k)" :title="getPercent(v)">{{v}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="statistics-title">
+                                按区域统计
+                                <div class="checkbox-group"><input id="cityView" v-model="isCityView" value="false" type="checkbox"> <label for="cityView">查看城市详情</label></div>
+                            </div>
+
+                            <ul class="no-bullet statistics-ul" v-if="!isCityView">
+                                <li v-for="(v,k) in statisticsArr.area">
+                                    <b>{{k}}</b> ：<a href="javascript:;" @click="exportStatistics('area',k)" :title="getPercent(v.count)">{{v.count}}</a>
+                                </li>
+                            </ul>
+                            <ul class="area-statistics" v-else>
+                                <li v-for="(v,k) in statisticsArr.area">
+                                    <b style="color:green;">{{k}}</b> ：<a href="javascript:;" @click="exportStatistics('area',k)" :title="getPercent(v.count)">{{v.count}}</a>
+                                    <ul>
+                                        <li v-for="(v1,k1) in v.rows">
+                                            <b style="">{{k1}}</b> ：<a href="javascript:;" @click="exportStatistics('area',k+'-'+k1)" :title="getPercent(v1)">{{v1}}</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <small>将会以EXCEL形式导出，运营商，号段和区域会分别放在三张不同工作簿中</small>
+                        <br/>
+                        <button class="button small " @click="exportOverview">导出分类统计结果</button>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!--查询失败列表-->
+            <div class="" id="invalidList" v-if="isShowInvalidList">
+                <h2 style="color:red;">查询失败列表（{{invalidArr.length}}）</h2>
+                <textarea id="invalidTextarea" rows="10" :value="invalidArr.join('\n')"></textarea>
+                <small style="color:#555;">查询失败通常由于工具尚未收录相关号段，我们还在持续完善数据和优化工具。</small>
+                <br/>
+                <button class="button small js-copy" data-clipboard-target="#invalidTextarea">复制失败列表</button>
+            </div>
+
+            <!--查询结果-->
+            <div class="" v-if="0!=resultArr.length" style="margin-top:50px;" id="validList">
+                <button class="button expanded " @click="exportAll()" v-if="2==queryStatus">导出全部查询结果</button>
+
+                <h3 class="text-center">查询结果预览</h3>
+                <p class="text-center">
+                    共计 <b>{{validNum}}</b> 条数据，以下仅展示前100条查询结果，更多数据请导出下载查询结果到本地后查看。
+                    <small v-if="0!=filterRuleArr.length">（过滤规则：<span>{{filterRuleArr.join('-')}}</span>）</small>
+                </p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>手机号码</th>
+                        <th v-if="showFieldArr.isp">运营商</th>
+                        <th v-if="showFieldArr.province">省份</th>
+                        <th v-if="showFieldArr.city">城市</th>
+                        <th v-if="showFieldArr.areaCode">区号</th>
+                        <th v-if="showFieldArr.zipCode">邮编</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(item,index) in resultArr" v-cloak>
+                        <td>{{index+1}}</td>
+                        <td>{{item.no}}</td>
+                        <td v-if="showFieldArr.isp">{{getIspName(item.isp)}}</td>
+                        <td v-if="showFieldArr.province">{{item.area.province}}</td>
+                        <td v-if="showFieldArr.city">{{item.area.city}}</td>
+                        <td v-if="showFieldArr.areaCode">{{item.area.area_code}}</td>
+                        <td v-if="showFieldArr.zipCode">{{item.area.zip_code}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="7" class="text-center" style="color:#555;">仅显示前100条，更多查询结果请导出到文件中查看.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="button expanded " @click="exportAll()" v-if="2==queryStatus">导出全部查询结果</button>
+        </div>
+
+        <div class="intro-box">
+            <p>
+                本模式需要您手动整理好手机号码列表，直接粘贴到文本框或选择TXT文件（每个号码一行），支持单次百万级以上手机号码归属地批量查询。
+            </p>
+            <p>
+                工具提供运营商，省份城市以及号段三个维度的数据统计和下载，查询完成后您可以下载查询统计结果，或直接点击查询结果的统计数值，即可下载相应的号码列表。
+                也可以勾选“启用号码分拣”，根据您的实际需求勾选运营商，省份及号段，快速分拣筛选出符合所选条件（交集）的号码列表。
+            </p>
+            <p>
+                查询结果导出支持TXT，CSV以及Excel三种格式的数据，可在查询设置中的“导出格式”中设置。
+            </p>
+            <p>
+                开通套餐后，该工具没有单次查询数量限制，有效期内均可无限次使用，实际能够查询的数量及查询速度取决于您的设备性能，可点击“举个栗子”按钮随机生成20万个手机号码看看效果。
+            </p>
+            <p>
+                如果查询号码数量多，建议导出到CSV格式（和Excel效果一致），不建议导出到Excel，数量过多导出到Excel可能导致导出耗时更久设置浏览器无响应，文件体积也会更大。
+            </p>
+            <p>
+                使用方法：<br/>
+                1、根据实际情况勾选查询设置，如需要查询的字段数据，是否号码去重及导出格式等。<br/>
+                2、粘贴号码列表到文本框中或选择txt号码列表文件后点击“开始查询”。<br/>
+                3、查询结束后点击统计结果的数值即可下载该统计的手机号码列表。<br/>
+                4、如需要筛选号码，勾选“启用号码分拣”，根据实际需要勾选运营商，号段及省份后点击下载按钮即可导出符合条件的数据。<br/>
+            </p>
+            <p>
+                <b>本查询模式完全在您的本地浏览器处理数据，不会上传至网络服务器查询处理，您的数据绝对安全，请放心使用！</b>
+            </p>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="excelToolTpl">
+    <div>
+        <div class="tab-intro">
+            <p>本模式支持Excel导入方式批量查询并保留Excel中的其它数据，适合号码数据量较少且无需统计分拣的场景。</p>
+        </div>
+        <div class="drag-box" id="excelDragBox">
+            <input type="file" id="excelPicker" class="file-picker" accept=".xls,.xlsx">
+            <div class="tip-word">点击选择或将Excel拖到此处</div>
+        </div>
+        <div class="setting-box" v-if="0!=excelData.length" v-cloak>
+            <div class="cell large-12 small-12" style="margin-bottom: 10px;" v-if="0">
+                <label for="">
+                    查询字段：
+                    <div class="checkbox-group" v-for="(item,index) in fieldArr">
+                        <input :id="'excel'+index" type="checkbox" :value="index" v-model="showFieldArr">
+                        <label :for="'excel'+index" v-text="item"></label>
+                    </div>
+                </label>
+            </div>
+            <div class="grid-x grid-margin-x" v-if="0!=excelData.length" v-cloak>
+                <div class="cell large-3 small-6">
+                    <label for="">
+                        号码从第几行开始：
+                        <input type="number" v-model="rowNo">
+                    </label>
+                </div>
+                <div class="cell large-3 small-6">
+                    <label for="">
+                        号码在第几列：
+                        <input type="number" v-model="colNo">
+                    </label>
+                </div>
+            </div>
+            <div class="cell large-12 small-12" style="margin-bottom: 10px;" v-if="0!=phoneCount">
+                <label for="">
+                    号码总数：
+                    <b v-text="phoneCount"></b>
+                </label>
+            </div>
+        </div>
+        <div class="btn-box">
+            <button class="button " @click="checkNo">开始查询</button>
+            <button class="button " @click="showDemo" v-if="0==excelData.length && 0==demoData.length" v-cloak>举个栗子</button>
+            <button class="button " @click="downloadDemo" v-if="0!=demoData.length" v-cloak>下载示例Excel文件</button>
+            <button class="button " @click="export2csv" v-if="0!=resultData.length" v-cloak>导出到CSV</button>
+            <button class="button " @click="export2excel" v-if="0!=resultData.length" v-cloak>导出到Excel</button>
+        </div>
+        <div class="intro-box">
+            <p>
+                本查询模式支持导入Excel文件批量查询手机号码归属地，查询结果将会在原有数据右侧添加归属地相关数据字段，不用将手机号码单独提取出来，
+                可以在保留原始Excel其它数据的基础上快捷批量查询指定列的手机号码归属地，方便数据的整理和直观对比。
+            </p>
+            <p>
+                作为辅助，本模式下仅提供数据批量查询，不支持数据分类统计以及分拣，请直接使用Excel的数据筛选功能进行筛选过滤，或者单独提取号码列表后使用号码文本列表查询模式进行查询统计及分拣。
+            </p>
+            <p>
+                由于部分表格前几行可能会有表头等其它数据， 系统读取Excel数据后，将会智能分析号码的开始行数（跳过表头等）以及所在的列，如系统判断无误开始行及所在列不需要修改设置，
+                如果判断错误，请根据您的实际情况手动修改再查询，如表中有多列手机号码，可以手动指定需要查询的号码列，行列序号均从1开始。
+            </p>
+            <p>
+                如您的表格设置了其它格式或样式，如颜色，字体大小，合并单元格等，查询后这些样式设置将会丢失，如您对格式及样式有要求，请查询完毕后再手动复制到您的原始表格即可。<br/>
+                查询结果列将会自动添加在您的Excel数据右侧，查询结束后可以自行删除不需要的列或将指定数据列移动到合适的位置。
+            </p>
+            <p>
+                查询速度取决于您的设备性能以及Excel文件大小（数据多少），如文件较大可能需要一些时间读取和处理，请耐心等待即可，本模式适合数据量较少的场景（数万号码内），如数据量较大可能造成浏览器崩溃无法响应或等待时间过长。
+            </p>
+            <p>
+                使用方法：<br/>
+                1、点击选择或将Excel拖入上传区域，系统将自动读取Excel并智能分析号码开始行和所在列。<br/>
+                2、根据实际情况设置号码开始行和所在列，点击开始查询。<br/>
+                3、查询结束后下载Excel或CSV即可。<br/>
+            </p>
+            <p>
+                <b>本查询模式完全在您的本地浏览器处理数据，不会上传至网络服务器查询处理，您的数据绝对安全，请放心使用！</b>
+            </p>
+        </div>
+    </div>
+</script>
+<footer id="footer">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x text-center">
+            <div class="cell">
+
+                <!-- 底部导航 -->
+                <div class="footer-nav text-center">
+                    <a href="javascript:;">首页</a>
+                    <a rel="nofollow" href="javascript:;">关于我们</a>
+                    <a href="javascript:;">工具定制</a>
+                    <a href="javascript:;">免责声明</a>
+                    <a href="javascript:;">联系我们</a>
+                    <a rel="nofollow" href="javascript:;">反馈建议</a>
+                </div>
+
+                <!-- 版权声明 -->
+                <p class="copyright text-center" style="margin-top:15px;">
+                    Copyright © 2014-2022 奇客科技 All Rights Reserved<br>
+                    2022-03-14 19:40  &nbsp;&nbsp;星期一<br><br>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="sidebar">
+    <ul>
+        <li class="hide-for-small-only">
+            <i class="iconfont icon_wechat"></i>
+            <div class="hidden-box">
+                <img src="static/picture/kefu-wechat.jpg" width="140" alt="客服微信" title="微信号：iam6899">
+                <span>扫码添加客服微信</span>
+            </div>
+        </li>
+        <li>
+            <a target="_blank" href="javascript:;"><i class="iconfont icon_qq js-go-top" title="QQ:2011689829"></i></a>
+        </li>
+        <li>
+            <i class="iconfont icon_gotop js-go-top" title="返回顶部"></i>
+        </li>
+    </ul>
+</div>
+
+<script src="static/js/require.js"></script>
+<script src="static/js/common.min5.js"></script>
+
+    <div style="display:none;">
+        <script type="text/javascript" src="static/js/z_stat-1279144968_1279144968.js"></script>
+    </div>
+<script>
+    var pageData = {"packageData":{"one_day":{"day":1,"name":"10元 \/ 1天","price":10},"one_month":{"day":30,"name":"28元 \/ 1个月","price":28},"half_year":{"day":180,"name":"128元 \/ 半年","price":128},"one_year":{"day":365,"name":"189元 \/ 1年","price":189}},"toolAlias":"phone"};
+</script>
+    <script src="static/js/phone.min.js"></script>
+<script src="static/js/demo.min.js"></script>
+</body>
+</html>
